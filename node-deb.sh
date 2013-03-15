@@ -4,10 +4,8 @@ export VERSION=0.10.0
 #Compile
 wget http://nodejs.org/dist/v0.10.0/node-v${VERSION}.tar.gz
 mv node-v${VERSION}.tar.gz nodejs_${VERSION}.orig.tar.gz
-tar xzvf nodejs_${VERSION}.orig.tar.gz
+tar xzf nodejs_${VERSION}.orig.tar.gz
 cd node-v${VERSION}
-#Move the original tar to the correct directory
-mv ../nodejs_${VERSION}.orig.tar.gz .
 #Create stuff
 mkdir debian
 #Use the LICENSE file from nodejs as copying file
@@ -15,7 +13,8 @@ cp LICENSE debian/copying
 #Create the changelog (no messages needed)
 dch --create -v ${VERSION}-wspot --package nodejs ""
 #Create control file
-echo "Package: nodejs" > debian/control
+echo "Source: nodejs" > debian/control
+echo "Package: nodejs" >> debian/control
 echo "Version: ${VERSION}-wspot" >> debian/control
 echo "Architecture: amd64" >> debian/control
 echo "Maintainer: btronik <ukoehler@btronik.de>" >> debian/control
