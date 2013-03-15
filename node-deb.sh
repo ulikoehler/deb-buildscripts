@@ -5,3 +5,4 @@ tar xzvf node-${VERSION}.tar.gz
 mkdir usr
 cd node-${VERSION}
 ./configure --prefix=../usr
+make -j8
