@@ -1,3 +1,4 @@
+#!/bin/sh
 #sudo apt-get install devscripts
 export VERSION=0.10.0
 #Compile
