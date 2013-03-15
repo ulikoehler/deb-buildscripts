@@ -10,6 +10,7 @@ make -j8
 #
 cd ../usr
 mkdir debian
+cp ../node-v${VERSION}/LICENSE debian/copying
 dch --create -v ${VERSION}-wspot --package nodejs
 echo "8" > debian/compat
 #Create control file
@@ -22,3 +23,7 @@ echo "Section: web" >> debian/control
 echo "Priority: extra" >> debian/control
 echo "Homepage: http://nodejs.org/" >> debian/control
 echo "Description: Node.js WOTSPOT distribution" >> debian/control
+#Create rules file
+echo "#!/usr/bin/make -f" > debian/rules
+echo "%:" >> debian/rules
+echo "        dh $@" >> debian/rules
