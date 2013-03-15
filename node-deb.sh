@@ -5,7 +5,7 @@ export VERSION=0.10.0
 wget http://nodejs.org/dist/v0.10.0/node-v${VERSION}.tar.gz
 mv node-v${VERSION}.tar.gz nodejs_${VERSION}-wotspot.orig.tar.gz
 tar xzvf nodejs_${VERSION}-wotspot.orig.tar.gz
-cd nodejs-v${VERSION}
+cd node-v${VERSION}
 #Create stuff
 mkdir debian
 #Use the LICENSE file from nodejs as copying file
