@@ -27,3 +27,6 @@ echo "Description: Node.js WOTSPOT distribution" >> debian/control
 echo "#!/usr/bin/make -f" > debian/rules
 echo "%:" >> debian/rules
 echo "	dh $@" >> debian/rules
+#
+mkdir -p debian/source
+echo "3.0 (quilt)" > debian/source/format
