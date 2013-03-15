@@ -22,8 +22,8 @@ echo "Homepage: http://nodejs.org/" >> debian/control
 echo "Description: Node.js WOTSPOT distribution" >> debian/control
 #Create rules file
 echo "#!/usr/bin/make -f" > debian/rules
-echo "%:" >> debian/rules
-echo "	dh $@" >> debian/rules
+echo '%:' >> debian/rules
+echo '	dh $@' >> debian/rules
 #
 mkdir -p debian/source
 echo "3.0 (quilt)" > debian/source/format
