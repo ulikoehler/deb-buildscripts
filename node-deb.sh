@@ -3,7 +3,7 @@
 export VERSION=0.10.0
 #Compile
 wget http://nodejs.org/dist/v0.10.0/node-v${VERSION}.tar.gz
-mv node-v${VERSION}.tar.gz nodejs_${VERSION}-wotspot.orig.tar.gz
+mv node-v${VERSION}.tar.gz nodejs_${VERSION}.orig.tar.gz
 tar xzvf nodejs_${VERSION}.orig.tar.gz
 cd node-v${VERSION}
 #Move the original tar to the correct directory
