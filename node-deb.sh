@@ -7,9 +7,10 @@ tar xzvf nodejs_${VERSION}-wotspot.orig.tar.gz
 cd nodejs-v${VERSION}
 #Create stuff
 mkdir debian
+#Use the LICENSE file from nodejs as copying file
 cp ../LICENSE debian/copying
+#Create the changelog (no messages needed)
 dch --create -v ${VERSION}-wspot --package nodejs ""
-echo "8" > debian/compat
 #Create control file
 echo "Package: nodejs" > debian/control
 echo "Version: ${VERSION}-wspot" >> debian/control
@@ -24,6 +25,7 @@ echo "Description: Node.js WOTSPOT distribution" >> debian/control
 echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
-#
+#Create some misc files
 mkdir -p debian/source
+echo "8" > debian/compat
 echo "3.0 (quilt)" > debian/source/format
