@@ -4,12 +4,14 @@ export VERSION=0.10.0
 #Compile
 wget http://nodejs.org/dist/v0.10.0/node-v${VERSION}.tar.gz
 mv node-v${VERSION}.tar.gz nodejs_${VERSION}-wotspot.orig.tar.gz
-tar xzvf nodejs_${VERSION}-wotspot.orig.tar.gz
+tar xzvf nodejs_${VERSION}.orig.tar.gz
 cd node-v${VERSION}
+#Move the original tar to the correct directory
+mv ../nodejs_${VERSION}.orig.tar.gz .
 #Create stuff
 mkdir debian
 #Use the LICENSE file from nodejs as copying file
-cp ../LICENSE debian/copying
+cp LICENSE debian/copying
 #Create the changelog (no messages needed)
 dch --create -v ${VERSION}-wspot --package nodejs ""
 #Create control file
