@@ -7,7 +7,7 @@ tar xzvf nodejs_${VERSION}-wotspot.orig.tar.gz
 cd nodejs-v${VERSION}
 #Create stuff
 mkdir debian
-cp ../node-v${VERSION}/LICENSE debian/copying
+cp ../LICENSE debian/copying
 dch --create -v ${VERSION}-wspot --package nodejs
 echo "8" > debian/compat
 #Create control file
