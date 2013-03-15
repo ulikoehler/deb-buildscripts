@@ -26,4 +26,4 @@ echo "Description: Node.js WOTSPOT distribution" >> debian/control
 #Create rules file
 echo "#!/usr/bin/make -f" > debian/rules
 echo "%:" >> debian/rules
-echo "        dh $@" >> debian/rules
+echo "	dh $@" >> debian/rules
