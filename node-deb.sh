@@ -8,7 +8,7 @@ cd nodejs-v${VERSION}
 #Create stuff
 mkdir debian
 cp ../LICENSE debian/copying
-dch --create -v ${VERSION}-wspot --package nodejs
+dch --create -v ${VERSION}-wspot --package nodejs ""
 echo "8" > debian/compat
 #Create control file
 echo "Package: nodejs" > debian/control
