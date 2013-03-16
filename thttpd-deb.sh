@@ -1,12 +1,4 @@
 #!/bin/bash
-#sudo apt-get install devscripts
-export VERSION=0.10.0
-#Compile
-wget http://nodejs.org/dist/v0.10.0/node-v${VERSION}.tar.gz
-mv node-v${VERSION}.tar.gz nodejs_${VERSION}.orig.tar.gz
-tar xzf nodejs_${VERSION}.orig.tar.gz
-cd node-v${VERSION}
-#Create stuff
 mkdir debian
 #Use the LICENSE file from nodejs as copying file
 cp LICENSE debian/copying
