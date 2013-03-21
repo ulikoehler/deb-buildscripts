@@ -3,7 +3,7 @@ mkdir debian
 #Use the LICENSE file from nodejs as copying file
 touch debian/copying
 #Create the changelog (no messages needed)
-dch --create -v ${VERSION}-wspot --package nodejs ""
+dch --create -v thttpd --package thttpd ""
 #Create control file
 echo "Source: thttpd" > debian/control
 echo "Maintainer: None <none@example.com>" >> debian/control
