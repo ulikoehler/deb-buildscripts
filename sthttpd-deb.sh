@@ -2,13 +2,13 @@
 wget ftp://opensource.dyc.edu/pub/sthttpd/sthttpd-2.26.3.tar.gz
 mv sthttpd-2.26.3.tar.gz sthttpd_2.26.3.orig.tar.gz
 tar xzvf sthttpd_2.26.3.orig.tar.gz
-cd sthttpd_2.26.3
+cd sthttpd-2.26.3
 rm -rf debian
 mkdir -p debian
 #Use the LICENSE file from nodejs as copying file
 touch debian/copying
 #Create the changelog (no messages needed)
-dch --create -v 2.26.3-1 --package thttpd ""
+dch --create -v 2.26.3-1 --package sthttpd ""
 #Create copyright file
 echo "** Copyright 1995,1998,1999,2000,2001 by Jef Poskanzer <jef@mail.acme.com>." > debian/copyright
 echo "** All rights reserved." >> debian/copyright
@@ -41,10 +41,10 @@ echo "Priority: optional" >> debian/control
 echo "Standards-Version: 3.9.2" >> debian/control
 echo "Build-Depends: debhelper (>= 8)" >> debian/control
 echo "" >> debian/control
-echo "Package: thttpd" >> debian/control
+echo "Package: sthttpd" >> debian/control
 echo "Version: 2.25b-1" >> debian/control
 echo "Architecture: amd64" >> debian/control
-echo "Depends: libc6 (>= 2.4)" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
 echo "Homepage: http://opensource.dyc.edu/sthttpd" >> debian/control
 echo "Description: sthttpd thttpd replacement" >> debian/control
 #Create rules file
