@@ -13,7 +13,7 @@ echo "Standards-Version: 3.9.2" >> debian/control
 echo "Build-Depends: debhelper (>= 8)" >> debian/control
 
 echo "Package: thttpd" >> debian/control
-#echo "Version: ${VERSION}-wspot" >> debian/control
+#echo "Version: 2.25b-1" >> debian/control
 echo "Architecture: amd64" >> debian/control
 echo "Depends: libc6 (>= 2.4)" >> debian/control
 echo "Homepage: http://acme.com/software/thttpd/" >> debian/control
