@@ -10,7 +10,7 @@ touch debian/copying
 #Create the changelog (no messages needed)
 dch --create -v 2.5.0-1 --package protobuf ""
 #Create copyright file
-cp LICENSE debian/copyright
+cp COPYING.txt debian/copyright
 #Create control file
 echo "Source: protobuf" > debian/control
 echo "Maintainer: None <none@example.com>" >> debian/control
@@ -21,9 +21,11 @@ echo "Build-Depends: debhelper (>= 8)" >> debian/control
 echo "" >> debian/control
 echo "Package: protobuf" >> debian/control
 echo "Architecture: amd64" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
+echo "Provides: libprotobuf-c0, libprotobuf-c0-dev, libprotobuf-dev, libprotobuf7, libprotobuf-lite7" >> debian/control
+echo "Build-Depends: zlib1g-dev" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}, zlib1g" >> debian/control
 echo "Homepage: https://code.google.com/p/protobuf/" >> debian/control
-echo "Description: Mongoose minimal webserver" >> debian/control
+echo "Description: Google Protobuf library & executables (including development files)" >> debian/control
 #Create rules file
 echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
