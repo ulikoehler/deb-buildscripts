@@ -57,7 +57,6 @@ echo 'override_dh_auto_install:' >> debian/rules
 echo -e '\tmkdir -p debian/sthttpd/usr/bin' >> debian/rules
 echo -e '\tcp src/thttpd debian/sthttpd/usr/bin' >> debian/rules
 #Create some misc files
-#Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
 echo "3.0 (quilt)" > debian/source/format
