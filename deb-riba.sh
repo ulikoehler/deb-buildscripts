@@ -22,7 +22,7 @@ echo "" >> debian/control
 echo "Package: riba" >> debian/control
 echo "Version: $DEBVERSION" >> debian/control
 echo "Architecture: amd64" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libleveldb, libsnappy1, libreadline, libstdc++6" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libleveldb, libsnappy1, libreadline, libstdc++6, libc6" >> debian/control
 echo "Homepage: https://code.google.com/p/leveldb/" >> debian/control
 echo "Description: LevelDB Key-Value database" >> debian/control
 #Create rules file
