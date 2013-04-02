@@ -29,9 +29,12 @@ echo "" >> debian/control
 echo "Package: libleveldb-dev" >> debian/control
 echo "Version: 1.9.0-1" >> debian/control
 echo "Architecture: any" >> debian/control
-echo "Depends: libsnappy-dev (>= 1.0)" >> debian/control
+echo "Depends: libsnappy-dev (>= 1.0), libleveldb (= 1.9.0)" >> debian/control
 echo "Homepage: https://code.google.com/p/leveldb/" >> debian/control
 echo "Description: LevelDB Key-Value database (development files)" >> debian/control
+#Create postinst script to create symlinks
+echo "ln -sf /usr/lib/libleveldb.so.1.9 /usr/lib/libleveldb.so.1" > debian/libleveldb.postinst
+echo "ln -sf /usr/lib/libleveldb.so.1 /usr/lib/libleveldb.so" >> debian/libleveldb.postinst
 #Create rules file
 echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
@@ -44,7 +47,7 @@ echo 'override_dh_auto_test:' >> debian/rules
 echo -e '\t' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e '\tmkdir -p debian/libleveldb/usr/lib debian/libleveldb-dev/usr/include' >> debian/rules
-echo -e '\tcp --preserve=links libleveldb.* debian/libleveldb/usr/lib' >> debian/rules
+echo -e '\tcp libleveldb.so.1.9 libleveldb.a debian/libleveldb/usr/lib' >> debian/rules
 echo -e '\tcp -r include/leveldb debian/libleveldb-dev/usr/include/' >> debian/rules
 #Create some misc files
 mkdir -p debian/source
