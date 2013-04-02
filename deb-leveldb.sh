@@ -10,7 +10,7 @@ cd leveldb-${VERSION}
 rm -rf debian
 mkdir -p debian
 #Use the existing LICENSE file
-cp LICENSE debian/copying
+cp LICENSE debian/copyright
 #Create the changelog (dummy only, doesn't contain real changelog messages)
 dch --create -v $DEBVERSION --package libleveldb ""
 #Create control file
