@@ -1,12 +1,12 @@
 #!/bin/bash
-export NAME=libzmq
-export VERSION=3.2.2
+export NAME=libczmq
+export VERSION=1.3.2
 export DEBVERSION=${VERSION}-1
-export URL=http://download.zeromq.org/zeromq-${VERSION}.tar.gz
+export URL=http://download.zeromq.org/czmq-${VERSION}.tar.gz
 #Download it
 wget "$URL" -O ${NAME}_${VERSION}.orig.tar.gz
 tar xzvf ${NAME}_${VERSION}.orig.tar.gz
-cd zeromq-${VERSION}
+cd czmq-${VERSION}
 rm -rf debian
 mkdir -p debian
 #Use the existing COPYING file
@@ -22,23 +22,22 @@ echo "Section: misc" >> debian/control
 echo "Priority: optional" >> debian/control
 echo "Standards-Version: 3.9.2" >> debian/control
 echo "Provides: libzmq1"
-echo "Build-Depends: debhelper (>= 8)" >> debian/control
+echo "Build-Depends: debhelper (>= 8), libzmq-dev" >> debian/control
 #Main library package
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
 echo "Architecture: amd64" >> debian/control
-echo "Provides: libzmq1" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
-echo "Homepage: http://zeromq.org/" >> debian/control
-echo "Description: ZeroMQ (0MQ) lightweight messaging kernel" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libzmq (>= 3.0)" >> debian/control
+echo "Homepage: http://czmq.zeromq.org/" >> debian/control
+echo "Description: ZeroMQ (0MQ) lightweight messaging kernel CZMQ High-Level C-Binding" >> debian/control
 #-dev package
 echo "" >> debian/control
 echo "Package: $NAME-dev" >> debian/control
 echo "Architecture: any" >> debian/control
 echo "Provides: libzmq-dev" >> debian/control
-echo "Depends: libzmq (= $DEBVERSION)" >> debian/control
-echo "Homepage: http://zeromq.org/" >> debian/control
-echo "Description: ZeroMQ (0MQ) lightweight messaging kernel (development headers)" >> debian/control
+echo "Depends: libzmq-dev (>= 3.0), libczmq (= $DEBVERSION)" >> debian/control
+echo "Homepage: http://czmq.zeromq.org/" >> debian/control
+echo "Description: ZeroMQ (0MQ) lightweight messaging kernel CZMQ High-Level C-Binding (development headers)" >> debian/control
 #Create rules file
 echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
