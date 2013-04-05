@@ -40,7 +40,6 @@ echo -e '\tmake -j8 ENABLE_OPTIMIZED=1' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e "\tmkdir -p debian/$NAME/usr/lib" >> debian/rules
 echo -e "\tcp ./Release+Asserts/lib/LLVMgold.so debian/$NAME/usr/lib" >> debian/rules
-echo -e "\tcp ./Release+Asserts/lib/LLVMgold.so debian/$NAME/usr/lib" >> debian/rules
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
