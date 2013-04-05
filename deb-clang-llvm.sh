@@ -21,7 +21,7 @@ echo "Build-Depends: debhelper (>= 8)" >> debian/control
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
 echo "Architecture: amd64" >> debian/control
-echo "Provides: llvm llvm-3.2 llvm-3.2-dev llvm-dev libllvm-3.2 libllvm-3.2-dev clang clang-3.2 clang-3.2-doc" >> debian/control
+echo "Provides: llvm, llvm-3.2, llvm-3.2-dev, llvm-dev, libllvm-3.2, libllvm-3.2-dev, clang, clang-3.2, clang-3.2-doc" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
 #Create rules file
 echo '#!/usr/bin/make -f' > debian/rules
