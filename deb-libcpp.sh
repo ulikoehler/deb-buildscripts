@@ -1,8 +1,8 @@
 #!/bin/bash
 export NAME=libcxx
 export ARCHITECTURE=amd64
-mkdir -p build/libcxx
-cd build/libcxx
+mkdir -p libcxx
+cd libcxx
 #Clone the directory
 export URL=http://llvm.org/svn/llvm-project/libcxx/trunk
 svn export $URL libcxx
@@ -10,8 +10,8 @@ export SVNVERSION=$(svn info $URL | grep Revision | cut -d' ' -f2)
 export VERSION=0.1svn-$SVNVERSION
 export DEBVERSION=${VERSION}-1
 #Package the source
-tar cJvf libcxx_${VERSION}.tar.xz libcxx
-mv libcxx_${VERSION}.tar.xz ..
+tar cJvf libcxx_${VERSION}.orig.tar.xz libcxx
+mv libcxx_${VERSION}.orig.tar.xz ..
 rm -rf debian
 mkdir -p debian
 #Use the existing COPYING file
@@ -24,7 +24,7 @@ echo "Maintainer: None <none@example.com>" >> debian/control
 echo "Section: misc" >> debian/control
 echo "Priority: optional" >> debian/control
 echo "Standards-Version: 3.9.2" >> debian/control
-echo "Build-Depends: debhelper (>= 8), cmake" >> debian/control
+echo "Build-Depends: debhelper (>= 8), cmake, clang (>= 3.0)" >> debian/control
 #Main library package
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
@@ -47,4 +47,4 @@ mkdir -p debian/source
 echo "8" > debian/compat
 echo "3.0 (quilt)" > debian/source/format
 #Build it
-debuild -us -uc
+debuild -us -uc -b
