@@ -7,7 +7,7 @@ export DEBVERSION=${VERSION}-1
 export URL=http://llvm.org/releases/${VERSION}/llvm-${VERSION}.src.tar.gz
 wget $URL
 #Package the source
-tar tzvf llvm-${VERSION}.src.tar.gz
+tar xzvf llvm-${VERSION}.src.tar.gz
 cd llvm-3.2.src
 rm -rf debian
 mkdir -p debian
@@ -34,10 +34,11 @@ echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
-echo -e "\tCXX=clang++ ./configure --with-binutils-include=/usr/include" >> debian/rules
+echo -e "\tCXX=g++ ./configure --with-binutils-include=/usr/include" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake -j8 ENABLE_OPTIMIZED=1' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
+echo -e "\tmkdir -p debian/$NAME/usr/lib" >> debian/rules
 echo -e "\tcp ./Release+Asserts/lib/LLVMgold.so debian/$NAME/usr/lib" >> debian/rules
 echo -e "\tcp ./Release+Asserts/lib/LLVMgold.so debian/$NAME/usr/lib" >> debian/rules
 #Create some misc files
