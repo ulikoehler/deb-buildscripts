@@ -1,16 +1,16 @@
 #!/bin/bash
-wget http://llvm.org/releases/3.2/clang+llvm-3.2-x86_64-linux-ubuntu-12.04.tar.gz
-mv clang+llvm-3.2-x86_64-linux-ubuntu-12.04.tar.gz clang+llvm_-3.2.orig.tar.gz
-tar xzvf clang+llvm_-3.2.orig.tar.gz
-cd clang+llvm-3.2-x86_64-linux-ubuntu-12.04
+export NAME=clang+llvm
+export VERSION=3.2
+export DEBVERSION=${VERSION}-1
+wget http://llvm.org/releases/3.2/clang+llvm-3.2-x86_64-linux-ubuntu-12.04.tar.gz -O ${NAME}_-3.2.orig.tar.gz
+tar xzvf ${NAME}_-3.2.orig.tar.gz
+cd ${NAME}-3.2-x86_64-linux-ubuntu-12.04
 rm -rf debian
 mkdir -p debian
 #Use the LICENSE file from nodejs as copying file
 touch debian/copying
 #Create the changelog (no messages needed)
-dch --create -v 3.3-1 --package clang+llvm ""
-#Create copyright file
-touch debian
+dch --create -v $DEBVERSION --package $NAME ""
 #Create control file
 echo "Source: clang+llvm" > debian/control
 echo "Maintainer: None <none@example.com>" >> debian/control
@@ -19,9 +19,9 @@ echo "Priority: optional" >> debian/control
 echo "Standards-Version: 3.9.2" >> debian/control
 echo "Build-Depends: debhelper (>= 8)" >> debian/control
 echo "" >> debian/control
-echo "Package: clang+llvm" >> debian/control
+echo "Package: $NAME" >> debian/control
 echo "Architecture: amd64" >> debian/control
-echo "Provides: llvm llvm-3.3 llvm-3.3-dev llvm-dev libllvm-3.3 libllvm-3.3-dev clang clang-3.3 clang-3.3-doc" >> debian/control
+echo "Provides: llvm llvm-3.2 llvm-3.2-dev llvm-dev libllvm-3.2 libllvm-3.2-dev clang clang-3.2 clang-3.2-doc" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
 #Create rules file
 echo '#!/usr/bin/make -f' > debian/rules
