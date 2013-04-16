@@ -25,7 +25,7 @@ echo "Build-Depends: debhelper (>= 8)" >> debian/control
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
 echo "Architecture: $ARCHITECTURE" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
+echo "Depends: \${shlibs:Depends}, \${misc:Depends}" >> debian/control
 echo "Homepage: http://nodejs.org/" >> debian/control
 echo "Description: NodeJS" >> debian/control
 #Create rules file
