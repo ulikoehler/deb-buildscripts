@@ -1,20 +1,21 @@
 #!/bin/bash
+export DEBVERSION=1.53.0-1
 if [ ! -d "boost_1_53_0" ]; then
     wget "http://downloads.sourceforge.net/project/boost/boost/1.53.0/boost_1_53_0.tar.bz2?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fboost%2Ffiles%2Fboost%2F1.53.0%2F&ts=1364690822&use_mirror=surfnet" -O boost-all_1.53.0.orig.tar.bz2
     tar xjvf boost-all_1.53.0.orig.tar.bz2
 fi
-    cd boost_1_53_0
+cd boost_1_53_0
 #Build DEB
 rm -rf debian
 mkdir -p debian
 #Use the LICENSE file from nodejs as copying file
 touch debian/copying
 #Create the changelog (no messages needed)
-dch --create -v 1.53.0-1 --package boost-all ""
+dch --create -v $DEBVERSION --package boost-all ""
 #Create copyright file
 touch debian
 #Create control file
-echo <<EOF > debian/control
+cat > debian/control <<EOF
 Source: boost-all
 Maintainer: None <none@example.com>
 Section: misc
@@ -24,47 +25,38 @@ Build-Depends: debhelper (>= 8)
 
 Package: boost-all
 Architecture: amd64
-Depends: \${shlibs:Depends}, \${misc:Depends}
-Description: Boost library, version 1.53.0 (shared libraries)
-
-Package: boost-all-doc
-Architecture: any
-Depends: \${shlibs:Depends}, \${misc:Depends}, boost-all ($VERSION)
-Description: Boost library, version 1.53.0 (documentation)
+Depends: \${shlibs:Depends}, \${misc:Depends}, boost-all (= $DEBVERSION)
+Description: Boost library, version $DEBVERSION (shared libraries)
 
 Package: boost-all-dev
 Architecture: any
-Depends: \${shlibs:Depends}, \${misc:Depends}
-Description: Boost library, version 1.53.0 (development files)
+Depends: boost-all (= $DEBVERSION)
+Description: Boost library, version $DEBVERSION (development files)
 
-Package: bjam
+Package: boost-build
 Architecture: any
-Depends: \${shlibs:Depends}, \${misc:Depends}
-Description: Boost Build v2 bjam executable
+Depends: \${misc:Depends}, libc
+Description: Boost Build v2 executable
 EOF
 #Create rules file
-echo <<EOF > debian/rules
+cat > debian/rules <<EOF 
 #!/usr/bin/make -f
 %:
-dh $@
-override_dh_auto_clean:
-\t
+	dh \$@
 override_dh_auto_configure:
-\t./bootstrap.sh
+	./bootstrap.sh
 override_dh_auto_build:
-\t./b2 --prefix=`pwd`/debian/boost-all/usr/
-\t./b2 tools/build/v2
+	./b2 -j 10 --prefix=`pwd`/debian/boost-all/usr/
 override_dh_auto_test:
-\t
 override_dh_auto_install:
-\tmkdir -p debian/boost-all/usr debian/boost-all-dev/usr debian/boost-all-doc/usr debian/bjam/usr/bin
-\t./b2 --prefix=`pwd`/debian/boost-all/usr/ install
-\tmv debian/boost-all/usr/include debian/boost-all-dev
-\tmv debian/boost-all/usr/doc debian/boost-all-doc
+	mkdir -p debian/boost-all/usr debian/boost-all-dev/usr debian/boost-build/usr/bin
+	./b2 --prefix=`pwd`/debian/boost-all/usr/ install
+	mv debian/boost-all/usr/include debian/boost-all-dev/usr
+	cp b2 debian/boost-build/usr/bin
 EOF
 #Create some misc files
 echo "8" > debian/compat
 mkdir -p debian/source
 echo "3.0 (quilt)" > debian/source/format
 #Build the package
-debuild -us -uc
+debuild -b
