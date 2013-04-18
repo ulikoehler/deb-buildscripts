@@ -1,5 +1,5 @@
 #!/bin/bash
-export DEBVERSION=1.53.0-1
+export DEBVERSION=1.53.0-2
 if [ ! -d "boost_1_53_0" ]; then
     wget "http://downloads.sourceforge.net/project/boost/boost/1.53.0/boost_1_53_0.tar.bz2?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fboost%2Ffiles%2Fboost%2F1.53.0%2F&ts=1364690822&use_mirror=surfnet" -O boost-all_1.53.0.orig.tar.bz2
     tar xjvf boost-all_1.53.0.orig.tar.bz2
