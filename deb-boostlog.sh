@@ -2,9 +2,12 @@
 export VERSION=1.1
 export DEBVERSION=${VERSION}-1
 export NAME=boost-log
-wget "http://downloads.sourceforge.net/project/boost-log/boost-log-1.1.zip?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fboost-log%2F&ts=1365373752&use_mirror=switch" -O ${NAME}_${VERSION}.zip
-unzip ${NAME}_${VERSION}.zip
-tar cJvf ${NAME}_${VERSION}.orig.tar.xz boost-log-${VERSION}
+
+if [ ! -d "boost-log-${VERSION}" ]; then
+	wget "http://downloads.sourceforge.net/project/boost-log/boost-log-1.1.zip?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fboost-log%2F&ts=1365373752&use_mirror=switch" -O ${NAME}_${VERSION}.zip
+	unzip ${NAME}_${VERSION}.zip
+	tar cJvf ${NAME}_${VERSION}.orig.tar.xz boost-log-${VERSION}
+fi
 cd boost-log-${VERSION}
 #Build DEB
 rm -rf debian
@@ -32,7 +35,7 @@ echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
-echo -e '\t./bootstrap.sh' >> debian/rules
+echo -e '\t' >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\t./b2 --prefix=`pwd`/debian/boost-all/usr/' >> debian/rules
 echo 'override_dh_auto_test:' >> debian/rules
