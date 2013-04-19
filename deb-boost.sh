@@ -35,7 +35,7 @@ Description: Boost library, version $DEBVERSION (development files)
 
 Package: boost-build
 Architecture: any
-Depends: \${misc:Depends}, libc
+Depends: \${misc:Depends}
 Description: Boost Build v2 executable
 EOF
 #Create rules file
