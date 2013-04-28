@@ -1,5 +1,5 @@
 #!/bin/bash
-export NAME=libcxx
+export NAME=libc++
 export ARCHITECTURE=amd64
 mkdir -p $NAME
 cd $NAME
@@ -44,7 +44,7 @@ echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
-echo -e "\tcmake -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_INSTALL_PREFIX:PATH=`pwd`/debian/${NAME}/usr libcxx" >> debian/rules
+echo -e "\tcmake -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_INSTALL_PREFIX:PATH=`pwd`/debian/${NAME}/usr $NAME" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules

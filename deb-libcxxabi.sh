@@ -1,5 +1,5 @@
 #!/bin/bash
-export NAME=libcxxabi
+export NAME=libc++abi
 export ARCHITECTURE=amd64
 #Clone the directory
 export URL=http://llvm.org/svn/llvm-project/libcxxabi/trunk
