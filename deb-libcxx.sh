@@ -5,13 +5,13 @@ mkdir -p $NAME
 cd $NAME
 #Clone the directory
 export URL=http://llvm.org/svn/llvm-project/libcxx/trunk
-svn export $URL libcxx
+svn export $URL $NAME
 export SVNVERSION=$(svn info $URL | grep Revision | cut -d' ' -f2)
-export VERSION=0.1svn-$SVNVERSION
+export VERSION=1.0-svn$SVNVERSION
 export DEBVERSION=${VERSION}-1
 #Package the source
-tar cJvf $NAME_${VERSION}.orig.tar.xz $NAME
-mv $NAME_${VERSION}.orig.tar.xz ..
+tar cJvf ${NAME}_${VERSION}.orig.tar.xz $NAME
+mv ${NAME}_${VERSION}.orig.tar.xz ..
 rm -rf debian
 mkdir -p debian
 #Use the existing COPYING file
