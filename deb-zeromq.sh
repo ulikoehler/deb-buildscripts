@@ -1,6 +1,6 @@
 #!/bin/bash
 export NAME=libzmq
-export VERSION=3.2.2
+export VERSION=3.2.3
 export DEBVERSION=${VERSION}-1
 export URL=http://download.zeromq.org/zeromq-${VERSION}.tar.gz
 #Download it
