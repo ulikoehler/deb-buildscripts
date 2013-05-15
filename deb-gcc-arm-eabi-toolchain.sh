@@ -1,5 +1,5 @@
 #!/bin/bash
-export NAME=clang+llvm
+export NAME=gcc-arm-eabi-toolchain
 export VERSION=4.7-2013-q1
 export DEBVERSION=${VERSION}-1
 wget https://launchpad.net/gcc-arm-embedded/4.7/4.7-2013-q1-update/+download/gcc-arm-none-eabi-4_7-2013q1-20130313-linux.tar.bz2 -O ${NAME}_${VERSION}.orig.tar.bz2
@@ -12,7 +12,7 @@ touch debian/copying
 #Create the changelog (no messages needed)
 dch --create -v $DEBVERSION --package $NAME ""
 #Create control file
-echo "Source: clang+llvm" > debian/control
+echo "Source: $NAME" > debian/control
 echo "Maintainer: None <none@example.com>" >> debian/control
 echo "Section: misc" >> debian/control
 echo "Priority: optional" >> debian/control
