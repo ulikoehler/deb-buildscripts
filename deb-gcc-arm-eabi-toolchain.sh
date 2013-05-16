@@ -2,7 +2,11 @@
 export NAME=gcc-arm-eabi-toolchain
 export VERSION=4.7-2013-q1
 export DEBVERSION=${VERSION}-1
-wget https://launchpad.net/gcc-arm-embedded/4.7/4.7-2013-q1-update/+download/gcc-arm-none-eabi-4_7-2013q1-20130313-src.tar.bz2 -O ${NAME}_${VERSION}.orig.tar.bz2
+if [ ! -f "${NAME}_${VERSION}.orig.tar.bz2" ]; then
+    wget https://launchpad.net/gcc-arm-embedded/4.7/4.7-2013-q1-update/+download/gcc-arm-none-eabi-4_7-2013q1-20130313-src.tar.bz2 -O ${NAME}_${VERSION}.orig.tar.bz2
+else
+    rm -rf gcc-arm-none-eabi-4_7-2013q1-20130313
+fi
 tar xjvf ${NAME}_${VERSION}.orig.tar.bz2
 cd gcc-arm-none-eabi-4_7-2013q1-20130313/
 #Extract and patch everything
