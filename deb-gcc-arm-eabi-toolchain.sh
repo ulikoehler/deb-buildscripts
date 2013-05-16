@@ -2,9 +2,20 @@
 export NAME=gcc-arm-eabi-toolchain
 export VERSION=4.7-2013-q1
 export DEBVERSION=${VERSION}-1
-wget https://launchpad.net/gcc-arm-embedded/4.7/4.7-2013-q1-update/+download/gcc-arm-none-eabi-4_7-2013q1-20130313-linux.tar.bz2 -O ${NAME}_${VERSION}.orig.tar.bz2
-tar xjvf ${NAME}_${VERSION}.orig.tar.gz
-cd ${NAME}-3.2-x86_64-linux-ubuntu-12.04
+wget https://launchpad.net/gcc-arm-embedded/4.7/4.7-2013-q1-update/+download/gcc-arm-none-eabi-4_7-2013q1-20130313-src.tar.bz2 -O ${NAME}_${VERSION}.orig.tar.bz2
+tar xjvf ${NAME}_${VERSION}.orig.tar.bz2
+cd gcc-arm-none-eabi-4_7-2013q1-20130313/
+#Extract and patch everything
+cd src
+for i in *.bz2 ; do tar xjvf $i ; done
+for i in *.gz ; do tar xzvf $i ; done
+cd zlib-1.2.5
+patch -p1 <../zlib-1.2.5.patch
+#Build the toolchain (before debuild!)
+cd ../../
+./build-prerequisites.sh
+./build-toolchain.sh
+exit
 rm -rf debian
 mkdir -p debian
 #Use the LICENSE file from nodejs as copying file
@@ -21,9 +32,9 @@ echo "Build-Depends: debhelper (>= 8)" >> debian/control
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
 echo "Architecture: amd64" >> debian/control
-echo "Provides: llvm, llvm-3.2, llvm-3.2-dev, llvm-dev, libllvm-3.2, libllvm-3.2-dev, clang, clang-3.2, clang-3.2-doc" >> debian/control
+echo "Provides: gcc-arm-none-eabi" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
-echo "Description: Vanilla LLVM + Clang distribution" >> debian/control
+echo "Description: GCC ARM EABI toolchain https://launchpad.net/gcc-arm-embedded" >> debian/control
 #Create rules file
 echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
