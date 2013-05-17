@@ -44,4 +44,4 @@ echo "3.0 (quilt)" > debian/source/format
 #Build the package
 debuild -us -uc -b
 cd ..
-#rm -rf $NAME
+rm -rf $NAME
