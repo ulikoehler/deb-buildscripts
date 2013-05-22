@@ -1,14 +1,16 @@
 #!/bin/bash
+export NAME=stlink
 git clone git://github.com/texane/stlink.git
 export VERSION=1.0-git$(git rev-parse HEAD | cut -c1-10)
 export DEBVERSION=${VERSION}-1
 cd stlink
+git pull
 rm -rf debian
 mkdir -p debian
 #Use the LICENSE file from nodejs as copying file
 touch debian/copyright
 #Create the changelog (no messages needed)
-dch --create -v $DEBVERSION --package libprotobuf ""
+dch --create -v $DEBVERSION --package stlink ""
 #Create copyright file
 cp COPYING debian/copyright
 #Create control file
@@ -32,16 +34,16 @@ echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
 echo -e '\t./autogen.sh' >> debian/rules
-echo -e '\t./configure --prefix=`pwd`/debian/$NAME/usr' >> debian/rules
+echo -e "\t./configure --prefix=`pwd`/debian/$NAME/usr" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e '\tmake install' >> debian/rules
 #Create the target dir
-mkdir -p debian/protobuf/usr
+mkdir -p debian/$NAME/usr
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
 echo "3.0 (quilt)" > debian/source/format
 #Build it
-debuild -us -uc
+debuild -us -uc -b
