@@ -1,7 +1,7 @@
 #!/bin/bash
 export NAME=stlink
 git clone git://github.com/texane/stlink.git
-export VERSION=1.0-git$(git rev-parse HEAD | cut -c1-10)
+export VERSION=1.0-git$(git rev-list --all | wc -l)
 export DEBVERSION=${VERSION}-2
 cd stlink
 git pull
