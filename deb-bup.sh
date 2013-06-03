@@ -4,8 +4,8 @@ export VERSION=0.25rc1
 export DEBVERSION=${VERSION}-1
 #Download it
 git clone git://github.com/bup/bup.git
-(cd bup && git checkout bup-0.25-rc1 && rm -rf .git)
-tar xzvf ${NAME}_${VERSION}.orig.tar.gz
+(cd bup && git checkout bup-0.25-rc1 && rm -rf .git && cd ..)
+tar cJvf ${NAME}_${VERSION}.orig.tar.xz bup
 cd bup
 rm -rf debian
 mkdir -p debian
