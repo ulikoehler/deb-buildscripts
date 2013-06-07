@@ -59,7 +59,7 @@ echo 'override_dh_auto_test:' >> debian/rules
 echo -e '\t' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e '\tmkdir -p debian/libleveldb/usr/lib debian/libleveldb-dev/usr/include debian/libleveldb-doc/usr/share/doc/libleveldb' >> debian/rules
-echo -e '\tcp libleveldb.so.1.9 libleveldb.a debian/libleveldb/usr/lib' >> debian/rules
+echo -e '\tcp libleveldb.so.1.10 libleveldb.a debian/libleveldb/usr/lib' >> debian/rules
 echo -e '\tcp -r include/leveldb debian/libleveldb-dev/usr/include/' >> debian/rules
 echo -e '\tcp -r doc/* debian/libleveldb-doc/usr/share/doc/libleveldb' >> debian/rules
 #Create some misc files
