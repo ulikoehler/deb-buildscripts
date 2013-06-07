@@ -1,6 +1,6 @@
 #!/bin/bash
 #It's not sufficient to only update these variables once a new version has been released!
-export VERSION=1.9.0
+export VERSION=1.10.0
 export DEBVERSION=${VERSION}-4
 #Download and extract LevelDB
 wget https://leveldb.googlecode.com/files/leveldb-${VERSION}.tar.gz
