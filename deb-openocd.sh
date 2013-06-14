@@ -1,7 +1,7 @@
 #!/bin/bash
 export NAME=openocd
 export VERSION=0.7.0
-export DEBVERSION=${VERSION}-2
+export DEBVERSION=${VERSION}-3
 export URL="http://downloads.sourceforge.net/project/openocd/openocd/0.7.0/openocd-0.7.0.tar.bz2?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenocd%2Ffiles%2Fopenocd%2F0.7.0%2F&ts=1368821905&use_mirror=switch"
 #Download it
 if [ ! -f "${NAME}_${VERSION}.orig.tar.bz2" ]
@@ -37,7 +37,7 @@ echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
-echo -e "\t./configure --prefix=`pwd`/debian/${NAME}/usr --enable-ft2232_libftdi" >> debian/rules
+echo -e "\t./configure --prefix=`pwd`/debian/${NAME}/usr --enable-ft2232_libftdi --enable-stlink" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake -j8' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
