@@ -3,7 +3,7 @@ export NAME=openocd
 #Download it
 git clone --depth 1 git://git.code.sf.net/p/openocd/code openocd
 cd openocd
-export VERSION=0.7.1-git$(git rev-parse HEAD | cut -c 1-10)
+export VERSION=0.8.0-dev-git$(git rev-parse HEAD | cut -c 1-10)
 export DEBVERSION=${VERSION}-1
 rm -rf debian
 mkdir -p debian
@@ -33,7 +33,7 @@ echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
 echo -e "\t./bootstrap" >> debian/rules
-echo -e "\t./configure --prefix=`pwd`/debian/${NAME}/usr --enable-maintainer-mode --enable-ft2232_libftdi --enable-stlink --enable-jlink --enable-buspirate --enable-usbprog" >> debian/rules
+echo -e "\t./configure --prefix=`pwd`/debian/${NAME}/usr --enable-maintainer-mode --enable-ft2232_libftdi --enable-stlink" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake -j8' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
