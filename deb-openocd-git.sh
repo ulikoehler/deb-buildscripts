@@ -32,6 +32,7 @@ echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
+echo -e "\t./bootstrap" >> debian/rules
 echo -e "\t./configure --prefix=`pwd`/debian/${NAME}/usr --enable-maintainer-mode --enable-ft2232_libftdi --enable-stlink --enable-jlink --enable-buspirate --enable-usbprog" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake -j8' >> debian/rules
