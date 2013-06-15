@@ -1,7 +1,7 @@
 #!/bin/bash
 export NAME=openocd
 #Download it
-git clone --depth 1 git://git.code.sf.net/p/openocd/code
+git clone --depth 1 git://git.code.sf.net/p/openocd/code openocd
 cd openocd
 export VERSION=0.7.1-git$(git rev-parse HEAD | cut -c 1-10)
 export DEBVERSION=${VERSION}-1
