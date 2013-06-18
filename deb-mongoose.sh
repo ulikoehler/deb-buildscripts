@@ -20,7 +20,7 @@ echo "Standards-Version: 3.9.2" >> debian/control
 echo "Build-Depends: debhelper (>= 8)" >> debian/control
 echo "" >> debian/control
 echo "Package: mongoose" >> debian/control
-echo "Architecture: amd64" >> debian/control
+echo "Architecture: $(dpkg-architecture -qDEB_HOST_ARCH)" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
 echo "Homepage: https://code.google.com/p/mongoose/" >> debian/control
 echo "Description: Mongoose minimal webserver" >> debian/control
