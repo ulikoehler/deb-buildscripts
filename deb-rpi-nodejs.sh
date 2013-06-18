@@ -14,6 +14,8 @@ mkdir -p debian
 #Use the existing COPYING file
 mv LICENSE debian/copyright
 rm ChangeLog README.md
+mkdir -p debian/nodejs/usr/
+mv bin include lib share debian/nodejs/usr/
 #Create the changelog (no messages - dummy)
 dch --create -v $DEBVERSION --package ${NAME} ""
 #Create control file
@@ -39,8 +41,7 @@ echo -e "\tbash -c 'true'" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tbash -c "true"' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
-echo -e '\tmkdir -p debian/nodejs/usr/' >> debian/rules
-echo -e '\tmv bin include lib share debian/nodejs/usr/' >> debian/rules
+echo -e '\t' >> debian/rules
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
