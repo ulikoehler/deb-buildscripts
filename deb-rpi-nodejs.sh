@@ -38,9 +38,9 @@ echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
 echo -e "\t" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
-echo -e '\t' >> debian/rules
-echo 'override_dh_auto_install:' >> debian/rules
 echo -e '\tmv bin include lib share debian/nodejs/usr/' >> debian/rules
+echo 'override_dh_auto_install:' >> debian/rules
+echo -e '\t' >> debian/rules
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
