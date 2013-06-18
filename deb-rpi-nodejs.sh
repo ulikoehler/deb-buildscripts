@@ -8,7 +8,7 @@ export URL=https://gist.github.com/raw/3245130/v0.10.11/node-v0.10.11-linux-arm-
 #Download it
 wget "$URL" -O nodejs-bin.tar.gz
 tar xzvf nodejs-bin.tar.gz
-cd node-v0.10.11-linux-arm-armv6j-vfp-hard
+cd node-v${VERSION}-linux-arm-armv6j-vfp-hard
 rm -rf debian
 mkdir -p debian
 #Use the existing COPYING file
@@ -40,7 +40,7 @@ echo -e "\t" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\t' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
-echo -e '\tmv bin include lib share debian/nodejs/usr' >> debian/rules
+echo -e '\tmv bin include lib share debian/nodejs/usr/' >> debian/rules
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
