@@ -4,7 +4,7 @@ export VERSION=3.3
 export DEBVERSION=${VERSION}-1
 wget http://llvm.org/releases/3.3/clang+llvm-3.3-amd64-Ubuntu-12.04.2.tar.gz
 tar xzvf clang+llvm-3.3-amd64-Ubuntu-12.04.2.tar.gz
-cd clang+llvm-3.3-amd64-Ubuntu-12.04.2.tar.gz
+cd clang+llvm-3.3-amd64-Ubuntu-12.04.2
 rm -rf debian
 mkdir -p debian
 #Use the LICENSE file from nodejs as copying file
