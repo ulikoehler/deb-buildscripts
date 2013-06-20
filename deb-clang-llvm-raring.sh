@@ -30,7 +30,7 @@ echo "" >> debian/control
 #Dev package
 echo "Package: ${NAME}-dev" >> debian/control
 echo "Architecture: any" >> debian/control
-echo "Provides: clang+llvm-dev llvm-3.3-dev, llvm-dev, libllvm-3.3-dev, libclang-dev, clang-dev, libclang-3.3-dev" >> debian/control
+echo "Provides: $NAME-dev llvm-3.3-dev, llvm-dev, libllvm-3.3-dev, libclang-dev, clang-dev, libclang-3.3-dev" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}, $NAME (= $DEBVERSION)" >> debian/control
 echo "Description: Vanilla LLVM + Clang distribution (development files)" >> debian/control
 #Create rules file
