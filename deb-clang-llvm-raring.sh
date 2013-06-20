@@ -44,7 +44,7 @@ echo -e '\t' >> debian/rules
 echo 'override_dh_auto_test:' >> debian/rules
 echo -e '\t' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
-echo -e "\tmkdir -p debian/$NAME/usr" >> debian/rules
+echo -e "\tmkdir -p debian/$NAME/usr debian/$NAME-dev/usr" >> debian/rules
 echo -e "\tcp -r lib bin share debian/$NAME/usr" >> debian/rules
 echo -e "\tcp -r include debian/$NAME-dev/usr" >> debian/rules
 #Create some misc files
