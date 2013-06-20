@@ -25,6 +25,7 @@ echo "Architecture: amd64" >> debian/control
 echo "Provides: llvm, llvm-3.3, libllvm-3.3, clang, clang-3.3" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
 echo "Description: Vanilla LLVM + Clang distribution" >> debian/control
+echo "" >> debian/control
 #Dev package
 echo "Package: ${NAME}-dev" >> debian/control
 echo "Architecture: any" >> debian/control
