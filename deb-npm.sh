@@ -11,18 +11,21 @@ mkdir -p tmp/usr
 #Change prefix and install
 oldPrefix=$(npm get prefix)
 npm set prefix tmp/usr
-npm install -g NPMPKG
+npm install -g $NPMPKG
 npm set prefix $oldPrefix
 #Extract metainfo using NodeJS on the package.json
-export PACKAGEJSON=tmp/usr/lib/node_modules/$NAME/package.json
+export PACKAGEJSON=tmp/usr/lib/node_modules/$NPMPKG/package.json
 export DESCRIPTION=$(node -e "var fs =  require('fs');process.stdout.write(JSON.parse(fs.readFileSync('${PACKAGEJSON}')).description);")
 export HOMEPAGE=$(node -e "var fs =  require('fs');process.stdout.write(JSON.parse(fs.readFileSync('${PACKAGEJSON}')).homepage);")
 export VERSION=$(node -e "var fs =  require('fs');process.stdout.write(JSON.parse(fs.readFileSync('${PACKAGEJSON}')).version);")
+echo "Homepage: $HOMEPAGE"
+echo "Version: $VERSION"
+echo "Description: $DESCRIPTION"
 export DEBVERSION=${VERSION}-1
 #Use the existing COPYING file
 rm -rf debian
 mkdir -p debian/${NAME}
-cp tmp/usr/lib/node_modules/$NAME/LICENSE debian/copyright
+cp tmp/usr/lib/node_modules/$NPMPKG/LICENSE debian/copyright
 #Create the changelog (no messages - dummy)
 dch --create -v $DEBVERSION --package ${NAME} ""
 #Create control file
