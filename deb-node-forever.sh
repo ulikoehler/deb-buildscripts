@@ -2,15 +2,19 @@
 export NAME=node-forever
 export VERSION=0.10.8
 export DEBVERSION=${VERSION}-1
+#Change to dir
+mkdir -p forever
+cd forever
+mkdir -p tmp/usr
 #Change prefix and install
 oldPrefix=$(npm get prefix)
-rm -rf debian
-mkdir -p debian/${NAME}/usr
-npm set prefix debian/${NAME}/usr
+npm set prefix tmp/usr
 npm install -g forever
-npm set prefix oldPrefix
+npm set prefix $oldPrefix
 #Use the existing COPYING file
-cp debian/${NAME}/usr/lib/node_modules/forever/LICENSE debian/copyright
+rm -rf debian
+mkdir -p debian/${NAME}
+cp tmp/usr/lib/node_modules/forever/LICENSE debian/copyright
 #Create the changelog (no messages - dummy)
 dch --create -v $DEBVERSION --package ${NAME} ""
 #Create control file
@@ -35,6 +39,7 @@ echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
+echo -e "\tmv tmp/usr debian/${NAME}" >> debian/rules
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
