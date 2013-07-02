@@ -38,7 +38,7 @@ echo "Build-Depends: debhelper (>= 8)" >> debian/control
 #-dev package
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
-echo "Architecture: any" >> debian/control
+echo "Architecture: all" >> debian/control
 echo "Provides: $NPMPKG" >> debian/control
 echo "Depends: nodejs" >> debian/control
 echo "Homepage: $HOMEPAGE" >> debian/control
@@ -50,7 +50,7 @@ echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
-echo -e "\tmv tmp/usr debian/${NAME}" >> debian/rules
+echo -e "\tmv tmp/usr debian/${NAME}/" >> debian/rules
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
