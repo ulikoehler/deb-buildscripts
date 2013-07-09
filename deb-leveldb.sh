@@ -1,6 +1,6 @@
 #!/bin/bash
 #It's not sufficient to only update these variables once a new version has been released!
-export VERSION=1.10.0
+export VERSION=1.12.0
 export DEBVERSION=${VERSION}-4
 #Download and extract LevelDB
 wget https://leveldb.googlecode.com/files/leveldb-${VERSION}.tar.gz
@@ -45,7 +45,7 @@ echo "Recommends: libleveldb-dev (>= $VERSION), libleveldb (>= $VERSION)" >> deb
 echo "Homepage: https://code.google.com/p/leveldb/" >> debian/control
 echo "Description: LevelDB Key-Value database (development files)" >> debian/control
 #Create postinst script to create symlinks
-echo "ln -sf /usr/lib/libleveldb.so.1.9 /usr/lib/libleveldb.so.1" > debian/libleveldb.postinst
+echo "ln -sf /usr/lib/libleveldb.so.1.12 /usr/lib/libleveldb.so.1" > debian/libleveldb.postinst
 echo "ln -sf /usr/lib/libleveldb.so.1 /usr/lib/libleveldb.so" >> debian/libleveldb.postinst
 #Create rules file
 echo '#!/usr/bin/make -f' > debian/rules
@@ -59,7 +59,7 @@ echo 'override_dh_auto_test:' >> debian/rules
 echo -e '\t' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e '\tmkdir -p debian/libleveldb/usr/lib debian/libleveldb-dev/usr/include debian/libleveldb-doc/usr/share/doc/libleveldb' >> debian/rules
-echo -e '\tcp libleveldb.so.1.10 libleveldb.a debian/libleveldb/usr/lib' >> debian/rules
+echo -e '\tcp libleveldb.so.1.12 libleveldb.a debian/libleveldb/usr/lib' >> debian/rules
 echo -e '\tcp -r include/leveldb debian/libleveldb-dev/usr/include/' >> debian/rules
 echo -e '\tcp -r doc/* debian/libleveldb-doc/usr/share/doc/libleveldb' >> debian/rules
 #Create some misc files
