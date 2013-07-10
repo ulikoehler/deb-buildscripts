@@ -1,7 +1,7 @@
 #!/bin/bash
 export NAME=libczmq
 export VERSION=1.4.1
-export DEBVERSION=${VERSION}-2
+export DEBVERSION=${VERSION}-3
 export URL=http://download.zeromq.org/czmq-${VERSION}.tar.gz
 #Download it
 wget "$URL" -O ${NAME}_${VERSION}.orig.tar.gz
@@ -39,7 +39,7 @@ echo "Architecture: all" >> debian/control
 echo "Provides: libczmq-dev" >> debian/control
 echo "Replaces: libczmq-dev" >> debian/control
 echo "Conflicts: libczmq-dev" >> debian/control
-echo "Depends: libzmq-dev (>= 3.0), libczmq-jemalloc (= $DEBVERSION), " >> debian/control
+echo "Depends: libzmq-dev (>= 3.0), libczmq (= $DEBVERSION), " >> debian/control
 echo "Homepage: http://czmq.zeromq.org/" >> debian/control
 echo "Description: ZeroMQ (0MQ) lightweight messaging kernel CZMQ High-Level C-Binding (development headers)" >> debian/control
 #Create rules file
