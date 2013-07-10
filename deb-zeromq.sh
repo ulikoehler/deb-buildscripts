@@ -21,7 +21,6 @@ echo "Maintainer: None <none@example.com>" >> debian/control
 echo "Section: misc" >> debian/control
 echo "Priority: optional" >> debian/control
 echo "Standards-Version: 3.9.2" >> debian/control
-echo "Provides: libzmq1"
 echo "Build-Depends: debhelper (>= 8), libjemalloc-dev" >> debian/control
 #Main library package
 echo "" >> debian/control
