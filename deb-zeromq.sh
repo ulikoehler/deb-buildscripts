@@ -1,7 +1,7 @@
 #!/bin/bash
 export NAME=libzmq
 export VERSION=3.2.3
-export DEBVERSION=${VERSION}-1
+export DEBVERSION=${VERSION}-2
 export URL=http://download.zeromq.org/zeromq-${VERSION}.tar.gz
 #Download it
 wget "$URL" -O ${NAME}_${VERSION}.orig.tar.gz
@@ -22,13 +22,13 @@ echo "Section: misc" >> debian/control
 echo "Priority: optional" >> debian/control
 echo "Standards-Version: 3.9.2" >> debian/control
 echo "Provides: libzmq1"
-echo "Build-Depends: debhelper (>= 8)" >> debian/control
+echo "Build-Depends: debhelper (>= 8), libjemalloc-dev" >> debian/control
 #Main library package
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
-echo "Architecture: amd64" >> debian/control
+echo "Architecture: all" >> debian/control
 echo "Provides: libzmq1" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libjemalloc1" >> debian/control
 echo "Homepage: http://zeromq.org/" >> debian/control
 echo "Description: ZeroMQ (0MQ) lightweight messaging kernel" >> debian/control
 #-dev package
@@ -44,7 +44,7 @@ echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
-echo -e "\t./configure --prefix=`pwd`/debian/${NAME}/usr" >> debian/rules
+echo -e "\tLDFLAGS=-ljemalloc ./configure --prefix=`pwd`/debian/${NAME}/usr" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake -j8' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
