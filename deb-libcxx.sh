@@ -18,13 +18,15 @@ mkdir -p debian
 cp $NAME/LICENSE.TXT debian/copyright
 #Create the changelog (no messages - dummy)
 dch --create -v $DEBVERSION --package ${NAME} ""
+#Calculate the include path for libsupc++ (because libc++abi needs extra clang flags)
+SUPCXXINCLUDEPATH=$(echo | g++ -Wp,-v -x c++ - -fsyntax-only 2>&1 | grep c++ | tr -d ' ' | perl -pe 'chomp if eof' | tr '\n' ';')
 #Create control file
 echo "Source: $NAME" > debian/control
 echo "Maintainer: None <none@example.com>" >> debian/control
 echo "Section: misc" >> debian/control
 echo "Priority: optional" >> debian/control
 echo "Standards-Version: 3.9.2" >> debian/control
-echo "Build-Depends: debhelper (>= 8), cmake, clang-3.2" >> debian/control
+echo "Build-Depends: debhelper (>= 8), cmake, clang, libstdc++6-dev" >> debian/control
 #Main library package
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
@@ -44,7 +46,7 @@ echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
-echo -e "\tcmake -DCMAKE_CXX_COMPILER=clang++ -DCMAKE_INSTALL_PREFIX:PATH=`pwd`/debian/${NAME}/usr $NAME" >> debian/rules
+echo -e "\tCC=clang CXX=clang++ cmake -G \"Unix Makefiles\" -DLIBCXX_CXX_ABI=libsupc++ cmake -DCMAKE_INSTALL_PREFIX:PATH=`pwd`/debian/${NAME}/usr -DLIBCXX_LIBSUPCXX_INCLUDE_PATHS=\"${SUPCXXINCLUDEPATH}\" -DCMAKE_BUILD_TYPE=Release $NAME" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
