@@ -24,11 +24,11 @@ echo "Maintainer: None <none@example.com>" >> debian/control
 echo "Section: misc" >> debian/control
 echo "Priority: optional" >> debian/control
 echo "Standards-Version: 3.9.2" >> debian/control
-echo "Build-Depends: debhelper (>= 8), libftdi-dev" >> debian/control
+echo "Build-Depends: debhelper (>= 8), libftdi-dev, libusb-1.0-0-dev" >> debian/control
 #Main library package
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
-echo "Architecture: amd64" >> debian/control
+echo "Architecture: any" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
 echo "Homepage: http://openocd.sourceforge.net" >> debian/control
 echo "Description: OpenOCD Debugger (vanilla, btronik)" >> debian/control
