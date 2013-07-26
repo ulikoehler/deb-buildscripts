@@ -23,9 +23,9 @@ echo "Build-Depends: debhelper (>= 8), libusb-1.0-0-dev" >> debian/control
 #Main library package
 echo "" >> debian/control
 echo "Package: stlink" >> debian/control
-echo "Architecture: amd64" >> debian/control
+echo "Architecture: any" >> debian/control
 echo "Provides: st-flash" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}, udev" >> debian/control
+echo 'Depends: ${shlibs:Depends}, ${misc:Depends}, udev' >> debian/control
 echo "Homepage: https://github.com/texane/stlink/" >> debian/control
 echo "Description: Texane STLink Linux port" >> debian/control
 #Create rules file
