@@ -1,7 +1,7 @@
 #!/bin/bash
 export NAME=libsodium
 export VERSION=0.4.2
-export DEBVERSION=${VERSION}-1
+export DEBVERSION=${VERSION}-2
 #Download and extract the archive
 if [ ! -f ${NAME}_${VERSION}.orig.tar.gz ]
 then
