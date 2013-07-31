@@ -1,12 +1,14 @@
 #!/bin/bash
-export NAME=bup
-export VERSION=0.25rc1
+export NAME=libsodium
+export VERSION=0.4.2
 export DEBVERSION=${VERSION}-1
 #Download it
-git clone git://github.com/bup/bup.git
-(cd bup && git checkout bup-0.25-rc1 && rm -rf .git && cd ..)
-tar cJvf ${NAME}_${VERSION}.orig.tar.xz bup
-cd bup
+if [ ! -f libsodium-0.4.2.tar.gz ]
+then
+    wget "https://download.libsodium.org/libsodium/releases/libsodium-${VERSION}.tar.gz"
+fi
+tar xzvf libsodium-0.4.2.tar.gz
+cd libsodium-0.4.2
 rm -rf debian
 mkdir -p debian
 #Use the existing COPYING file
@@ -27,22 +29,30 @@ echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
 echo "Architecture: amd64" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
-echo "Homepage: https://github.com/bup/bup" >> debian/control
-echo "Description: BUP backup system" >> debian/control
+echo "Homepage: https://libsodium.org" >> debian/control
+echo "Description: libsodium" >> debian/control
+#dev package
+echo "" >> debian/control
+echo "Package: $NAME-dev" >> debian/control
+echo "Architecture: all" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
+echo "Homepage: https://libsodium.org" >> debian/control
+echo "Description: libsodium development files" >> debian/control
 #Rules files
 echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
-echo -e "\t./configure" >> debian/rules
+echo -e "\t./configure --prefix=$(pwd)/debian/$NAME/usr" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
-echo -e "\tmkdir -p debian/$NAME/usr" >> debian/rules
-echo -e "\tmake install PREFIX=debian/$NAME/usr" >> debian/rules
+echo -e "\tmkdir -p debian/$NAME/usr debian/$NAME-dev/usr" >> debian/rules
+echo -e "\tmake install" >> debian/rules
+echo -e "\tmv debian/$NAME/usr/include debian/$NAME-dev/usr" >> debian/rules
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
 echo "3.0 (quilt)" > debian/source/format
 #Build it
-debuild -us -uc
+debuild -us -uc -b
