@@ -3,11 +3,11 @@ export NAME=libsodium
 export VERSION=0.4.2
 export DEBVERSION=${VERSION}-1
 #Download and extract the archive
-if [ ! -f ${NAME}-${VERSION}.orig.tar.gz ]
+if [ ! -f ${NAME}_${VERSION}.orig.tar.gz ]
 then
-    wget "https://download.libsodium.org/libsodium/releases/${NAME}-${VERSION}.tar.gz" -O ${NAME}-${VERSION}.orig.tar.gz
+    wget "https://download.libsodium.org/libsodium/releases/${NAME}-${VERSION}.tar.gz" -O ${NAME}_${VERSION}.orig.tar.gz
 fi
-tar xzvf ${NAME}-${VERSION}.orig.tar.gz
+tar xzvf ${NAME}_${VERSION}.orig.tar.gz
 cd ${NAME}-${VERSION}
 rm -rf debian
 mkdir -p debian
