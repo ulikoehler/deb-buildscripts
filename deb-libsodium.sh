@@ -28,7 +28,7 @@ echo "Build-Depends: debhelper (>= 8), devscripts, build-essential" >> debian/co
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
 echo "Architecture: any" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libsodium(= $DEBVERSION)" >> debian/control
 echo "Homepage: https://libsodium.org" >> debian/control
 echo "Description: libsodium" >> debian/control
 #dev package
