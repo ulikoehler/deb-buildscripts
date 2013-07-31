@@ -2,13 +2,13 @@
 export NAME=libsodium
 export VERSION=0.4.2
 export DEBVERSION=${VERSION}-1
-#Download it
-if [ ! -f libsodium-0.4.2.tar.gz ]
+#Download and extract the archive
+if [ ! -f ${NAME}-${VERSION}.tar.gz ]
 then
-    wget "https://download.libsodium.org/libsodium/releases/libsodium-${VERSION}.tar.gz"
+    wget "https://download.libsodium.org/libsodium/releases/${NAME}-${VERSION}.tar.gz"
 fi
-tar xzvf libsodium-0.4.2.tar.gz
-cd libsodium-0.4.2
+tar xzvf ${NAME}-${VERSION}.tar.gz
+cd ${NAME}-${VERSION}
 rm -rf debian
 mkdir -p debian
 #Use the existing COPYING file
@@ -23,11 +23,11 @@ echo "Maintainer: None <none@example.com>" >> debian/control
 echo "Section: misc" >> debian/control
 echo "Priority: optional" >> debian/control
 echo "Standards-Version: 3.9.2" >> debian/control
-echo "Build-Depends: debhelper (>= 8)" >> debian/control
+echo "Build-Depends: debhelper (>= 8), devscripts, build-essential" >> debian/control
 #Main library package
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
-echo "Architecture: amd64" >> debian/control
+echo "Architecture: any" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
 echo "Homepage: https://libsodium.org" >> debian/control
 echo "Description: libsodium" >> debian/control
