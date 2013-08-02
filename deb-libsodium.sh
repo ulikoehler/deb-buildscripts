@@ -1,7 +1,10 @@
 #!/bin/bash
+#Revision 1
+#Libsodium DEB build script. Call without arguments.
+#(c)2013 Uli Koehler. Licensed as CC-By-SA 3.0 DE.
 export NAME=libsodium
 export VERSION=0.4.2
-export DEBVERSION=${VERSION}-2
+export DEBVERSION=${VERSION}-1
 #Download and extract the archive
 if [ ! -f ${NAME}_${VERSION}.orig.tar.gz ]
 then
@@ -28,14 +31,14 @@ echo "Build-Depends: debhelper (>= 8), devscripts, build-essential" >> debian/co
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
 echo "Architecture: any" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libsodium(= $DEBVERSION)" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
 echo "Homepage: https://libsodium.org" >> debian/control
 echo "Description: libsodium" >> debian/control
 #dev package
 echo "" >> debian/control
 echo "Package: $NAME-dev" >> debian/control
 echo "Architecture: all" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libsodium(= $DEBVERSION)" >> debian/control
 echo "Homepage: https://libsodium.org" >> debian/control
 echo "Description: libsodium development files" >> debian/control
 #Rules files
