@@ -4,7 +4,7 @@
 #(c)2013 Uli Koehler. Licensed as CC-By-SA 3.0 DE.
 export NAME=goaccess
 export VERSION=0.6
-export DEBVERSION=${VERSION}-1
+export DEBVERSION=1:${VERSION}-1
 #Download and extract the archive
 if [ ! -f ${NAME}_${VERSION}.orig.tar.gz ]
 then
