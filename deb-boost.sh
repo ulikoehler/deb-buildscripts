@@ -1,5 +1,5 @@
 #!/bin/bash
-export DEBVERSION=1.54.0-1
+export DEBVERSION=1.54.0-2
 if [ ! -d "boost_1_54_0" ]; then
     wget "http://downloads.sourceforge.net/project/boost/boost/1.54.0/boost_1_54_0.tar.bz2?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fboost%2Ffiles%2Fboost%2F1.54.0%2F&ts=1372793272&use_mirror=switch" -O boost-all_1.54.0.orig.tar.bz2
     tar xjvf boost-all_1.54.0.orig.tar.bz2
@@ -46,11 +46,11 @@ cat > debian/rules <<EOF
 override_dh_auto_configure:
 	./bootstrap.sh
 override_dh_auto_build:
-	./b2 -j 4 --prefix=`pwd`/debian/boost-all/usr/
+	./b2 link=static,shared -j 4 --prefix=`pwd`/debian/boost-all/usr/
 override_dh_auto_test:
 override_dh_auto_install:
 	mkdir -p debian/boost-all/usr debian/boost-all-dev/usr debian/boost-build/usr/bin
-	./b2 --prefix=`pwd`/debian/boost-all/usr/ install
+	./b2 link=static,shared --prefix=`pwd`/debian/boost-all/usr/ install
 	mv debian/boost-all/usr/include debian/boost-all-dev/usr
 	cp b2 debian/boost-build/usr/bin
 EOF

@@ -1,4 +1,7 @@
 #!/bin/bash
+#Revision 1
+#msgpack C++ binding DEB build script. Call without arguments.
+#(c)2013 Uli Koehler. Licensed as CC-By-SA 3.0 DE.
 export NAME=libmsgpack
 export VERSION=0.5.4
 export DEBVERSION=${VERSION}-3
