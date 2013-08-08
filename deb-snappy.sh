@@ -1,7 +1,7 @@
 #!/bin/bash
 export NAME=libsnappy
 export VERSION=1.1.0
-export DEBVERSION=${VERSION}-1
+export DEBVERSION=${VERSION}-2
 export URL=https://snappy.googlecode.com/files/snappy-1.1.0.tar.gz
 #Download it
 wget "$URL" -O ${NAME}_${VERSION}.orig.tar.gz
