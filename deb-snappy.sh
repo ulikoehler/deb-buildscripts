@@ -1,5 +1,5 @@
 #!/bin/bash
-export NAME=lib snappy
+export NAME=libsnappy
 export VERSION=1.1.0
 export DEBVERSION=${VERSION}-1
 export URL=https://snappy.googlecode.com/files/snappy-1.1.0.tar.gz
