@@ -1,7 +1,7 @@
 #!/bin/bash
 #It's not sufficient to only update these variables once a new version has been released!
 export VERSION=1.12.0
-export DEBVERSION=${VERSION}-5
+export DEBVERSION=${VERSION}-6
 #Download and extract LevelDB
 wget https://leveldb.googlecode.com/files/leveldb-${VERSION}.tar.gz
 mv leveldb-${VERSION}.tar.gz libleveldb_${VERSION}.orig.tar.gz
@@ -19,13 +19,13 @@ echo "Maintainer: None <none@example.com>" >> debian/control
 echo "Section: misc" >> debian/control
 echo "Priority: optional" >> debian/control
 echo "Standards-Version: 3.9.2" >> debian/control
-echo "Build-Depends: debhelper (>= 8), libsnappy-dev (>= 1.0)" >> debian/control
+echo "Build-Depends: debhelper (>= 8), libsnappy-dev (>= 1.0), libjemalloc-dev" >> debian/control
 #Create the library package
 echo "" >> debian/control
 echo "Package: libleveldb" >> debian/control
 echo "Version: $DEBVERSION" >> debian/control
 echo "Architecture: amd64" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libsnappy1 (>= 1.0)" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libsnappy1 (>= 1.0), libjemalloc1" >> debian/control
 echo "Homepage: https://code.google.com/p/leveldb/" >> debian/control
 echo "Description: LevelDB Key-Value database" >> debian/control
 #Also create the -dev package
@@ -54,6 +54,7 @@ echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
 echo -e '\t' >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
+echo -e '\tsed -i "s/tcmalloc/jemalloc/g" build_detect_platform' >> debian/rules
 echo -e '\tmake' >> debian/rules
 echo 'override_dh_auto_test:' >> debian/rules
 echo -e '\t' >> debian/rules
