@@ -1,7 +1,7 @@
 #!/bin/bash
 export NAME=libsnappy
 export VERSION=1.1.0
-export DEBVERSION=${VERSION}-2
+export DEBVERSION=${VERSION}-3
 export URL=https://snappy.googlecode.com/files/snappy-1.1.0.tar.gz
 #Download it
 wget "$URL" -O ${NAME}_${VERSION}.orig.tar.gz
@@ -21,7 +21,7 @@ echo "Maintainer: None <none@example.com>" >> debian/control
 echo "Section: misc" >> debian/control
 echo "Priority: optional" >> debian/control
 echo "Standards-Version: 3.9.2" >> debian/control
-echo "Build-Depends: debhelper (>= 8)" >> debian/control
+echo "Build-Depends: debhelper (>= 8), libjemalloc-dev" >> debian/control
 #Main library package
 echo "" >> debian/control
 echo "Package: libsnappy1" >> debian/control
@@ -43,7 +43,7 @@ echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
-echo -e "\t./configure --prefix=`pwd`/debian/libsnappy1/usr" >> debian/rules
+echo -e "\tLDFLAGS=-ljemalloc ./configure --prefix=`pwd`/debian/libsnappy1/usr" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake -j8' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
