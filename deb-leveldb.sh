@@ -24,7 +24,7 @@ echo "Build-Depends: debhelper (>= 8), libsnappy-dev (>= 1.0), libjemalloc-dev" 
 echo "" >> debian/control
 echo "Package: libleveldb" >> debian/control
 echo "Version: $DEBVERSION" >> debian/control
-echo "Architecture: amd64" >> debian/control
+echo "Architecture: any" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libsnappy1 (>= 1.0), libjemalloc1" >> debian/control
 echo "Homepage: https://code.google.com/p/leveldb/" >> debian/control
 echo "Description: LevelDB Key-Value database" >> debian/control
