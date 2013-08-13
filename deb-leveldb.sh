@@ -1,7 +1,7 @@
 #!/bin/bash
 #It's not sufficient to only update these variables once a new version has been released!
 export VERSION=1.12.0
-export DEBVERSION=${VERSION}-7
+export DEBVERSION=${VERSION}-8
 #Download and extract LevelDB
 wget https://leveldb.googlecode.com/files/leveldb-${VERSION}.tar.gz
 mv leveldb-${VERSION}.tar.gz libleveldb_${VERSION}.orig.tar.gz
@@ -55,7 +55,7 @@ echo 'override_dh_auto_configure:' >> debian/rules
 echo -e '\t' >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tsed -i "s/tcmalloc/jemalloc/g" build_detect_platform' >> debian/rules
-echo -e '\tmake' >> debian/rules
+echo -e '\tCCFLAGS="-march=core2" CXXFLAGS="-march=core2" make' >> debian/rules
 echo 'override_dh_auto_test:' >> debian/rules
 echo -e '\t' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
