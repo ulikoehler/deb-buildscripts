@@ -1,7 +1,7 @@
 #!/bin/bash
 export NAME=libjemalloc
 export VERSION=3.4.0
-export DEBVERSION=${VERSION}-1
+export DEBVERSION=${VERSION}-2
 export URL=http://www.canonware.com/download/jemalloc/jemalloc-${VERSION}.tar.bz2
 #Download it
 wget "$URL" -O ${NAME}_${VERSION}.orig.tar.bz2
@@ -40,7 +40,7 @@ echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
-echo -e "\t./configure --prefix=`pwd`/debian/libjemalloc1/usr" >> debian/rules
+echo -e "\tCFLAGS=-march=core2 CXXFLAGS=-march=core2 ./configure --prefix=`pwd`/debian/libjemalloc1/usr" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake -j8' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
