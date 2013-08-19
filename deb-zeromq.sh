@@ -26,7 +26,7 @@ echo "Build-Depends: debhelper (>= 8), libjemalloc-dev" >> debian/control
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
 echo "Architecture: all" >> debian/control
-echo "Provides: libzmq1" >> debian/control
+echo "Provides: libzmq1, libzmq3" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libjemalloc1" >> debian/control
 echo "Homepage: http://zeromq.org/" >> debian/control
 echo "Description: ZeroMQ (0MQ) lightweight messaging kernel" >> debian/control
