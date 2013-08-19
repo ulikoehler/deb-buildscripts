@@ -2,7 +2,7 @@
 export NAME=google-perftools
 export VERSION=2.1
 #Download it
-export DEBVERSION=${VERSION}-2
+export DEBVERSION=${VERSION}-3
 wget https://gperftools.googlecode.com/files/gperftools-2.1.zip
 unzip gperftools-2.1.zip
 tar cJvf ${NAME}_${VERSION}.orig.tar.xz gperftools-2.1
@@ -34,7 +34,7 @@ echo "Description: Google Perftools" >> debian/control
 echo "" >> debian/control
 echo "Package: $NAME-dev" >> debian/control
 echo "Architecture: any" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}, gperftools (= $DEBVERSION)" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}, google-perftools (= $DEBVERSION)" >> debian/control
 echo "Homepage: https://code.google.com/p/gperftools/" >> debian/control
 echo "Description: Google Perftools" >> debian/control
 #pprof package
