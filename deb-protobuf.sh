@@ -22,7 +22,7 @@ echo "Build-Depends: debhelper (>= 8)" >> debian/control
 #Main library package
 echo "" >> debian/control
 echo "Package: libprotobuf" >> debian/control
-echo "Architecture: amd64" >> debian/control
+echo "Architecture: any" >> debian/control
 echo "Provides: libprotobuf-c0, libprotobuf7, libprotobuf-lite7" >> debian/control
 echo "Build-Depends: zlib1g-dev" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}, zlib1g" >> debian/control
@@ -31,7 +31,7 @@ echo "Description: Google Protobuf library" >> debian/control
 #-dev package
 echo "" >> debian/control
 echo "Package: libprotobuf-dev" >> debian/control
-echo "Architecture: amd64" >> debian/control
+echo "Architecture: all" >> debian/control
 echo "Provides: libprotobuf-c0, libprotobuf-c0-dev, libprotobuf-dev" >> debian/control
 echo "Depends: zlib1g, libprotobuf (= $DEBVERSION)" >> debian/control
 echo "Homepage: https://code.google.com/p/protobuf/" >> debian/control
