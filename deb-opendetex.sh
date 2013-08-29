@@ -1,7 +1,7 @@
 #!/bin/bash
 export NAME=opendetex
 export VERSION=2.8.1
-export DEBVERSION=${VERSION}-2
+export DEBVERSION=${VERSION}-3
 export URL=https://opendetex.googlecode.com/files/opendetex-${VERSION}.tar.bz2
 #Download it
 wget "$URL" -O ${NAME}_${VERSION}.orig.tar.bz2
@@ -37,7 +37,9 @@ echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake -j8' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e "\tmkdir -p debian/$NAME/usr/bin" >> debian/rules
-echo -e "\tcp detex delatex debian/$NAME/usr/bin" >> debian/rules
+echo -e "\tcp delatex debian/$NAME/usr/bin" >> debian/rules
+#detex (original version) is already in texlive-binaries
+echo -e "\tcp detex debian/$NAME/usr/bin/opendetex" >> debian/rules
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
