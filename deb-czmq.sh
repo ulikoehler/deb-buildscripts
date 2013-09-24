@@ -1,12 +1,12 @@
 #!/bin/bash
 export NAME=libczmq
-export VERSION=1.4.1
-export DEBVERSION=${VERSION}-3
+export VERSION=2.0.1-rc2
+export DEBVERSION=${VERSION}-1
 export URL=http://download.zeromq.org/czmq-${VERSION}.tar.gz
 #Download it
 wget "$URL" -O ${NAME}_${VERSION}.orig.tar.gz
 tar xzvf ${NAME}_${VERSION}.orig.tar.gz
-cd czmq-${VERSION}
+cd czmq-2.0.1
 rm -rf debian
 mkdir -p debian
 #Use the existing COPYING file
