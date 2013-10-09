@@ -1,12 +1,12 @@
 #!/bin/bash
 export NAME=libzmq
-export VERSION=4.0.0-rc1
+export VERSION=4.0.1
 export DEBVERSION=${VERSION}-1
 export URL=http://download.zeromq.org/zeromq-${VERSION}.tar.gz
 #Download it
 wget "$URL" -O ${NAME}_${VERSION}.orig.tar.gz
 tar xzvf ${NAME}_${VERSION}.orig.tar.gz
-cd zeromq-4.0.0
+cd zeromq-4.0.1
 rm -rf debian
 mkdir -p debian
 #Use the existing COPYING file
