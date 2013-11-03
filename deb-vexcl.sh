@@ -2,7 +2,7 @@
 #DEB package builder for VexCL
 #This script is released under Apache License v2.0
 #Copyright (c) 2013 Uli Köhler
-export NAME=vexcl
+export NAME=libvexcl-dev
 export VERSION=0.8.5
 export DEBVERSION=${VERSION}-1
 #Download it
@@ -27,8 +27,8 @@ echo "Standards-Version: 3.9.2" >> debian/control
 echo "Build-Depends: debhelper (>= 8), cmake " >> debian/control
 #Dev package
 echo "" >> debian/control
-echo "Package: $NAME-dev" >> debian/control
-echo "Architecture: amd64" >> debian/control
+echo "Package: $NAME" >> debian/control
+echo "Architecture: all" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
 echo "Homepage: https://github.com/ddemidov/vexcl" >> debian/control
 echo "Description: VexCL" >> debian/control
@@ -43,7 +43,6 @@ echo -e '\tmake -j4' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e "\tmkdir -p debian/$NAME-dev/usr" >> debian/rules
 echo -e '\tmake install' >> debian/rules
-echo -e "\tmv debian/$NAME/usr/include debian/$NAME-dev/usr/" >> debian/rules
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
