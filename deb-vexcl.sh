@@ -6,7 +6,7 @@ export NAME=libvexcl-dev
 export VERSION=0.8.5
 export DEBVERSION=${VERSION}-1
 #Download it
-git clone --depth 1 git://github.com/ddemidov/vexcl.git
+git clone git://github.com/ddemidov/vexcl.git
 (cd vexcl && rm -rf .git && git checkout VERSION && cd ..)
 tar cJvf ${NAME}_${VERSION}.orig.tar.xz vexcl
 cd vexcl
