@@ -39,7 +39,7 @@ echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
 echo -e "\tcmake -DCMAKE_INSTALL_PREFIX:PATH=`pwd`/debian/${NAME}/usr ." >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
-echo -e '\tmake -j4' >> debian/rules
+echo -e '\tmake' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e "\tmkdir -p debian/$NAME-dev/usr" >> debian/rules
 echo -e '\tmake install' >> debian/rules
