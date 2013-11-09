@@ -3,11 +3,13 @@
 #This script is released under Apache License v2.0
 #Copyright (c) 2013 Uli Köhler
 export NAME=libvexcl-dev
-export VERSION=0.8.5
+export VERSION=0.8.6git
 export DEBVERSION=${VERSION}-1
 #Download it
-git clone git://github.com/ddemidov/vexcl.git
-(cd vexcl && rm -rf .git && git checkout VERSION && cd ..)
+git clone --depth 1 git://github.com/ddemidov/vexcl.git
+(cd vexcl && rm -rf .git && cd ..)
+export VERSION=0.8.6-git$(cd vexcl && git rev-list --all | wc -l)
+export DEBVERSION=${VERSION}-1
 tar cJvf ${NAME}_${VERSION}.orig.tar.xz vexcl
 cd vexcl
 rm -rf debian
