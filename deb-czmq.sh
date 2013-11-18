@@ -6,7 +6,7 @@ export URL=http://download.zeromq.org/czmq-${VERSION}.tar.gz
 #Download it
 wget "$URL" -O ${NAME}_${VERSION}.orig.tar.gz
 tar xzvf ${NAME}_${VERSION}.orig.tar.gz
-cd czmq-2.0.2
+cd czmq-${VERSION}
 rm -rf debian
 mkdir -p debian
 #Use the existing COPYING file
