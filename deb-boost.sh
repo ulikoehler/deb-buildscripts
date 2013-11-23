@@ -21,7 +21,7 @@ Maintainer: None <none@example.com>
 Section: misc
 Priority: optional
 Standards-Version: 3.9.2
-Build-Depends: debhelper (>= 8)
+Build-Depends: debhelper (>= 8), cdbs, libbz2-dev, zlib1g-dev
 
 Package: boost-all
 Architecture: amd64
