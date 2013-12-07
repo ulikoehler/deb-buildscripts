@@ -35,14 +35,6 @@ echo "Architecture: any" >> debian/control
 echo "Depends: libsnappy-dev (>= 1.0), libleveldb (>= ${VERSION})" >> debian/control
 echo "Homepage: http://rocksdb.org/" >> debian/control
 echo "Description: RocksDB Key-Value database (development files)" >> debian/control
-#Also create the -doc package
-echo "" >> debian/control
-echo "Package: librocksdb-doc" >> debian/control
-echo "Version: $DEBVERSION" >> debian/control
-echo "Architecture: any" >> debian/control
-echo "Recommends: librocksdb-dev (>= $VERSION), librocksdb (>= $VERSION)" >> debian/control
-echo "Homepage: http://rocksdb.org/" >> debian/control
-echo "Description: RocksDB Key-Value database (documentation)" >> debian/control
 #Create rules file
 echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
@@ -54,7 +46,9 @@ echo -e '\tCCFLAGS="-march=core2" CXXFLAGS="-march=core2" make' >> debian/rules
 echo 'override_dh_auto_test:' >> debian/rules
 echo -e '\t' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
-echo -e '\tmkdir -p debian/librocksdb/usr/lib debian/librocksdb-dev/usr/include debian/libleveldb-doc/usr/share/doc/librocksdb' >> debian/rules
+echo -e '\tmkdir -p debian/librocksdb/usr/lib debian/librocksdb/usr/bin debian/librocksdb-dev/usr/include ' >> debian/rules
+echo -e '\tcp *.a debian/librocksdb/usr/lib' >> debian/rules
+echo -e '\tcp ldb debian/librocksdb/usr/bin' >> debian/rules
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
