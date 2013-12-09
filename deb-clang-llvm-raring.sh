@@ -2,7 +2,7 @@
 #Raring-specific (and slightly smaller) clang+llvm
 export NAME=clang+llvm-raring
 export VERSION=3.3
-export DEBVERSION=${VERSION}-1
+export DEBVERSION=${VERSION}-2
 wget http://llvm.org/releases/3.3/clang+llvm-3.3-Ubuntu-13.04-x86_64-linux-gnu.tar.bz2
 tar xjvf clang+llvm-3.3-Ubuntu-13.04-x86_64-linux-gnu.tar.bz2
 cd clang+llvm-3.3-Ubuntu-13.04-x86_64-linux-gnu
@@ -47,6 +47,8 @@ echo 'override_dh_auto_install:' >> debian/rules
 echo -e "\tmkdir -p debian/$NAME/usr debian/$NAME-dev/usr" >> debian/rules
 echo -e "\tcp -r lib bin share debian/$NAME/usr" >> debian/rules
 echo -e "\tcp -r include debian/$NAME-dev/usr" >> debian/rules
+#Numba compatibility
+echo -e "\tcp ./include/llvm/IR/Intrinsics.gen debian/$NAME-dev/usr/include/llvm" >> debian/rules
 #Create some misc files
 echo "8" > debian/compat
 mkdir -p debian/source

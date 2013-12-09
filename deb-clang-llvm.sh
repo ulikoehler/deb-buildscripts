@@ -1,7 +1,7 @@
 #!/bin/bash
 export NAME=clang+llvm
 export VERSION=3.3
-export DEBVERSION=${VERSION}-1
+export DEBVERSION=${VERSION}-2
 wget http://llvm.org/releases/3.3/clang+llvm-3.3-amd64-Ubuntu-12.04.2.tar.gz
 tar xzvf clang+llvm-3.3-amd64-Ubuntu-12.04.2.tar.gz
 cd clang+llvm-3.3-amd64-Ubuntu-12.04.2
@@ -46,6 +46,8 @@ echo 'override_dh_auto_install:' >> debian/rules
 echo -e "\tmkdir -p debian/$NAME/usr debian/$NAME-dev/usr/" >> debian/rules
 echo -e "\tcp -r lib bin share debian/$NAME/usr" >> debian/rules
 echo -e "\tcp -r include debian/$NAME-dev/usr/" >> debian/rules
+#Numba compatibility
+echo -e "\tcp ./include/llvm/IR/Intrinsics.gen debian/$NAME-dev/usr/include/llvm" >> debian/rules
 #Create some misc files
 echo "8" > debian/compat
 mkdir -p debian/source
