@@ -47,8 +47,10 @@ echo 'override_dh_auto_test:' >> debian/rules
 echo -e '\t' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e '\tmkdir -p debian/librocksdb/usr/lib debian/librocksdb/usr/bin debian/librocksdb-dev/usr/include ' >> debian/rules
-echo -e '\tcp *.a *.so debian/librocksdb/usr/lib' >> debian/rules
+echo -e '\tcp -r include/* debian/librocksdb-dev/usr/include ' >> debian/rules
+echo -e '\tcp *.a *.so.* debian/librocksdb/usr/lib' >> debian/rules
 echo -e '\tcp ldb debian/librocksdb/usr/bin' >> debian/rules
+echo -e '\tcd  debian/librocksdb/usr/lib && ln -sf librocksdb.so.* librocksdb.so' >> debian/rules
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
