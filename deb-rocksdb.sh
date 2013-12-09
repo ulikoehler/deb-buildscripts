@@ -42,12 +42,12 @@ echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
 echo -e '\tsed -i "s/tcmalloc/jemalloc/g" build_tools/build_detect_platform' >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rule
-echo -e '\tCCFLAGS="-march=core2" CXXFLAGS="-march=core2" make' >> debian/rules
+echo -e '\tCCFLAGS="-march=core2" CXXFLAGS="-march=core2" make all librocksdb.so' >> debian/rules
 echo 'override_dh_auto_test:' >> debian/rules
 echo -e '\t' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e '\tmkdir -p debian/librocksdb/usr/lib debian/librocksdb/usr/bin debian/librocksdb-dev/usr/include ' >> debian/rules
-echo -e '\tcp *.a debian/librocksdb/usr/lib' >> debian/rules
+echo -e '\tcp *.a *.so debian/librocksdb/usr/lib' >> debian/rules
 echo -e '\tcp ldb debian/librocksdb/usr/bin' >> debian/rules
 #Create some misc files
 mkdir -p debian/source
