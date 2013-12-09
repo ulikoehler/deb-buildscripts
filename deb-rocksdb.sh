@@ -41,6 +41,8 @@ echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
 echo -e '\tsed -i "s/tcmalloc/jemalloc/g" build_tools/build_detect_platform' >> debian/rules
+#Compatibility for older g++
+echo -e '\tsed -i "s/gnu++11/gnu++0x/g" build_tools/build_detect_platform' >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rule
 echo -e '\tCCFLAGS="-march=core2" CXXFLAGS="-march=core2" make all librocksdb.so' >> debian/rules
 echo 'override_dh_auto_test:' >> debian/rules
