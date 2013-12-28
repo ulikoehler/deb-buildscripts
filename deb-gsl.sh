@@ -1,6 +1,6 @@
 #!/bin/bash
 export NAME=imatix-gsl
-export VERSION=1.4
+export VERSION=4.1
 #Download it
 git clone git://github.com/imatix/gsl.git --depth 1
 cd gsl
