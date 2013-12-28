@@ -1,8 +1,8 @@
 #!/bin/bash
 export NAME=fritzing
-export VERSION=0.8.3b
+export VERSION=0.8.5b
 export DEBVERSION=${VERSION}-1
-export URL=http://fritzing.org/download/0.8.3b/source-tarball/fritzing-0.8.3b.source.tar.bz2
+export URL=http://fritzing.org/download/${VERSION}/source-tarball/fritzing-${VERSION}.source.tar.bz2
 #Download it
 wget "$URL" -O ${NAME}_${VERSION}.orig.tar.bz2
 tar xjvf ${NAME}_${VERSION}.orig.tar.bz2
@@ -21,7 +21,7 @@ echo "Maintainer: None <none@example.com>" >> debian/control
 echo "Section: misc" >> debian/control
 echo "Priority: optional" >> debian/control
 echo "Standards-Version: 3.9.2" >> debian/control
-echo "Build-Depends: debhelper (>= 8), libqt4-dev" >> debian/control
+echo "Build-Depends: debhelper (>= 8), libqt4-dev, qmake" >> debian/control
 #Main package
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
@@ -36,7 +36,7 @@ echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
 echo -e "\tqmake PREFIX=`pwd`/debian/${NAME}/usr" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
-echo -e '\tmake -j4' >> debian/rules
+echo -e '\tmake -j2' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e '\tmake install' >> debian/rules
 #Create some misc files
