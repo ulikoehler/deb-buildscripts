@@ -4,7 +4,9 @@ export VERSION=0.8.5b
 export DEBVERSION=${VERSION}-1
 export URL=http://fritzing.org/download/${VERSION}/source-tarball/fritzing-${VERSION}.source.tar.bz2
 #Download it
-wget "$URL" -O ${NAME}_${VERSION}.orig.tar.bz2
+if [ ! -f ${NAME}_${VERSION}.orig.tar.bz2 ] ; then
+    wget "$URL" -O ${NAME}_${VERSION}.orig.tar.bz2
+fi
 tar xjvf ${NAME}_${VERSION}.orig.tar.bz2
 cd fritzing-${VERSION}.source
 rm -rf debian
@@ -21,7 +23,7 @@ echo "Maintainer: None <none@example.com>" >> debian/control
 echo "Section: misc" >> debian/control
 echo "Priority: optional" >> debian/control
 echo "Standards-Version: 3.9.2" >> debian/control
-echo "Build-Depends: debhelper (>= 8), libqt4-dev, qmake" >> debian/control
+echo "Build-Depends: debhelper (>= 8), libqt4-dev" >> debian/control
 #Main package
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control

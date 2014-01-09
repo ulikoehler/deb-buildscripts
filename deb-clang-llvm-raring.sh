@@ -1,11 +1,11 @@
 #!/bin/bash
 #Raring-specific (and slightly smaller) clang+llvm
 export NAME=clang+llvm-raring
-export VERSION=3.3
-export DEBVERSION=${VERSION}-2
-wget http://llvm.org/releases/3.3/clang+llvm-3.3-Ubuntu-13.04-x86_64-linux-gnu.tar.bz2
-tar xjvf clang+llvm-3.3-Ubuntu-13.04-x86_64-linux-gnu.tar.bz2
-cd clang+llvm-3.3-Ubuntu-13.04-x86_64-linux-gnu
+export VERSION=3.4
+export DEBVERSION=${VERSION}-1
+wget http://llvm.org/releases/3.4/clang+llvm-3.4-x86_64-linux-gnu-ubuntu-13.10.tar.xz
+tar xJvf clang+llvm-3.4-x86_64-linux-gnu-ubuntu-13.10.tar.xz
+cd clang+llvm-3.4-x86_64-linux-gnu-ubuntu-13.10
 rm -rf debian
 mkdir -p debian
 #Use the LICENSE file from nodejs as copying file
@@ -23,14 +23,14 @@ echo "" >> debian/control
 #Library package
 echo "Package: $NAME" >> debian/control
 echo "Architecture: amd64" >> debian/control
-echo "Provides: clang+llvm, llvm, llvm-3.3, libllvm-3.3, clang, clang-3.3" >> debian/control
+echo "Provides: clang+llvm, llvm, llvm-3.4, libllvm-3.4, clang, clang-3.4" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
 echo "Description: Vanilla LLVM + Clang distribution" >> debian/control
 echo "" >> debian/control
 #Dev package
 echo "Package: ${NAME}-dev" >> debian/control
 echo "Architecture: any" >> debian/control
-echo "Provides: $NAME-dev, llvm-3.3-dev, llvm-dev, libllvm-3.3-dev, libclang-dev, clang-dev, libclang-3.3-dev" >> debian/control
+echo "Provides: $NAME-dev, llvm-3.4-dev, llvm-dev, libllvm-3.4-dev, libclang-dev, clang-dev, libclang-3.4-dev" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}, $NAME (= $DEBVERSION)" >> debian/control
 echo "Description: Vanilla LLVM + Clang distribution (development files)" >> debian/control
 #Create rules file
