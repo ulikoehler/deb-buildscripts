@@ -38,6 +38,8 @@ echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e '\tmake install' >> debian/rules
+echo 'override_dh_auto_test:' >> debian/rules
+echo -e '\t' >> debian/rules
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
