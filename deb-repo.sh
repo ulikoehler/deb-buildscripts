@@ -4,8 +4,10 @@ export VERSION=1.21
 export DEBVERSION=${VERSION}-1
 export URL=http://commondatastorage.googleapis.com/git-repo-downloads/repo
 #Download it
+rm -rf repo
+mkdir -p repo
+cd repo
 wget $URL
-rm -rf debian
 mkdir -p debian
 #Create the changelog (no messages - dummy)
 dch --create -v $DEBVERSION --package ${NAME} ""
