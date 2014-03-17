@@ -3,7 +3,7 @@
 #Libsodium DEB build script. Call without arguments.
 #(c)2013 Uli Koehler. Licensed as CC-By-SA 3.0 DE.
 export NAME=libsodium
-export VERSION=0.4.2
+export VERSION=0.4.5
 export DEBVERSION=${VERSION}-1
 #Download and extract the archive
 if [ ! -f ${NAME}_${VERSION}.orig.tar.gz ]

@@ -1,6 +1,6 @@
 #!/bin/bash
 export NAME=nodejs
-export VERSION=0.10.4
+export VERSION=0.10.26
 export DEBVERSION=${VERSION}-1
 export ARCHITECTURE=amd64
 export URL=http://nodejs.org/dist/v${VERSION}/node-v${VERSION}.tar.gz
