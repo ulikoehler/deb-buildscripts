@@ -1,4 +1,4 @@
-    #!/bin/bash
+#!/bin/bash
 #It's not sufficient to only update these variables once a new version has been released!
 
 #Download and extract LevelDB
