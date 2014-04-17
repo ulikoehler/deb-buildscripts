@@ -1,6 +1,6 @@
 #!/bin/bash
 export NAME=libjemalloc
-export VERSION=3.5.1
+export VERSION=3.6.0
 export DEBVERSION=${VERSION}-1
 export URL=http://www.canonware.com/download/jemalloc/jemalloc-${VERSION}.tar.bz2
 #Download it
