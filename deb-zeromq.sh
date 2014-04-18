@@ -1,5 +1,5 @@
 #!/bin/bash
-export NAME=libzmq
+export NAME=libzmq4
 export VERSION=4.0.4
 export DEBVERSION=${VERSION}-1
 export URL=http://download.zeromq.org/zeromq-${VERSION}.tar.gz
@@ -34,8 +34,8 @@ echo "Description: ZeroMQ (0MQ) lightweight messaging kernel" >> debian/control
 echo "" >> debian/control
 echo "Package: $NAME-dev" >> debian/control
 echo "Architecture: any" >> debian/control
-echo "Provides: libzmq-dev" >> debian/control
-echo "Depends: libzmq (= $DEBVERSION)" >> debian/control
+echo "Provides: libzmq-dev, libzmq1-dev, libzmq3-dev" >> debian/control
+echo "Depends: $NAME (= $DEBVERSION)" >> debian/control
 echo "Homepage: http://zeromq.org/" >> debian/control
 echo "Description: ZeroMQ (0MQ) lightweight messaging kernel (development headers)" >> debian/control
 #Create rules file
