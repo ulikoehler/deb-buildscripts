@@ -1,6 +1,6 @@
 #!/bin/bash
 export NAME=libczmq
-export VERSION=2.0.3
+export VERSION=2.1.0
 export DEBVERSION=${VERSION}-1
 export URL=http://download.zeromq.org/czmq-${VERSION}.tar.gz
 #Download it
