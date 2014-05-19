@@ -21,7 +21,7 @@ echo "Maintainer: None <none@example.com>" >> debian/control
 echo "Section: misc" >> debian/control
 echo "Priority: optional" >> debian/control
 echo "Standards-Version: 3.9.2" >> debian/control
-echo "Build-Depends: debhelper (>= 8), libzmq-dev, libjemalloc-dev" >> debian/control
+echo "Build-Depends: debhelper (>= 8), libzmq4-dev, libjemalloc-dev" >> debian/control
 #Main library package
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
@@ -29,7 +29,7 @@ echo "Architecture: any" >> debian/control
 echo "Provides: libczmq1" >> debian/control
 echo "Replaces: libczmq" >> debian/control
 echo "Conflicts: libczmq" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libzmq (>= 3.0), libjemalloc1" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libzmq4 (>= 4.0), libjemalloc1" >> debian/control
 echo "Homepage: http://czmq.zeromq.org/" >> debian/control
 echo "Description: ZeroMQ (0MQ) lightweight messaging kernel CZMQ High-Level C-Binding" >> debian/control
 #-dev package
@@ -39,7 +39,7 @@ echo "Architecture: all" >> debian/control
 echo "Provides: libczmq-dev" >> debian/control
 echo "Replaces: libczmq-dev" >> debian/control
 echo "Conflicts: libczmq-dev" >> debian/control
-echo "Depends: libzmq-dev (>= 3.0), libczmq (= $DEBVERSION), " >> debian/control
+echo "Depends: libzmq4-dev (>= 3.0), libczmq (= $DEBVERSION), " >> debian/control
 echo "Homepage: http://czmq.zeromq.org/" >> debian/control
 echo "Description: ZeroMQ (0MQ) lightweight messaging kernel CZMQ High-Level C-Binding (development headers)" >> debian/control
 #Create rules file
