@@ -1,7 +1,7 @@
 #!/bin/bash
 export NAME=libzmq4
 export VERSION=4.0.4
-export DEBVERSION=${VERSION}-2
+export DEBVERSION=${VERSION}-3
 export URL=http://download.zeromq.org/zeromq-${VERSION}.tar.gz
 #Download it
 wget "$URL" -O ${NAME}_${VERSION}.orig.tar.gz
@@ -51,7 +51,7 @@ echo -e '\tmake install' >> debian/rules
 echo -e "\tmkdir -p debian/$NAME-dev/usr" >> debian/rules
 echo -e "\tmv debian/$NAME/usr/include debian/$NAME-dev/usr/" >> debian/rules
 #Download cppzmq
-echo -e "\twget -P debian/$NAME-dev/usr/include https://github.com/zeromq/cppzmq/blob/master/zmq.hpp" >> debian/rules
+echo -e "\twget -P debian/$NAME-dev/usr/include https://raw.githubusercontent.com/zeromq/cppzmq/master/zmq.hpp" >> debian/rules
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
