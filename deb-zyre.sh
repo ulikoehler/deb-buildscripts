@@ -1,7 +1,7 @@
 #!/bin/bash
 export NAME=libzyre
 export VERSION=1.0.0
-export DEBVERSION=${VERSION}-1
+export DEBVERSION=${VERSION}-2
 #Download it
 git clone https://github.com/zeromq/zyre.git
 cd zyre
@@ -20,7 +20,7 @@ echo "Maintainer: None <none@example.com>" >> debian/control
 echo "Section: misc" >> debian/control
 echo "Priority: optional" >> debian/control
 echo "Standards-Version: 3.9.2" >> debian/control
-echo "Build-Depends: debhelper (>= 8), libzmq4-dev, libczmq-dev" >> debian/control
+echo "Build-Depends: debhelper (>= 8), libczmq (>= 2.0), libzmq4-dev, libczmq-dev" >> debian/control
 #Main library package
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
@@ -36,7 +36,7 @@ echo "Architecture: all" >> debian/control
 echo "Provides: libczmq-dev" >> debian/control
 echo "Replaces: libczmq-dev" >> debian/control
 echo "Conflicts: libczmq-dev" >> debian/control
-echo "Depends: libzmq4-dev (>= 3.0), libczmq (= $DEBVERSION), " >> debian/control
+echo "Depends: libzmq4-dev (>= 3.0), libczmq-dev (>= 2.0), libzyre (= $DEBVERSION) " >> debian/control
 echo "Homepage: https://github.com/zeromq/zyre" >> debian/control
 echo "Description:  ZyRe ZMQ autodiscovery library" >> debian/control
 #Create rules file
