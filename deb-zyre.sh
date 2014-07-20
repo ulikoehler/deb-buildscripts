@@ -44,7 +44,7 @@ echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
-echo -e "\tcmake . -DCMAKE_INSTALL_PREFIX:PATH==`pwd`/debian/${NAME}/usr -DCMAKE_BUILD_TYPE=Release" >> debian/rules
+echo -e "\tcmake . -DCMAKE_INSTALL_PREFIX:PATH=`pwd`/debian/${NAME}/usr -DCMAKE_BUILD_TYPE=Release" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake' >> debian/rules
 echo 'override_dh_auto_test:' >> debian/rules
