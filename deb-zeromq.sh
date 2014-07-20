@@ -21,13 +21,13 @@ echo "Maintainer: None <none@example.com>" >> debian/control
 echo "Section: misc" >> debian/control
 echo "Priority: optional" >> debian/control
 echo "Standards-Version: 3.9.2" >> debian/control
-echo "Build-Depends: debhelper (>= 8), libjemalloc-dev" >> debian/control
+echo "Build-Depends: debhelper (>= 8)" >> debian/control
 #Main library package
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
 echo "Architecture: all" >> debian/control
 echo "Provides: libzmq1, libzmq3" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libjemalloc1" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
 echo "Homepage: http://zeromq.org/" >> debian/control
 echo "Description: ZeroMQ (0MQ) lightweight messaging kernel" >> debian/control
 #-dev package
