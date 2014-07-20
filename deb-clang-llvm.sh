@@ -2,7 +2,7 @@
 export NAME=clang+llvm
 export VERSION=3.4.2
 export DEBVERSION=${VERSION}-1
-export DIRNAME=clang+llvm-${VERSION}-x86_64-unknown-ubuntu14.04
+export DIRNAME=clang+llvm-${VERSION}-x86_64-linux-gnu-ubuntu14.04
 export FILENAME=${DIRNAME}.tar.xz
 wget http://llvm.org/releases/${VERSION}/$FILENAME
 tar xJvf $FILENAME
