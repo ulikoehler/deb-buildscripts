@@ -1,10 +1,10 @@
 #!/bin/bash
-export DEBVERSION=1.55.0-1
-if [ ! -d "boost_1_55_0" ]; then
-    wget "http://downloads.sourceforge.net/project/boost/boost/1.55.0/boost_1_55_0.tar.bz2?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fboost%2Ffiles%2Fboost%2F1.55.0%2F&ts=1385240128&use_mirror=switch" -O boost-all_1.55.0.orig.tar.bz2
-    tar xjvf boost-all_1.55.0.orig.tar.bz2
+export DEBVERSION=1.57.0-1
+if [ ! -d "boost_1_57_0" ]; then
+    wget "http://downloads.sourceforge.net/project/boost/boost/1.57.0/boost_1_57_0.tar.bz2?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fboost%2Ffiles%2Fboost%2F1.57.0%2F&ts=1385240128&use_mirror=switch" -O boost-all_1.57.0.orig.tar.bz2
+    tar xjvf boost-all_1.57.0.orig.tar.bz2
 fi
-cd boost_1_55_0
+cd boost_1_57_0
 #Build DEB
 rm -rf debian
 mkdir -p debian
