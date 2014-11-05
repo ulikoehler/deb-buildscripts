@@ -29,7 +29,7 @@ echo "Build-Depends: debhelper (>= 8), libftdi-dev, libusb-1.0-0-dev" >> debian/
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
 echo "Architecture: any" >> debian/control
-echo "Depends: libhidapi-hidraw0, libusb-1.0-0, libudev, libnih-dbus" >> debian/control
+echo "Depends: libhidapi-hidraw0, libusb-1.0-0, libudev1, libnih-dbus1" >> debian/control
 echo "Homepage: http://openocd.sourceforge.net" >> debian/control
 echo "Description: OpenOCD Debugger (vanilla, btronik)" >> debian/control
 #Create rules file
