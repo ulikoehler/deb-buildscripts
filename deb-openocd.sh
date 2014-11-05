@@ -1,8 +1,8 @@
 #!/bin/bash
 export NAME=openocd
-export VERSION=0.7.0
-export DEBVERSION=${VERSION}-4
-export URL="http://downloads.sourceforge.net/project/openocd/openocd/0.7.0/openocd-0.7.0.tar.bz2?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenocd%2Ffiles%2Fopenocd%2F0.7.0%2F&ts=1368821905&use_mirror=switch"
+export VERSION=0.8.0
+export DEBVERSION=${VERSION}-1
+export URL="http://downloads.sourceforge.net/project/openocd/openocd/0.8.0/openocd-0.8.0.tar.bz2?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fopenocd%2Ffiles%2Fopenocd%2F0.8.0%2F&ts=1368821905&use_mirror=switch"
 #Download it
 if [ ! -f "${NAME}_${VERSION}.orig.tar.bz2" ]
 then
@@ -29,7 +29,7 @@ echo "Build-Depends: debhelper (>= 8), libftdi-dev, libusb-1.0-0-dev" >> debian/
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
 echo "Architecture: any" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
+echo "Depends: libhidapi-hidraw0, libusb-1.0-0, libudev, libnih-dbus" >> debian/control
 echo "Homepage: http://openocd.sourceforge.net" >> debian/control
 echo "Description: OpenOCD Debugger (vanilla, btronik)" >> debian/control
 #Create rules file
@@ -37,12 +37,14 @@ echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
-echo -e "\t./configure --prefix=`pwd`/debian/${NAME}/usr --enable-ft2232_libftdi --enable-stlink --enable-jlink --enable-buspirate --enable-usbprog" >> debian/rules
+echo -e "\t./configure --prefix=`pwd`/debian/${NAME}/usr" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake -j8' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e '\tmake install' >> debian/rules
 echo -e "\tmkdir -p debian/$NAME-dev/usr" >> debian/rules
+echo 'override_dh_shlibdeps:' >> debian/rules
+echo -e '\tdh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info' >> debian/rules
 #echo -e "\tmv debian/$NAME/usr/include debian/$NAME-dev/usr/" >> debian/rules
 #Create some misc files
 mkdir -p debian/source
