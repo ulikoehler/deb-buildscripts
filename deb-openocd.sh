@@ -42,10 +42,10 @@ echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake -j8' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e '\tmake install' >> debian/rules
-echo -e "\tmkdir -p debian/$NAME-dev/usr" >> debian/rules
+echo -e "\tmkdir -p debian/$NAME/usr/lib/openocd/scripts" >> debian/rules
+echo -e "\tcp -r tcl/* debian/$NAME/usr/lib/openocd/scripts" >> debian/rules
 echo 'override_dh_shlibdeps:' >> debian/rules
 echo -e '\tdh_shlibdeps --dpkg-shlibdeps-params=--ignore-missing-info' >> debian/rules
-#echo -e "\tmv debian/$NAME/usr/include debian/$NAME-dev/usr/" >> debian/rules
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
