@@ -46,7 +46,7 @@ echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
-echo -e "\tCC=clang CXX=clang++ cmake -G \"Unix Makefiles\" -DLIBCXX_CXX_ABI=libsupc++ cmake -DCMAKE_INSTALL_PREFIX:PATH=`pwd`/debian/${NAME}/usr -DLIBCXX_LIBSUPCXX_INCLUDE_PATHS=\"${SUPCXXINCLUDEPATH}\" -DCMAKE_BUILD_TYPE=Release $NAME" >> debian/rules
+echo -e "\tCC=gcc CXX=g++ cmake -G \"Unix Makefiles\" -DLIBCXX_CXX_ABI=libsupc++ cmake -DCMAKE_INSTALL_PREFIX:PATH=`pwd`/debian/${NAME}/usr -DLIBCXX_LIBSUPCXX_INCLUDE_PATHS=\"${SUPCXXINCLUDEPATH}\" -DCMAKE_BUILD_TYPE=Release $NAME" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules

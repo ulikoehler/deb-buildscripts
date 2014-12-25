@@ -4,7 +4,8 @@
 #Download and extract LevelDB
 git clone git://github.com/facebook/rocksdb.git
 cd rocksdb
-export VERSION=1.0-git$(git rev-list --all | wc -l)
+export VERSION=2.8.fb
+git checkout $VERSION
 export DEBVERSION=${VERSION}-2
 rm -rf debian
 mkdir -p debian
@@ -47,12 +48,13 @@ echo 'override_dh_auto_build:' >> debian/rule
 echo -e '\tCCFLAGS="-march=core2" CXXFLAGS="-march=core2" make all librocksdb.so' >> debian/rules
 echo 'override_dh_auto_test:' >> debian/rules
 echo -e '\t' >> debian/rules
+echo 'override_dh_auto_build:' >> debian/rules
+echo -e '\tmake -j4 shared_lib' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e '\tmkdir -p debian/librocksdb/usr/lib debian/librocksdb/usr/bin debian/librocksdb-dev/usr/include ' >> debian/rules
 echo -e '\tcp -r include/* debian/librocksdb-dev/usr/include ' >> debian/rules
-echo -e '\tcp *.a *.so debian/librocksdb/usr/lib' >> debian/rules
+echo -e '\tcp *.so debian/librocksdb/usr/lib' >> debian/rules
 echo -e '\tcp ldb debian/librocksdb/usr/bin' >> debian/rules
-echo -e '\tcd  debian/librocksdb/usr/lib && ln -sf librocksdb.so.* librocksdb.so' >> debian/rules
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
