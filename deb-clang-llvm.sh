@@ -1,8 +1,8 @@
 #!/bin/bash
 export NAME=clang+llvm
-export VERSION=3.4.2
+export VERSION=3.5.1
 export DEBVERSION=${VERSION}-1
-export DIRNAME=clang+llvm-${VERSION}-x86_64-linux-gnu-ubuntu-14.04
+export DIRNAME=clang+llvm-${VERSION}-x86_64-linux-gnu-ubuntu
 export FILENAME=${DIRNAME}.xz
 wget http://llvm.org/releases/${VERSION}/$FILENAME
 tar xJvf $FILENAME
