@@ -1,14 +1,14 @@
 #!/bin/bash
-export NAME=libnetcdf4
-export VERSION=4.3.3
+export NAME=libnetcdfc++4
+export VERSION=4.2.1
 export DEBVERSION=${VERSION}-1
-export URL=ftp://ftp.unidata.ucar.edu/pub/netcdf/netcdf-${VERSION}.tar.gz
+export URL=https://github.com/Unidata/netcdf-cxx4/archive/v${VERSION}.tar.gz
 #Download it
 if [ ! -f ${NAME}_${VERSION}.orig.tar.gz ] ; then
     wget "$URL" -O ${NAME}_${VERSION}.orig.tar.gz
 fi
 tar xzvf ${NAME}_${VERSION}.orig.tar.gz
-cd netcdf-${VERSION}
+cd netcdf-cxx4-${VERSION}
 rm -rf debian
 mkdir -p debian
 #Use the existing COPYING file
@@ -28,17 +28,18 @@ echo "Build-Depends: debhelper (>= 8)" >> debian/control
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
 echo "Architecture: any" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libnetcdf4" >> debian/control
 echo "Homepage: http://www.unidata.ucar.edu/software/netcdf/" >> debian/control
-echo "Provides: libnetcdfc7, libnetcdff7, netcdf-bin" >> debian/control
-echo "Description: NetCDF API" >> debian/control
+echo "Provides: libnetcdfc++4" >> debian/control
+echo "Description: NetCDF C++ API" >> debian/control
 #-dev package
 echo "" >> debian/control
 echo "Package: $NAME-dev" >> debian/control
 echo "Architecture: all" >> debian/control
+echo "Depends: libnetcdf4-dev" >> debian/control
 echo "Homepage: http://www.unidata.ucar.edu/software/netcdf/" >> debian/control
 echo "Provides: libnetcdf-dev" >> debian/control
-echo "Description: NetCDF API" >> debian/control
+echo "Description: NetCDF C++ API" >> debian/control
 #Create rules file
 echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
