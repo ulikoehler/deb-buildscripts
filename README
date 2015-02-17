@@ -1,0 +1,30 @@
+# Debian package buildscripts
+
+This repository contains a collection of self-contained scripts which can be used to download & build debian packages.
+
+This is most useful when the version in official package repositories is outdated and you just want to build the package without worrying about complex build processes.
+
+The script automatically
+- Download the correct version of the package
+- Unpack it
+- Create the `debian` folder
+- Build the package (including a `-dev` package)
+
+### Installing dependencies
+
+(only partially finished)
+
+```sh
+sudo apt-get install devscripts [...]
+```
+
+### Building a debian buildscript
+
+Simply run the buildscript, e.g.:
+
+```sh
+./deb-jemalloc.sh
+```
+
+If the build succeeds, this will create `.deb` packages. Else, look at the error messages, usually some packages are missing.
+
