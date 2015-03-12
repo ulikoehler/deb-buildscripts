@@ -28,3 +28,10 @@ Simply run the buildscript, e.g.:
 
 If the build succeeds, this will create `.deb` packages. Else, look at the error messages, usually some packages are missing.
 
+### License
+
+`deb-buildscripts` is published in the hope that it will be useful to someone.
+
+The buildscripts (i.e. everything in this repository, but not neccessarily the software you can build using the scripts) are distributed under [CC0 1.0 Universal](https://creativecommons.org/publicdomain/zero/1.0) (public domain).
+
+deb-buildscripts were originally written by [Uli Köhler](http://techoverflow.net). Attribution is highly appreciated but not required in any form.
