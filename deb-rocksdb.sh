@@ -4,8 +4,8 @@
 #Download and extract LevelDB
 git clone git://github.com/facebook/rocksdb.git
 cd rocksdb
-export VERSION=3.9.1
-git checkout rocksdb-$VERSION
+export VERSION=3.10
+git checkout v$VERSION
 export DEBVERSION=${VERSION}-1
 rm -rf debian
 mkdir -p debian
