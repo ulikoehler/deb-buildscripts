@@ -38,7 +38,7 @@ echo -e '\t' >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake -j8' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
-echo -e "\tPREFIX=/usr DESTDIR=`pwd`/debian/$NAME make install" >> debian/rules
+echo -e "\tPREFIX=`pwd`/debian/$NAME/usr make install" >> debian/rules
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
