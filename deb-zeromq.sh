@@ -1,7 +1,7 @@
 #!/bin/bash
 export NAME=libzmq4
 export VERSION=4.1.2
-export DEBVERSION=${VERSION}-2
+export DEBVERSION=${VERSION}-3
 export URL=http://download.zeromq.org/zeromq-${VERSION}.tar.gz
 #Download it
 wget "$URL" -O ${NAME}_${VERSION}.orig.tar.gz
@@ -43,7 +43,7 @@ echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
-echo -e "\tLDFLAGS=-ljemalloc ./configure --prefix=`pwd`/debian/${NAME}/usr" >> debian/rules
+echo -e "\t./configure --prefix=`pwd`/debian/${NAME}/usr" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake -j8' >> debian/rules
 echo 'override_dh_auto_test:' >> debian/rules
