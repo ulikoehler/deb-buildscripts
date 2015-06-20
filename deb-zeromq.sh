@@ -5,9 +5,9 @@ export DEBVERSION=${VERSION}-1
 export URL=http://download.zeromq.org/zeromq-${VERSION}.tar.gz
 #Download it
 wget "$URL" -O ${NAME}_${VERSION}.orig.tar.gz
+rm -rf zeromq-${VERSION}
 tar xzvf ${NAME}_${VERSION}.orig.tar.gz
 cd zeromq-${VERSION}
-rm -rf debian
 mkdir -p debian
 #Use the existing COPYING file
 cp COPYING debian/copyright
@@ -47,6 +47,7 @@ echo -e "\tLDFLAGS=-ljemalloc ./configure --prefix=`pwd`/debian/${NAME}/usr" >> 
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake -j8' >> debian/rules
 echo 'override_dh_auto_test:' >> debian/rules
+echo -e '\ttrue' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e '\tmake install' >> debian/rules
 echo -e "\tmkdir -p debian/$NAME-dev/usr" >> debian/rules
