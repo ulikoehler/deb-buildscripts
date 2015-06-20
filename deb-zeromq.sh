@@ -46,6 +46,7 @@ echo 'override_dh_auto_configure:' >> debian/rules
 echo -e "\tLDFLAGS=-ljemalloc ./configure --prefix=`pwd`/debian/${NAME}/usr" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake -j8' >> debian/rules
+echo 'override_dh_auto_test:' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e '\tmake install' >> debian/rules
 echo -e "\tmkdir -p debian/$NAME-dev/usr" >> debian/rules
