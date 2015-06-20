@@ -8,7 +8,7 @@ export DEBVERSION=${VERSION}-1
 #Download and extract the archive
 if [ ! -f ${NAME}_${VERSION}.orig.tar.gz ]
 then
-    wget "https://download.libsodium.org/libsodium/releases/${NAME}-${VERSION}.tar.gz" -O ${NAME}_${VERSION}.orig.tar.gz
+    wget "https://download.libsodium.org/libsodium/releases/${NAME}-${VERSION}.tar.gz" -O ${NAME}_${VERSION}.orig.tar.gz --no-check-certificate
 fi
 tar xzvf ${NAME}_${VERSION}.orig.tar.gz
 cd ${NAME}-${VERSION}
