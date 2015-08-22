@@ -1,10 +1,10 @@
 #!/bin/bash
-export DEBVERSION=1.57.0-1
-if [ ! -d "boost_1_57_0" ]; then
-    wget "http://downloads.sourceforge.net/project/boost/boost/1.57.0/boost_1_57_0.tar.bz2?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fboost%2Ffiles%2Fboost%2F1.57.0%2F&ts=1385240128&use_mirror=switch" -O boost-all_1.57.0.orig.tar.bz2
-    tar xjvf boost-all_1.57.0.orig.tar.bz2
+export DEBVERSION=1.59.0-1
+if [ ! -d "boost_1_59_0" ]; then
+    wget "http://downloads.sourceforge.net/project/boost/boost/1.59.0/boost_1_59_0.tar.bz2?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fboost%2Ffiles%2Fboost%2F1.59.0%2F&ts=1385240128&use_mirror=switch" -O boost-all_1.59.0.orig.tar.bz2
+    tar xjvf boost-all_1.59.0.orig.tar.bz2
 fi
-cd boost_1_57_0
+cd boost_1_59_0
 #Build DEB
 rm -rf debian
 mkdir -p debian
@@ -53,6 +53,7 @@ override_dh_auto_install:
 	./b2 link=static,shared --prefix=`pwd`/debian/boost-all/usr/ install
 	mv debian/boost-all/usr/include debian/boost-all-dev/usr
 	cp b2 debian/boost-build/usr/bin
+	cd tools/build && ./b2 install --prefix=`pwd`/debian/boost-build/usr/ install
 EOF
 #Create some misc files
 echo "8" > debian/compat
