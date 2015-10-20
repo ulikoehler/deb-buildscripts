@@ -1,1 +1,6 @@
 *~
+*orig.tar.xz
+*.changes
+*.deb
+*.dsc
+*.build
