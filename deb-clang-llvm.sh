@@ -1,9 +1,9 @@
 #!/bin/bash
 export NAME=clang+llvm
-export VERSION=3.5.1
+export VERSION=3.7.0
 export DEBVERSION=${VERSION}-1
-export DIRNAME=clang+llvm-${VERSION}-x86_64-linux-gnu-ubuntu
-export FILENAME=${DIRNAME}.xz
+export DIRNAME=clang+llvm-${VERSION}-x86_64-linux-gnu-ubuntu-14.04
+export FILENAME=${DIRNAME}.tar.xz
 wget http://llvm.org/releases/${VERSION}/$FILENAME
 tar xJvf $FILENAME
 cd $DIRNAME
@@ -24,14 +24,14 @@ echo "" >> debian/control
 #Library package
 echo "Package: $NAME" >> debian/control
 echo "Architecture: amd64" >> debian/control
-echo "Provides: llvm, llvm-3.4, libllvm-3.4, clang, clang-3.4" >> debian/control
+echo "Provides: llvm, llvm-3.7, libllvm-3.7, clang, clang-3.7" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
 echo "Description: Vanilla LLVM + Clang distribution" >> debian/control
 echo "" >> debian/control
 #Dev package
 echo "Package: ${NAME}-dev" >> debian/control
 echo "Architecture: any" >> debian/control
-echo "Provides: llvm-3.4-dev, llvm-dev, libllvm-3.4-dev, libclang-dev, clang-dev, libclang-3.4-dev" >> debian/control
+echo "Provides: llvm-3.7-dev, llvm-dev, libllvm-3.7-dev, libclang-dev, clang-dev, libclang-3.7-dev" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}, $NAME (= $DEBVERSION)" >> debian/control
 echo "Description: Vanilla LLVM + Clang distribution (development files)" >> debian/control
 #Create rules file
