@@ -3,7 +3,7 @@ export NAME=libaquila
 #Download it
 git clone https://github.com/zsiciarz/aquila.git
 export VERSION=3.0.0-git$(cd aquila && git rev-list --all | wc -l)
-export DEBVERSION=${VERSION}-1
+export DEBVERSION=${VERSION}-2
 echo $VERSION
 # Remove git
 (cd aquila && rm -rf .git && cd ..)
@@ -49,7 +49,8 @@ echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake all aquila_test' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e "\tmkdir -p debian/$NAME/usr" >> debian/rules
-echo -e "\tmake install PREFIX=debian/$NAME/usr" >> debian/rules
+echo -e "\tmake install" >> debian/rules
+echo -e "\tcp lib/libOoura_fft.a debian/$NAME/usr/lib" >> debian/rules
 echo -e "\tmkdir -p debian/$NAME-dev/usr/ && mv debian/$NAME/usr/include debian/$NAME-dev/usr/" >> debian/rules
 #Create some misc files
 mkdir -p debian/source
