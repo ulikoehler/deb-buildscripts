@@ -1,9 +1,9 @@
 #!/bin/bash
+git clone https://github.com/bup/bup.git
 export NAME=bup
-export VERSION=0.26-git$(git rev-list --all | wc -l)
+export VERSION=0.26-git$(cd bup && git rev-list --all | wc -l)
 export DEBVERSION=${VERSION}-1
 #Download it
-git clone git://github.com/bup/bup.git
 (cd bup && rm -rf .git && cd ..)
 tar cJvf ${NAME}_${VERSION}.orig.tar.xz bup
 cd bup
