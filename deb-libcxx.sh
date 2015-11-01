@@ -1,5 +1,5 @@
 #!/bin/bash
-export NAME=libc++
+export NAME=libcxx
 export ARCHITECTURE=amd64
 mkdir -p $NAME
 cd $NAME

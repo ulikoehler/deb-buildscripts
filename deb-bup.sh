@@ -1,7 +1,7 @@
 #!/bin/bash
 git clone https://github.com/bup/bup.git
 export NAME=bup
-export VERSION=0.26-git$(cd bup && git rev-list --all | wc -l)
+export VERSION=0.28-git$(cd bup && git rev-list --all | wc -l)
 export DEBVERSION=${VERSION}-1
 #Download it
 (cd bup && rm -rf .git && cd ..)
