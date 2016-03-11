@@ -27,7 +27,7 @@ echo "Maintainer: None <none@example.com>" >> debian/control
 echo "Section: misc" >> debian/control
 echo "Priority: optional" >> debian/control
 echo "Standards-Version: 3.9.2" >> debian/control
-echo "Build-Depends: debhelper (>= 8), libv4l-dev, libavresample-dev" >> debian/control
+echo "Build-Depends: debhelper (>= 8), libv4l-dev, libavresample-dev, python3" >> debian/control
 #Main library package
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
@@ -35,11 +35,18 @@ echo "Architecture: $ARCHITECTURE" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
 echo "Homepage: http://opencv.willowgarage.com/" >> debian/control
 echo "Description: OpenCV" >> debian/control
-#Main library package
+#Dev package
 echo "" >> debian/control
 echo "Package: $NAME-dev" >> debian/control
 echo "Architecture: any" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libopencv3 (= $VERSION)" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libopencv3 (= $DEBVERSION)" >> debian/control
+echo "Homepage: http://opencv.willowgarage.com/" >> debian/control
+echo "Description: OpenCV" >> debian/control
+#Dev package
+echo "" >> debian/control
+echo "Package: $NAME-python3" >> debian/control
+echo "Architecture: any" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libopencv3 (= $DEBVERSION), python3" >> debian/control
 echo "Homepage: http://opencv.willowgarage.com/" >> debian/control
 echo "Description: OpenCV" >> debian/control
 #Create rules file
@@ -52,8 +59,10 @@ echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tcd build && make -j6' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e '\tcd build && make install' >> debian/rules
-echo -e "\tcd build && mkdir -p ../debian/${NAME}-dev/usr" >> debian/rules
+echo -e "\tcd build && mkdir -p ../debian/${NAME}-dev/usr ../debian/${NAME}-python3/usr/lib/" >> debian/rules
 echo -e "\tcd build && mv ../debian/${NAME}/usr/include ../debian/${NAME}-dev/usr" >> debian/rules
+echo -e "\tcd build && rm -rf ../debian/${NAME}/usr/lib/pyshared" >> debian/rules # Remove py2.x stuff
+echo -e "\tcd build && mv ../debian/${NAME}/usr/lib/python3* ../debian/${NAME}-python3/usr/lib/" >> debian/rules
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
