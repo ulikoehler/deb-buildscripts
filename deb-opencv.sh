@@ -27,7 +27,7 @@ echo "Maintainer: None <none@example.com>" >> debian/control
 echo "Section: misc" >> debian/control
 echo "Priority: optional" >> debian/control
 echo "Standards-Version: 3.9.2" >> debian/control
-echo "Build-Depends: debhelper (>= 8), libv4l-dev, libavresample-dev, python3" >> debian/control
+echo "Build-Depends: debhelper (>= 8), libv4l-dev, libavresample-dev, python3, libgtk2.0-dev" >> debian/control
 #Main library package
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
