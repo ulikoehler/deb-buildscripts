@@ -75,7 +75,7 @@ echo "Description: OpenCV" >> debian/control
 echo "" >> debian/control
 echo "Package: $NAME-python2" >> debian/control
 echo "Architecture: $ARCHITECTURE" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}, $NAME (= $DEBVERSION), python" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}, $NAME (= $DEBVERSION), python, python-support (>= 0.90)" >> debian/control
 echo "Homepage: http://opencv.willowgarage.com/" >> debian/control
 echo "Description: OpenCV" >> debian/control
 
@@ -83,7 +83,7 @@ echo "Description: OpenCV" >> debian/control
 echo "" >> debian/control
 echo "Package: $NAME-python3" >> debian/control
 echo "Architecture: $ARCHITECTURE" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}, $NAME (= $DEBVERSION), python3" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}, $NAME (= $DEBVERSION), python3, python-support (>= 0.90)" >> debian/control
 echo "Homepage: http://opencv.willowgarage.com/" >> debian/control
 echo "Description: OpenCV" >> debian/control
 
@@ -100,7 +100,7 @@ echo -e '\tmake install' >> debian/rules
 echo -e "\tmkdir -p debian/${NAME}-dev/usr debian/${NAME}-python3/usr/lib/ debian/${NAME}-python/usr/lib/" >> debian/rules
 echo -e "\tmv debian/${NAME}/usr/include debian/${NAME}-dev/usr" >> debian/rules
 # Python2/3-specific stuff
-echo -e "\tmv debian/${NAME}/usr/lib/pyshared  debian/${NAME}-python3/usr/lib/" >> debian/rules
+echo -e "\tmv debian/${NAME}/usr/lib/python2*  debian/${NAME}-python3/usr/lib/" >> debian/rules
 echo -e "\tmv debian/${NAME}/usr/lib/python3* debian/${NAME}-python3/usr/lib/" >> debian/rules
 #Create some misc files
 mkdir -p debian/source
