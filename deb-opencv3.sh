@@ -1,7 +1,7 @@
 #!/bin/bash
 export NAME=libopencv3
 export VERSION=3.1.0
-export DEBVERSION=${VERSION}-1
+export DEBVERSION=${VERSION}-2
 export ARCHITECTURE=any
 
 # Delete old build directory
@@ -89,21 +89,35 @@ echo "Depends: ${shlibs:Depends}, ${misc:Depends}, $NAME (= $DEBVERSION), python
 echo "Homepage: http://opencv.willowgarage.com/" >> debian/control
 echo "Description: OpenCV" >> debian/control
 
+#Documentation package
+echo "" >> debian/control
+echo "Package: $NAME-doc" >> debian/control
+echo "Architecture: any" >> debian/control
+echo "Homepage: http://opencv.willowgarage.com/" >> debian/control
+echo "Description: OpenCV HTML documentation" >> debian/control
+
 #Create rules file
 echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
-echo -e '\tmake -j8' >> debian/rules
+echo -e '\tmake -j8 && make doxygen' >> debian/rules
 echo 'override_dh_auto_test:' >> debian/rules # Do not run OpenCV tests here because they take super-long.
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e '\tmake install' >> debian/rules
 echo -e "\tmkdir -p debian/${NAME}-dev/usr debian/${NAME}-python3/usr/lib/ debian/${NAME}-python/usr/lib/" >> debian/rules
 echo -e "\tmv debian/${NAME}/usr/include debian/${NAME}-dev/usr" >> debian/rules
+# Move IPP ICV to /usr/lib
+echo -e "\tmv debian/${NAME}/usr/share/OpenCV/3rdparty/lib/libippicv.a debian/${NAME}/usr/lib" >> debian/rules
+echo -e "\trm -rf debian/${NAME}/usr/share/OpenCV/3rdparty" >> debian/rules
 # Python2/3-specific stuff
 echo -e "\tmv debian/${NAME}/usr/lib/python2*  debian/${NAME}-python3/usr/lib/" >> debian/rules
 echo -e "\tmv debian/${NAME}/usr/lib/python3* debian/${NAME}-python3/usr/lib/" >> debian/rules
+# Documentation
+echo -e "\tmkdir -p debian/${NAME}-doc/usr/share/OpenCV" >> debian/rules
+echo -e "\tmv debian/${NAME}/usr/share/OpenCV/doc debian/${NAME}-python3/usr/share/OpenCV" >> debian/rules
+echo -e "\tmv debian/${NAME}/usr/share/OpenCV/samples debian/${NAME}-python3/usr/share/OpenCV" >> debian/rules
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
