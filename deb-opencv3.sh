@@ -54,6 +54,7 @@ echo "Section: misc" >> debian/control
 echo "Priority: optional" >> debian/control
 echo "Standards-Version: 3.9.2" >> debian/control
 echo "Build-Depends: debhelper (>= 8), $ALL_PKGS" >> debian/control
+echo "Conflicts: libopencv-dev, libcv-dev, libopencv-contrib-dev" >> debian/control
 
 #Main library package
 echo "" >> debian/control
@@ -62,6 +63,7 @@ echo "Architecture: $ARCHITECTURE" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
 echo "Homepage: http://opencv.willowgarage.com/" >> debian/control
 echo "Description: OpenCV" >> debian/control
+echo "Conflicts: libopencv-dev, libcv-dev, libopencv-contrib-dev" >> debian/control
 
 #Dev package
 echo "" >> debian/control
