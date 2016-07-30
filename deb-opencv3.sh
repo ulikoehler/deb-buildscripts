@@ -1,7 +1,7 @@
 #!/bin/bash
 export NAME=libopencv3
 export VERSION=3.1.0
-export DEBVERSION=${VERSION}-2
+export DEBVERSION=${VERSION}-3
 export ARCHITECTURE=any
 
 # Delete old build directory
@@ -77,7 +77,7 @@ echo "Description: OpenCV" >> debian/control
 echo "" >> debian/control
 echo "Package: $NAME-python2" >> debian/control
 echo "Architecture: $ARCHITECTURE" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}, $NAME (= $DEBVERSION), python, python-support (>= 0.90)" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}, $NAME (= $DEBVERSION), python" >> debian/control
 echo "Homepage: http://opencv.willowgarage.com/" >> debian/control
 echo "Description: OpenCV" >> debian/control
 
@@ -85,7 +85,7 @@ echo "Description: OpenCV" >> debian/control
 echo "" >> debian/control
 echo "Package: $NAME-python3" >> debian/control
 echo "Architecture: $ARCHITECTURE" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}, $NAME (= $DEBVERSION), python3, python-support (>= 0.90)" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}, $NAME (= $DEBVERSION), python3" >> debian/control
 echo "Homepage: http://opencv.willowgarage.com/" >> debian/control
 echo "Description: OpenCV" >> debian/control
 
@@ -116,8 +116,8 @@ echo -e "\tmv debian/${NAME}/usr/lib/python2*  debian/${NAME}-python3/usr/lib/" 
 echo -e "\tmv debian/${NAME}/usr/lib/python3* debian/${NAME}-python3/usr/lib/" >> debian/rules
 # Documentation
 echo -e "\tmkdir -p debian/${NAME}-doc/usr/share/OpenCV" >> debian/rules
-echo -e "\tmv debian/${NAME}/usr/share/OpenCV/doc debian/${NAME}-python3/usr/share/OpenCV" >> debian/rules
-echo -e "\tmv debian/${NAME}/usr/share/OpenCV/samples debian/${NAME}-python3/usr/share/OpenCV" >> debian/rules
+echo -e "\tmv debian/${NAME}/usr/share/OpenCV/doc debian/${NAME}-doc/usr/share/OpenCV" >> debian/rules
+echo -e "\tmv debian/${NAME}/usr/share/OpenCV/samples debian/${NAME}-doc/usr/share/OpenCV" >> debian/rules
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
