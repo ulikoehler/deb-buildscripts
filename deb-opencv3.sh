@@ -66,7 +66,7 @@ echo "Description: OpenCV" >> debian/control
 #Dev package
 echo "" >> debian/control
 echo "Package: $NAME-dev" >> debian/control
-echo "Architecture: $ARCHITECTURE" >> debian/control
+echo "Architecture: any" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}, $NAME (= $DEBVERSION)" >> debian/control
 echo "Homepage: http://opencv.willowgarage.com/" >> debian/control
 echo "Description: OpenCV" >> debian/control
