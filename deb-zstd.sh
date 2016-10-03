@@ -40,7 +40,7 @@ echo "Description: ZSTD compression (library)" >> debian/control
 echo "" >> debian/control
 echo "Package: lib$NAME-dev" >> debian/control
 echo "Architecture: all" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libzstd (= $VERSION)" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libzstd (= $DEBVERSION)" >> debian/control
 echo "Homepage: https://github.com/facebook/zstd" >> debian/control
 echo "Description: ZSTD compression (development files)" >> debian/control
 #Rules files
