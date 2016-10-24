@@ -19,13 +19,13 @@ echo "Maintainer: None <none@example.com>" >> debian/control
 echo "Section: misc" >> debian/control
 echo "Priority: optional" >> debian/control
 echo "Standards-Version: 3.9.2" >> debian/control
-echo "Build-Depends: debhelper (>= 8), libsnappy-dev (>= 1.0), libgflags-dev, libjemalloc-dev, libbz2-dev, zlib1g-dev" >> debian/control
+echo "Build-Depends: debhelper (>= 8), libsnappy-dev (>= 1.0), libgflags-dev, libbz2-dev, zlib1g-dev" >> debian/control
 #Create the library package
 echo "" >> debian/control
 echo "Package: librocksdb" >> debian/control
 echo "Version: $DEBVERSION" >> debian/control
 echo "Architecture: any" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libsnappy1 (>= 1.0), libjemalloc1, libbz2-1.0, zlib1g" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libsnappy1 (>= 1.0), libbz2-1.0, zlib1g" >> debian/control
 echo "Homepage: http://rocksdb.org/" >> debian/control
 echo "Description: RocksDB Key-Value database" >> debian/control
 #Also create the -dev package
@@ -41,11 +41,8 @@ echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
-echo -e '\tsed -i "s/tcmalloc/jemalloc/g" build_tools/build_detect_platform' >> debian/rules
-#Compatibility for older g++
-echo -e '\tsed -i "s/gnu++11/gnu++0x/g" build_tools/build_detect_platform' >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rule
-echo -e '\tCCFLAGS="-march=core2" CXXFLAGS="-march=core2" make all librocksdb.so' >> debian/rules
+echo -e '\tCCFLAGS="-march=core2" make' >> debian/rules
 echo 'override_dh_auto_test:' >> debian/rules
 echo -e '\t' >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
