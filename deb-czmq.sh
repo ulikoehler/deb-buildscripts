@@ -2,7 +2,7 @@
 export NAME=libczmq
 export VERSION=3.0.2
 export DEBVERSION=${VERSION}-1
-export URL=http://download.zeromq.org/czmq-${VERSION}.tar.gz
+export URL=https://github.com/zeromq/czmq/releases/download/v${VERSION}/czmq-${VERSION}.tar.gz
 #Download it
 wget "$URL" -O ${NAME}_${VERSION}.orig.tar.gz
 tar xzvf ${NAME}_${VERSION}.orig.tar.gz
@@ -55,6 +55,7 @@ echo 'override_dh_auto_install:' >> debian/rules
 echo -e '\tmake install' >> debian/rules
 echo -e "\tmkdir -p debian/$NAME-dev/usr" >> debian/rules
 echo -e "\tmv debian/$NAME/usr/include debian/$NAME-dev/usr/" >> debian/rules
+echo -e "\tcd debian/$NAME/usr/bin/ && mv makecert zmq-makecert" >> debian/rules
 #Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
