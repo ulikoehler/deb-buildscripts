@@ -5,7 +5,7 @@
 git clone git://github.com/facebook/rocksdb.git
 cd rocksdb
 export VERSION=4.11.2
-git checkout $VERSION
+git checkout v$VERSION
 export DEBVERSION=${VERSION}-1
 rm -rf debian
 mkdir -p debian
@@ -41,16 +41,14 @@ echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
-echo 'override_dh_auto_build:' >> debian/rule
-echo -e '\tCCFLAGS="-march=core2" make' >> debian/rules
+echo 'override_dh_auto_build:' >> debian/rules
+echo -e '\tmake -j4 DEBUG_LEVEL=0 shared_lib ldb' >> debian/rules
 echo 'override_dh_auto_test:' >> debian/rules
 echo -e '\t' >> debian/rules
-echo 'override_dh_auto_build:' >> debian/rules
-echo -e '\tmake -j4 shared_lib' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e '\tmkdir -p debian/librocksdb/usr/lib debian/librocksdb/usr/bin debian/librocksdb-dev/usr/include ' >> debian/rules
 echo -e '\tcp -r include/* debian/librocksdb-dev/usr/include ' >> debian/rules
-echo -e '\tcp *.so debian/librocksdb/usr/lib' >> debian/rules
+echo -e '\tcp *.so *.so.* debian/librocksdb/usr/lib' >> debian/rules
 echo -e '\tcp ldb debian/librocksdb/usr/bin' >> debian/rules
 #Create some misc files
 mkdir -p debian/source
