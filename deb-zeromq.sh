@@ -1,8 +1,8 @@
 #!/bin/bash
 export NAME=libzmq4
-export VERSION=4.1.3
+export VERSION=4.1.5
 export DEBVERSION=${VERSION}-1
-export URL=http://download.zeromq.org/zeromq-${VERSION}.tar.gz
+export URL=https://github.com/zeromq/zeromq4-1/releases/download/v${VERSION}/zeromq-${VERSION}.tar.gz
 #Download it
 wget "$URL" -O ${NAME}_${VERSION}.orig.tar.gz
 rm -rf zeromq-${VERSION}
@@ -25,7 +25,7 @@ echo "Build-Depends: debhelper (>= 8)" >> debian/control
 #Main library package
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
-echo "Architecture: all" >> debian/control
+echo "Architecture: any" >> debian/control
 echo "Provides: libzmq1, libzmq3" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libsodium" >> debian/control
 echo "Homepage: http://zeromq.org/" >> debian/control
@@ -33,7 +33,7 @@ echo "Description: ZeroMQ (0MQ) lightweight messaging kernel" >> debian/control
 #-dev package
 echo "" >> debian/control
 echo "Package: $NAME-dev" >> debian/control
-echo "Architecture: any" >> debian/control
+echo "Architecture: all" >> debian/control
 echo "Provides: libzmq-dev, libzmq1-dev, libzmq3-dev" >> debian/control
 echo "Depends: $NAME (= $DEBVERSION)" >> debian/control
 echo "Homepage: http://zeromq.org/" >> debian/control
