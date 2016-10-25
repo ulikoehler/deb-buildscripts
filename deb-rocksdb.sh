@@ -1,19 +1,21 @@
 #!/bin/bash
 #It's not sufficient to only update these variables once a new version has been released!
 
-#Download and extract LevelDB
+# Download and extract LevelDB
 git clone git://github.com/facebook/rocksdb.git
 cd rocksdb
 export VERSION=4.11.2
+export VERSION_MIN=$(echo $VERSION | cut -d. -f1-2)
+export VERSION_MAJ=$(echo $VERSION | cut -d. -f1)
 git checkout v$VERSION
 export DEBVERSION=${VERSION}-1
 rm -rf debian
 mkdir -p debian
-#Use the existing LICENSE file
+# Use the existing LICENSE file
 cp LICENSE debian/copyright
-#Create the changelog (dummy only, doesn't contain real changelog messages)
+# Create the changelog (dummy only, doesn't contain real changelog messages)
 dch --create -v $DEBVERSION --package librocksdb ""
-#Create control file
+# Create control file
 echo "Source: librocksdb" > debian/control
 echo "Maintainer: None <none@example.com>" >> debian/control
 echo "Section: misc" >> debian/control
@@ -25,10 +27,10 @@ echo "" >> debian/control
 echo "Package: librocksdb" >> debian/control
 echo "Version: $DEBVERSION" >> debian/control
 echo "Architecture: any" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libsnappy1 (>= 1.0), libbz2-1.0, zlib1g" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libsnappy1v5 (>= 1.0), libbz2-1.0, zlib1g" >> debian/control
 echo "Homepage: http://rocksdb.org/" >> debian/control
 echo "Description: RocksDB Key-Value database" >> debian/control
-#Also create the -dev package
+# Also create the -dev package
 echo "" >> debian/control
 echo "Package: librocksdb-dev" >> debian/control
 echo "Version: $DEBVERSION" >> debian/control
@@ -36,7 +38,7 @@ echo "Architecture: any" >> debian/control
 echo "Depends: libsnappy-dev (>= 1.0), librocksdb (>= ${VERSION})" >> debian/control
 echo "Homepage: http://rocksdb.org/" >> debian/control
 echo "Description: RocksDB Key-Value database (development files)" >> debian/control
-#Create rules file
+# Create rules file
 echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
@@ -46,11 +48,18 @@ echo -e '\tmake -j4 DEBUG_LEVEL=0 shared_lib ldb' >> debian/rules
 echo 'override_dh_auto_test:' >> debian/rules
 echo -e '\t' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
-echo -e '\tmkdir -p debian/librocksdb/usr/lib debian/librocksdb/usr/bin debian/librocksdb-dev/usr/include ' >> debian/rules
+echo -e '\tmkdir -p debian/librocksdb/usr/lib debian/librocksdb/usr/bin debian/librocksdb-dev/usr/include' >> debian/rules
 echo -e '\tcp -r include/* debian/librocksdb-dev/usr/include ' >> debian/rules
-echo -e '\tcp *.so *.so.* debian/librocksdb/usr/lib' >> debian/rules
+echo -e "\tcp librocksdb.so.$VERSION debian/librocksdb/usr/lib" >> debian/rules
+echo -e "\tcp librocksdb.so.$VERSION librocksdb_debug.so.$VERSION debian/librocksdb/usr/lib" >> debian/rules
+echo -e "\tcd debian/librocksdb/usr/lib && ln -sf librocksdb.so.$VERSION librocksdb.so.$VERSION_MIN" >> debian/rules
+echo -e "\tcd debian/librocksdb/usr/lib && ln -sf librocksdb.so.$VERSION librocksdb.so.$VERSION_MAJ" >> debian/rules
+echo -e "\tcd debian/librocksdb/usr/lib && ln -sf librocksdb.so.$VERSION librocksdb.so" >> debian/rules
+echo -e "\tcd debian/librocksdb/usr/lib && ln -sf librocksdb_debug.so.$VERSION librocksdb_debug.so.$VERSION_MIN" >> debian/rules
+echo -e "\tcd debian/librocksdb/usr/lib && ln -sf librocksdb_debug.so.$VERSION librocksdb_debug.so.$VERSION_MAJ" >> debian/rules
+echo -e "\tcd debian/librocksdb/usr/lib && ln -sf librocksdb_debug.so.$VERSION librocksdb_debug.so" >> debian/rules
 echo -e '\tcp ldb debian/librocksdb/usr/bin' >> debian/rules
-#Create some misc files
+# Create some misc files
 mkdir -p debian/source
 echo "8" > debian/compat
 echo "3.0 (quilt)" > debian/source/format
