@@ -15,8 +15,9 @@ The script automatically
 (only partially finished)
 
 ```sh
-sudo apt-get install devscripts [...]
+sudo apt-get install devscripts debhelper build-essential
 ```
+Depending on the buildscript, you might need to install more packages.
 
 ### Building a debian buildscript
 
