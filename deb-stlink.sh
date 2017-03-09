@@ -1,8 +1,8 @@
 #!/bin/bash
 export NAME=stlink
-git clone git://github.com/texane/stlink.git
-export VERSION=1.0-git$(cd stlink && git rev-list --all | wc -l)
-export DEBVERSION=${VERSION}-2
+git clone git://github.com/texane/stlink.git --depth 1 -b 1.3.1
+export VERSION=1.3.1
+export DEBVERSION=${VERSION}-1
 cd stlink
 git pull
 rm -rf debian
@@ -33,15 +33,15 @@ echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
-echo -e '\t./autogen.sh' >> debian/rules
-echo -e "\t./configure --prefix=`pwd`/debian/$NAME/usr" >> debian/rules
+echo -e "\tcmake -DCMAKE_INSTALL_PREFIX:PATH=`pwd`/debian/$NAME/usr" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e "\tmkdir -p debian/stlink/etc/udev/rules.d" >> debian/rules
-echo -e "\tcp 49-stlinkv1.rules debian/$NAME/etc/udev/rules.d/" >> debian/rules
-echo -e "\tcp 49-stlinkv2.rules debian/$NAME/etc/udev/rules.d/" >> debian/rules
 echo -e '\tmake install' >> debian/rules
+echo -e "\tcp /etc/udev/rules.d/49-stlink* debian/$NAME/etc/udev/rules.d/" >> debian/rules
+echo 'override_dh_auto_test:' >> debian/rules
+echo -e >> debian/rules
 #Create the target dir
 mkdir -p debian/$NAME/usr
 #Create some misc files
