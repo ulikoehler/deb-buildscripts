@@ -3,7 +3,7 @@
 #Libsodium DEB build script. Call without arguments.
 #(c)2013 Uli Koehler. Licensed as CC-By-SA 3.0 DE.
 export NAME=libsodium
-export VERSION=1.0.6
+export VERSION=1.0.11
 export DEBVERSION=${VERSION}-1
 #Download and extract the archive
 if [ ! -f ${NAME}_${VERSION}.orig.tar.gz ]
@@ -31,6 +31,7 @@ echo "Build-Depends: debhelper (>= 8), devscripts, build-essential" >> debian/co
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
 echo "Architecture: any" >> debian/control
+echo "Provides: libsodium18" >> debian/control
 echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
 echo "Homepage: https://libsodium.org" >> debian/control
 echo "Description: libsodium" >> debian/control
@@ -48,7 +49,7 @@ echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
 echo -e "\t./configure --prefix=$(pwd)/debian/$NAME/usr" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
-echo -e '\tmake' >> debian/rules
+echo -e '\tmake -j4' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e "\tmkdir -p debian/$NAME/usr debian/$NAME-dev/usr" >> debian/rules
 echo -e "\tmake install" >> debian/rules
