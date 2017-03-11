@@ -1,6 +1,10 @@
 #!/bin/bash
 export NAME=stlink
+<<<<<<< 2fe7709b8eb0748bc5f6186832ee5ae653f3d6ef
 git clone git://github.com/texane/stlink.git --depth 1 -b 1.3.1
+=======
+git clone git://github.com/texane/stlink.git -b 1.3.1
+>>>>>>> Bump OCD to 0.10.0, stlink kinda works now again
 export VERSION=1.3.1
 export DEBVERSION=${VERSION}-1
 cd stlink
@@ -38,6 +42,7 @@ echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e "\tmkdir -p debian/stlink/etc/udev/rules.d" >> debian/rules
+echo -e "\tcp /etc/udev/rules.d/49-stlink* debian/$NAME/etc/udev/rules.d/" >> debian/rules
 echo -e '\tmake install' >> debian/rules
 echo -e "\tcp /etc/udev/rules.d/49-stlink* debian/$NAME/etc/udev/rules.d/" >> debian/rules
 echo 'override_dh_auto_test:' >> debian/rules
