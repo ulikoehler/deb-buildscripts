@@ -1,6 +1,6 @@
 #!/bin/bash
 export NAME=libopencv3
-export VERSION=3.1.0
+export VERSION=3.2.0
 export DEBVERSION=${VERSION}-3
 export ARCHITECTURE=any
 
