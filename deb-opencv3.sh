@@ -108,8 +108,8 @@ echo 'override_dh_auto_install:' >> debian/rules
 echo -e '\tmake install' >> debian/rules
 echo -e "\tmkdir -p debian/${NAME}-dev/usr debian/${NAME}-python3/usr/lib/ debian/${NAME}-python/usr/lib/" >> debian/rules
 echo -e "\tmv debian/${NAME}/usr/include debian/${NAME}-dev/usr" >> debian/rules
-# Move IPP ICV to /usr/lib
-echo -e "\tmv debian/${NAME}/usr/share/OpenCV/3rdparty/lib/libippicv.a debian/${NAME}/usr/lib" >> debian/rules
+# Move IPP ICV to /usr/lib. Currently hardcoded for x64
+echo -e "\tmv 3rdparty/ippicv/ippicv_lnx/lib/intel64/libippicv.a debian/${NAME}/usr/lib" >> debian/rules
 echo -e "\trm -rf debian/${NAME}/usr/share/OpenCV/3rdparty" >> debian/rules
 # Python2/3-specific stuff
 echo -e "\tmv debian/${NAME}/usr/lib/python2*  debian/${NAME}-python3/usr/lib/" >> debian/rules
