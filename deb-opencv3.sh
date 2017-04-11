@@ -60,7 +60,7 @@ echo "Conflicts: libopencv-dev, libcv-dev, libopencv-contrib-dev" >> debian/cont
 echo "" >> debian/control
 echo "Package: $NAME" >> debian/control
 echo "Architecture: $ARCHITECTURE" >> debian/control
-echo "Depends: ${shlibs:Depends}, ${misc:Depends}" >> debian/control
+echo "Depends: ${shlibs:Depends}, ${misc:Depends}, libgdal1i, libhdf5-10" >> debian/control
 echo "Homepage: http://opencv.willowgarage.com/" >> debian/control
 echo "Description: OpenCV" >> debian/control
 echo "Conflicts: libopencv-dev, libcv-dev, libopencv-contrib-dev" >> debian/control
