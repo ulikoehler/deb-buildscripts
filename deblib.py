@@ -47,12 +47,16 @@ def set_version(arg, gitcount=False):
     global version
     version = arg
     if gitcount:
-        gitrev = cmd_output("git rev-list --all | wc -l".format(get_name()))
+        gitrev = cmd_output("git rev-list --all | wc -l".format(get_name())).decode("utf-8")
         version += "-{}".format(gitrev.strip())
 
 def set_debversion(arg):
     global debversion
     debversion = "{}-{}".format(get_version(), arg)
+
+def set_homepage(arg):
+    global homepage
+    homepage = homepage
 
 def cmd(arg, cwd=True):
     if cwd:
@@ -64,21 +68,30 @@ def cmd_output(arg, cwd=True):
         arg = "cd {} && {}".format(get_name(), arg)
     return subprocess.check_output(arg, shell=True)
 
+def remove_old_buildtree():
+    shutil.rmtree(get_name())
+
 def git_clone(url):
     subprocess.run(["git", "clone", url, get_name()])
 
 def pack_source():
-    # Remove .git
+    # Remove .git & old build directory
     shutil.rmtree(os.path.join(get_name(), ".git"), ignore_errors=True)
     shutil.rmtree(os.path.join(get_name(), "debian"), ignore_errors=True)
     # Pack source archive
-    subprocess.run("tar cJvf {}_{}.orig.tar.xz {}".format(get_name(), get_version(), get_name()))
+    outfilename = "{}_{}.orig.tar.xz".format(get_name(), get_version())
+    # Delete old archive if it exist
+    if os.path.isfile(outfilename):
+        os.remove(outfilename)
+    # Create new archive
+    cmd_output("tar cJvf {} {}".format(
+        outfilename, get_name()), cwd=False)
 
 def debian_dirpath():
     return os.path.join(get_name(), "debian")
 
 def create_debian_dir():
-    os.path.makedirs(debian_dirpath())
+    os.makedirs(debian_dirpath(), exist_ok=True)
 
 def copy_license():
     dst = os.path.join(debian_dirpath(), "copyright")
@@ -93,8 +106,8 @@ def create_debian():
     "Create the debian directory. Call this AFTER setting all config options"
 
 def create_dummy_changelog():
-    arg = "DEBEMAIL=ukoehler@techoverflow.net dch --create -v {} --package {} \"\" && dch -r \"\""
-    cmd(arg.formt(get_debversion(), get_name()))
+    arg = "dch --create -v {} --package {} \"\" && dch -r \"\""
+    cmd(arg.format(get_debversion(), get_name()))
 
 def intitialize_control():
     with open(control_filepath(), "w") as outfile:
@@ -144,9 +157,9 @@ def init_misc_files():
       - debian/source/format
     """
     os.makedirs(os.path.join(debian_dirpath(), "source"))
-    with open(os.path.join(debian_dirpath(), "compat")) as outf:
+    with open(os.path.join(debian_dirpath(), "compat"), "w") as outf:
         outf.write("8")
-    with open(os.path.join(debian_dirpath(), "source", "format")) as outf:
+    with open(os.path.join(debian_dirpath(), "source", "format"), "w") as outf:
         outf.write("3.0 (quilt)")
 
 def parallelism():
@@ -155,7 +168,7 @@ def parallelism():
     except: # <= python 3.4
         return 2
 
-def build_config_cmake(targets=["all"], cmake_opts=[], parallel=os.cp):
+def build_config_cmake(targets=["all"], cmake_opts=[]):
     """
     Configure the build for cmake
     """
@@ -167,7 +180,7 @@ def build_config_cmake(targets=["all"], cmake_opts=[], parallel=os.cp):
         "make {} -j{}".format(
             " ".join(targets), parallelism())]
     build_config["install"] = [
-        "mkdir -p debian/{}/usr".format(get_name())
+        "mkdir -p debian/{}/usr".format(get_name()),
         "make install"
     ]
     build_depends.append("cmake")
@@ -209,7 +222,7 @@ def install_file(src, dst, suffix=None):
     """
     dstproj = get_name() if suffix is None else get_name() + "-" + suffix
     # Dont add mkdir twice
-    mkdir = "mkdir -p debian/{}/{}".format("debian/{}/{}")
+    mkdir = "mkdir -p debian/{}/{}".format(dstproj, dst)
     if mkdir not in build_config["install"]:
         build_config["install"].append(mkdir)
     # Add move command
@@ -221,14 +234,14 @@ def write_rules():
     """
     Call after al
     """
-    with open(os.path.join(debian_dirpath(), "rules")) as outf:
+    with open(os.path.join(debian_dirpath(), "rules"), "w") as outf:
         print('#!/usr/bin/make -f', file=outf)
         print('%:', file=outf)
         print('\tdh $@', file=outf)
         for key, cmds in build_config.items():
             print('override_dh_auto_{}:'.format(key), file=outf)
             for cmd in cmds:
-            print('\t{}'.format(cmd), file=outf)
+                print('\t{}'.format(cmd), file=outf)
 
 def perform_debuild():
-    cmd("debuild -S -uc", cwd=False)
+    cmd("debuild -S -uc")

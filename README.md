@@ -29,6 +29,15 @@ Simply run the buildscript, e.g.:
 
 If the build succeeds, this will create `.deb` packages. Else, look at the error messages, usually some packages are missing.
 
+### Caveats
+
+When building for a PPA, add
+
+```
+export DEBEMAIL=ukoehler@techoverflow.net
+```
+to your `.bashrc` or `.zshrc` and restart your shell.
+
 ### License
 
 `deb-buildscripts` is published in the hope that it will be useful to someone.
