@@ -28,7 +28,7 @@ write_rules()
 #Create control file
 intitialize_control()
 control_add_package(description="Aquila DSP library")
-control_add_package("-dev",
+control_add_package("dev",
     arch_specific=False,
     description="Aquila DSP library (development files)")
 

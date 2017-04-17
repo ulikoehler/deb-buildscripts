@@ -69,7 +69,8 @@ def cmd_output(arg, cwd=True):
     return subprocess.check_output(arg, shell=True)
 
 def remove_old_buildtree():
-    shutil.rmtree(get_name())
+    if os.path.exists(get_name()):
+        shutil.rmtree(get_name())
 
 def git_clone(url):
     subprocess.run(["git", "clone", url, get_name()])
@@ -130,12 +131,14 @@ def get_dpkg_architecture():
 def control_filepath():
     return os.path.join(debian_dirpath(), "control")
 
-def control_add_package(suffix=None, depends=[], arch_specific=True, description=None):
+def control_add_package(suffix=None, depends=[], arch_specific=True, description=None, only_current_arch=False):
     global homepage
     package_name = get_name()
     if suffix:
         package_name += "-" + suffix
-    arch = get_dpkg_architecture() if arch_specific else "all"
+    arch = "any" if arch_specific else "all"
+    if only_current_arch: # Force e.g. amd64 for prebuilt stufff
+        arch = get_dpkg_architecture()
     # Auto-determine some deps for 
     if arch_specific:
         depends += ["${shlibs:Depends}", "${misc:Depends}"]
