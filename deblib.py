@@ -72,8 +72,13 @@ def remove_old_buildtree():
     if os.path.exists(get_name()):
         shutil.rmtree(get_name())
 
-def git_clone(url):
-    subprocess.run(["git", "clone", url, get_name()])
+def git_clone(url, depth=None, branch=None):
+    args = ["git", "clone", url, get_name()]
+    if depth:
+        args += ["--depth", str(depth)]
+    if branch:
+        args += ["--branch", branch]
+    subprocess.run(args)
 
 def pack_source():
     # Remove .git & old build directory
@@ -99,7 +104,7 @@ def copy_license():
     for filename in ["COPYING", "LICENSE"]:
         fn = os.path.join(get_name(), filename)
         if os.path.isfile(fn):
-            shutil.copy(filename, dst)
+            shutil.copy(fn, dst)
             return
     raise PackagingError("Can't find license file!")
 
@@ -117,7 +122,7 @@ def intitialize_control():
         print("Section: misc", file=outfile)
         print("Priority: optional", file=outfile)
         print("Standards-Version: 3.9.2", file=outfile)
-        print("Build-Depends: {}".format(" ,".join(
+        print("Build-Depends: {}".format(", ".join(
             ["debhelper (>= 8)"] + build_depends)), file=outfile)
 
 def get_dpkg_architecture():
@@ -175,6 +180,7 @@ def build_config_cmake(targets=["all"], cmake_opts=[]):
     """
     Configure the build for cmake
     """
+    global build_depends
     build_config["configure"] = [
         "cmake . -DCMAKE_INSTALL_PREFIX=debian/{}/usr {}".format(
             get_name(), " ".join(cmake_opts))
@@ -187,6 +193,25 @@ def build_config_cmake(targets=["all"], cmake_opts=[]):
         "make install"
     ]
     build_depends.append("cmake")
+
+
+def build_config_autotools(targets=["all"]):
+    """
+    Configure the build for cmake
+    """
+    global build_depends
+    build_config["configure"] = [
+        "./autogen.sh",
+        "./configure --prefix=`pwd`/debian/{}/usr".format(get_name())
+    ]
+    build_config["build"] = [
+        "make {} -j{}".format(
+            " ".join(targets), parallelism())]
+    build_config["install"] = [
+        "mkdir -p debian/{}/usr".format(get_name()),
+        "make install"
+    ]
+    build_depends += ["autoconf", "automake"]
 
 def test_config(arg):
     """Configure a command to run for testing"""
@@ -205,12 +230,12 @@ def install_usr_dir_to_package(src, suffix):
     moves the /usr/include folder to <name>-dev/usr/
     """
     # Dont add mkdir twice
-    mkdir = "mkdir -p debian/{}-dev/usr/".format(suffix)
+    mkdir = "mkdir -p debian/{}-{}/usr/".format(get_name(), suffix)
     if mkdir not in build_config["install"]:
         build_config["install"].append(mkdir)
     # Add move command
     build_config["install"].append(
-        "mv debian/{}/{} debian/{}-dev/usr/".format(
+        "mv debian/{}/{} debian/{}-{}/usr/".format(
             get_name(), src, get_name(), suffix)
     )
 
@@ -247,4 +272,4 @@ def write_rules():
                 print('\t{}'.format(cmd), file=outf)
 
 def perform_debuild():
-    cmd("debuild -S -uc")
+    cmd("debuild -us -uc")
