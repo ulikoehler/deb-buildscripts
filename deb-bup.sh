@@ -1,10 +1,11 @@
 #!/bin/bash
 git clone https://github.com/bup/bup.git
 export NAME=bup
-export VERSION=0.28-git$(cd bup && git rev-list --all | wc -l)
+#export VERSION=0.30-git$(cd bup && git rev-list --all | wc -l)
+export VERSION=0.29.1
 export DEBVERSION=${VERSION}-1
 #Download it
-(cd bup && rm -rf .git && cd ..)
+(cd bup && git co $VERSION && rm -rf .git && cd ..)
 tar cJvf ${NAME}_${VERSION}.orig.tar.xz bup
 cd bup
 rm -rf debian
@@ -45,4 +46,4 @@ mkdir -p debian/source
 echo "8" > debian/compat
 echo "3.0 (quilt)" > debian/source/format
 #Build it
-debuild -us -uc
+dpkg-buildpackage -b

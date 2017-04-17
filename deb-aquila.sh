@@ -8,14 +8,16 @@ echo $VERSION
 # Remove git
 (cd aquila && rm -rf .git && cd ..)
 # Pack
-tar cJvf ${NAME}_${VERSION}.orig.tar.xz aquila
+#tar cJvf ${NAME}_${VERSION}.orig.tar.xz aquila
 cd aquila
 rm -rf debian
 mkdir -p debian
 #Use the existing COPYING file
 cp COPYING debian/copyright
 #Create the changelog (no messages - dummy)
+export DEBEMAIL=ukoehler@techoverflow.net
 dch --create -v $DEBVERSION --package ${NAME} ""
+dch -r ""
 #Create copyright file
 cp COPYING debian/copyright
 #Create control file
@@ -57,4 +59,4 @@ mkdir -p debian/source
 echo "8" > debian/compat
 echo "3.0 (quilt)" > debian/source/format
 #Build it
-debuild -us -uc
+debuild -S -uc
