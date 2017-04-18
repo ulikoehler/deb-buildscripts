@@ -5,7 +5,7 @@ set_name("libzmq4")
 set_homepage("http://zeromq.org")
 #Download it
 pkgversion = "4.2.1"
-set_version(pkgversion + "-deb1")
+set_version(pkgversion + "-deb5")
 wget_download("https://github.com/zeromq/libzmq/releases/download/v{}/zeromq-{}.tar.gz".format(pkgversion, pkgversion))
 set_debversion(1)
 # Remove git
@@ -21,17 +21,16 @@ create_dummy_changelog()
 # Create rules file
 build_config_autotools(targets=["all", "dist"])
 install_usr_dir_to_package("usr/include", "dev")
-build_config["install"].append(
-    "wget -P debian/{}-dev/usr/include https://raw.githubusercontent.com/zeromq/cppzmq/v4.2.1/zmq.hpp".format(get_name())
-)
 install_usr_dir_to_package("usr/share", "doc")
 write_rules()
+
+build_depends += ["libunwind8", "libunwind-dev", "zip"]
 
 #Create control file
 intitialize_control()
 control_add_package(
     provides=["libzmq1", "libzmq3"],
-    depends=["libsodium"],
+    depends=["libsodium", "libunwind8"],
     description="ZeroMQ (0MQ) lightweight messaging kernel")
 control_add_package("dev",
     provides=["libzmq-dev", "libzmq1-dev", "libzmq3-dev"],
