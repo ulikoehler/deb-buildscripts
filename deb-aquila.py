@@ -32,7 +32,5 @@ control_add_package("dev",
     arch_specific=False,
     description="Aquila DSP library (development files)")
 
-#Create some misc files
-init_misc_files()
 #Build it
-perform_debuild()
+commandline_interface()

@@ -271,5 +271,19 @@ def write_rules():
             for cmd in cmds:
                 print('\t{}'.format(cmd), file=outf)
 
-def perform_debuild():
-    cmd("debuild -us -uc")
+def perform_debuild(only_source=False):
+    # Create misc files
+    init_misc_files()
+    cmd("debuild -S -uc" if only_source else "debuild -us -uc")
+
+def commandline_interface():
+    """
+    Provides a CLI interface and runs perform_debuild with option
+    """
+    import argparse
+    parser = argparse.ArgumentParser()
+    parser.add_argument("-s", "--only-source", action="store_true",
+        help="Dont build packages, only source (for PPA)")
+    args = parser.parse_args()
+
+    perform_debuild(only_source=args.only_source)

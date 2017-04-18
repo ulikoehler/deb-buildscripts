@@ -5,8 +5,9 @@ set_name("libjemalloc")
 remove_old_buildtree()
 set_homepage("https://github.com/jemalloc/jemalloc")
 #Download it
-set_version("4.5.0")
-git_clone("https://github.com/jemalloc/jemalloc.git", branch=get_version())
+pkgversion = "4.5.0"
+set_version("4.5.0-deb1")
+git_clone("https://github.com/jemalloc/jemalloc.git", branch=pkgversion)
 set_debversion(2)
 # Remove git
 pack_source()
@@ -36,7 +37,5 @@ control_add_package("doc",
     arch_specific=False,
     description="JeMalloc memory allocator (documentation)")
 
-#Create some misc files
-init_misc_files()
 #Build it
-perform_debuild()
+commandline_interface()
