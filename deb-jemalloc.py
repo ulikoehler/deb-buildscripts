@@ -6,7 +6,7 @@ remove_old_buildtree()
 set_homepage("https://github.com/jemalloc/jemalloc")
 #Download it
 pkgversion = "4.5.0"
-set_version("4.5.0-deb1")
+set_version("4.5.0-deb2")
 git_clone("https://github.com/jemalloc/jemalloc.git", branch=pkgversion)
 set_debversion(2)
 # Remove git
@@ -25,7 +25,7 @@ install_usr_dir_to_package("usr/include", "dev")
 install_usr_dir_to_package("usr/share", "doc")
 write_rules()
 
-build_depends += ["xsltproc"]
+build_depends += ["xsltproc", "docbook-xsl"]
 
 #Create control file
 intitialize_control()
