@@ -200,15 +200,17 @@ def build_config_autotools(targets=["all"]):
     Configure the build for cmake
     """
     global build_depends
-    build_config["configure"] = [
-        "./autogen.sh",
-        "./configure --prefix=`pwd`/debian/{}/usr".format(get_name())
+    # Auto-regenerate ./configure
+    if os.path.isfile(os.path.join(debian_dirpath(), "autogen.sh")):
+        build_config["configure"].append("./autogen.sh")
+    build_config["configure"] += [
+        "mkdir -p debian/{}/usr".format(get_name()),
+        "./configure --prefix=$(pwd)/debian/{}/usr".format(get_name())
     ]
     build_config["build"] = [
         "make {} -j{}".format(
             " ".join(targets), parallelism())]
     build_config["install"] = [
-        "mkdir -p debian/{}/usr".format(get_name()),
         "make install"
     ]
     build_depends += ["autoconf", "automake"]

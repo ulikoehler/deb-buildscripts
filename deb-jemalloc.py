@@ -6,7 +6,7 @@ remove_old_buildtree()
 set_homepage("https://github.com/jemalloc/jemalloc")
 #Download it
 pkgversion = "4.5.0"
-set_version("4.5.0-deb2")
+set_version(pkgversion + "-deb2")
 git_clone("https://github.com/jemalloc/jemalloc.git", branch=pkgversion)
 set_debversion(2)
 # Remove git
