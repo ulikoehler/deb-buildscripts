@@ -6,7 +6,7 @@ remove_old_buildtree()
 set_homepage("https://github.com/bup/bup")
 #Download it
 pkgversion = "0.29.1"
-set_version(pkgversion + "-deb1")
+set_version(pkgversion + "-deb3")
 git_clone("https://github.com/bup/bup.git", branch=pkgversion)
 set_debversion(1)
 # Remove git
@@ -26,6 +26,8 @@ build_config["configure"] = ["./configure"]
 build_config["install"] = ["make install PREFIX=debian/{}/usr".format(get_name())]
 build_config["clean"] = []
 write_rules()
+
+build_depends += ["python2.7", "git"]
 
 #Create control file
 intitialize_control()
