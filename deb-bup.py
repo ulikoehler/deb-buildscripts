@@ -2,7 +2,6 @@
 from deblib import *
 # General config
 set_name("bup")
-remove_old_buildtree()
 set_homepage("https://github.com/bup/bup")
 #Download it
 pkgversion = "0.29.1"

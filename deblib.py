@@ -7,7 +7,7 @@ Contains basic functionality to build deb packages from scratch
 import subprocess
 import shutil
 import os
-from collections import defaultdict
+from collections import defaultdict, Counter
 
 class PackagingError(Exception):
     pass
@@ -73,12 +73,44 @@ def remove_old_buildtree():
         shutil.rmtree(get_name())
 
 def git_clone(url, depth=None, branch=None):
+    remove_old_buildtree()
     args = ["git", "clone", url, get_name()]
     if depth:
         args += ["--depth", str(depth)]
     if branch:
         args += ["--branch", branch]
     subprocess.run(args)
+
+def wget_download(url):
+    """
+    Download a package from a wget-compatible URL
+    """
+    remove_old_buildtree()
+    # Extract filename
+    filename = url.rpartition("/")[2].partition("?")[0]
+    # Download
+    if not os.path.isfile(filename):
+        args = ["wget", url]
+        subprocess.run(args)
+    else:
+        print("Skipping download - file {} already exists".format(filename))
+    # Extract
+    if filename.endswith(".tar.gz"):
+        out = subprocess.check_output(["tar", "xzvf", filename])
+    elif filename.endswith(".tar.bz2"):
+        out = subprocess.check_output(["tar", "xjvf", filename])
+    elif filename.endswith(".tar.xz"):
+        out = subprocess.check_output(["tar", "xJvf", filename])
+    else:
+        raise PackagingError("Cant extract archive: " + filename)
+    # Find the most common output prefix of the tar output = the directory name
+    outlines = [line.strip() for line in out.decode("utf-8").split("\n")]
+    ctr = Counter()
+    for line in outlines:
+        ctr[line.partition("/")[0]] += 1
+    prefix = ctr.most_common()[0][0]
+    # Rename to the directory name the rest of the code expects
+    os.rename(prefix, get_name())
 
 def pack_source():
     # Remove .git & old build directory
@@ -136,7 +168,7 @@ def get_dpkg_architecture():
 def control_filepath():
     return os.path.join(debian_dirpath(), "control")
 
-def control_add_package(suffix=None, depends=[], arch_specific=True, description=None, only_current_arch=False):
+def control_add_package(suffix=None, depends=[], provides=[], arch_specific=True, description=None, only_current_arch=False):
     global homepage
     package_name = get_name()
     if suffix:
@@ -152,7 +184,10 @@ def control_add_package(suffix=None, depends=[], arch_specific=True, description
         print("", file=outfile)
         print("Package: " + package_name, file=outfile)
         print("Architecture: " + arch, file=outfile)
-        print("Depends: " + ", ".join(depends), file=outfile)
+        if depends:
+            print("Depends: " + ", ".join(depends), file=outfile)
+        if provides:
+            print("Provides: " + ", ".join(provides), file=outfile)
         if homepage:
             print("Homepage: " + homepage, file=outfile)
         if description:
@@ -195,7 +230,7 @@ def build_config_cmake(targets=["all"], cmake_opts=[]):
     build_depends.append("cmake")
 
 
-def build_config_autotools(targets=["all"]):
+def build_config_autotools(targets=["all"], cfg_flags=[]):
     """
     Configure the build for cmake
     """
@@ -205,7 +240,7 @@ def build_config_autotools(targets=["all"]):
         build_config["configure"].append("./autogen.sh")
     build_config["configure"] += [
         "mkdir -p debian/{}/usr".format(get_name()),
-        "./configure --prefix=$(pwd)/debian/{}/usr".format(get_name())
+        "./configure --prefix=`pwd`/debian/{}/usr {}".format(get_name(), "".join(cfg_flags))
     ]
     build_config["build"] = [
         "make {} -j{}".format(

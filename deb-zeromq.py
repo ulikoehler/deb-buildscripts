@@ -1,0 +1,47 @@
+#!/usr/bin/env python3
+from deblib import *
+# General config
+set_name("libzmq4")
+set_homepage("http://zeromq.org")
+#Download it
+pkgversion = "4.2.1"
+set_version(pkgversion + "-deb1")
+wget_download("https://github.com/zeromq/libzmq/releases/download/v{}/zeromq-{}.tar.gz".format(pkgversion, pkgversion))
+set_debversion(1)
+# Remove git
+pack_source()
+create_debian_dir()
+
+#Use the existing COPYING file
+copy_license()
+
+#Create the changelog (no messages - dummy)
+create_dummy_changelog()
+
+# Create rules file
+build_config_autotools(targets=["all", "dist"])
+install_usr_dir_to_package("usr/include", "dev")
+build_config["install"].append(
+    "wget -P debian/{}-dev/usr/include https://raw.githubusercontent.com/zeromq/cppzmq/v4.2.1/zmq.hpp".format(get_name())
+)
+install_usr_dir_to_package("usr/share", "doc")
+write_rules()
+
+#Create control file
+intitialize_control()
+control_add_package(
+    provides=["libzmq1", "libzmq3"],
+    depends=["libsodium"],
+    description="ZeroMQ (0MQ) lightweight messaging kernel")
+control_add_package("dev",
+    provides=["libzmq-dev", "libzmq1-dev", "libzmq3-dev"],
+    depends=["{} (= {})".format(get_name(), get_debversion())],
+    arch_specific=False,
+    description="ZeroMQ (0MQ) lightweight messaging kernel (development files)")
+control_add_package("doc",
+    provides=["libzmq-doc", "libzmq1-doc", "libzmq3-doc"],
+    arch_specific=False,
+    description="ZeroMQ (0MQ) lightweight messaging kernel (documentation)")
+
+#Build it
+commandline_interface()

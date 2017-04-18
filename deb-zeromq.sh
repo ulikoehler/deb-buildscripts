@@ -1,6 +1,6 @@
 #!/bin/bash
 export NAME=libzmq4
-export VERSION=4.1.5
+export VERSION=4.2.1
 export DEBVERSION=${VERSION}-1
 export URL=https://github.com/zeromq/zeromq4-1/releases/download/v${VERSION}/zeromq-${VERSION}.tar.gz
 #Download it

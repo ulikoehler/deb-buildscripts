@@ -2,7 +2,6 @@
 from deblib import *
 # General config
 set_name("libaquila")
-remove_old_buildtree()
 set_homepage("https://github.com/zsiciarz/aquila")
 #Download it
 git_clone("https://github.com/zsiciarz/aquila.git")
