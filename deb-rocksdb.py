@@ -5,11 +5,7 @@ set_name("librocksdb")
 set_homepage("http://rocksdb.org/")
 #Download it
 pkgversion = "5.2.1"
-<<<<<<< 0ed6e534a57d347c4106e479bd875eda35ebe477
-set_version(pkgversion + "-deb5")
-=======
-set_version(pkgversion + "-deb4")
->>>>>>> More rocksdb fixes
+set_version(pkgversion + "-deb6")
 git_clone("https://github.com/facebook/rocksdb.git", branch="v" + pkgversion, depth=1)
 set_debversion(1)
 # Remove git
