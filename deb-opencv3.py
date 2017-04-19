@@ -12,6 +12,17 @@ contrib_dirname = get_name() + "_git/opencv_contrib"
 git_clone_to("https://github.com/opencv/opencv_contrib.git", contrib_dirname, branch=pkgversion, depth=1)
 remove_metadata_directories(contrib_dirname)
 
+# Download intel ICV
+icv_commit = "81a676001ca8075ada498583e4166079e5744668"
+icv_hash = "04e81ce5d0e329c3fbc606ae32cad44d"
+icv_filename = "ippicv_linux_20151201.tgz"
+icv_url = "https://raw.githubusercontent.com/opencv/opencv_3rdparty/{}/ippicv/{}".format(icv_commit, icv_filename)
+icv_path  = "3rdparty/ippicv/downloads/linux-{}/{}".format(icv_hash, icv_filename)
+if not os.path.isfile(icv_path):
+    print("Downloading Intel ICV")
+    subprocess.call(["wget", "-O", icv_path, icv_url])
+    print("Downloading Intel ICV finished")
+
 set_debversion(1)
 # Remove git
 pack_source()
