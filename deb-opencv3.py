@@ -5,7 +5,7 @@ set_name("libopencv3")
 set_homepage("http://opencv.willowgarage.com/")
 #Download it
 pkgversion = "3.2.0"
-set_version(pkgversion + "-deb3")
+set_version(pkgversion + "-deb7")
 git_clone("https://github.com/Itseez/opencv.git", branch=pkgversion, depth=1)
 # Clone opencv_contrib to main source directory
 contrib_dirname = get_name() + "_git/opencv_contrib"
@@ -14,15 +14,19 @@ remove_metadata_directories(contrib_dirname)
 
 # Download intel ICV
 icv_commit = "81a676001ca8075ada498583e4166079e5744668"
-icv_hash = "04e81ce5d0e329c3fbc606ae32cad44d"
+icv_hash = "808b791a6eac9ed78d32a7666804320e"
 icv_filename = "ippicv_linux_20151201.tgz"
 icv_url = "https://raw.githubusercontent.com/opencv/opencv_3rdparty/{}/ippicv/{}".format(icv_commit, icv_filename)
-icv_path  = "3rdparty/ippicv/downloads/linux-{}/{}".format(icv_hash, icv_filename)
-if not os.path.isfile(icv_path):
-    print("Downloading Intel ICV")
-    os.makedirs(os.path.dirname(icv_path), exist_ok=True)
-    subprocess.call(["wget", "-O", icv_path, icv_url])
-    print("Downloading Intel ICV finished")
+icv_path  = "{}/3rdparty/ippicv/downloads/linux-{}/{}".format(get_name(), icv_hash, icv_filename)
+icv_dst = "{}/3rdparty/ippicv/".format(get_name())
+print("Downloading Intel ICV")
+os.makedirs(os.path.dirname(icv_path), exist_ok=True)
+subprocess.call(["wget", "-O", icv_path, icv_url])
+subprocess.call(["tar", "xzvf", icv_path])
+subprocess.call("mv ippicv_lnx/* " + icv_dst, shell=True)
+# Remove download tree & local ippicv directory
+shutil.rmtree(icv_dst + "downloads")
+shutil.rmtree("ippicv_lnx")
 
 set_debversion(1)
 # Remove git
@@ -37,7 +41,17 @@ create_dummy_changelog()
 
 instcmd = "INSTALL_PATH=debian/{}/usr make install-shared".format(get_name())
 # Create rules file
-build_config_cmake(targets=["all", "doxygen"], cmake_opts=[], install_cmd=instcmd)
+build_config_cmake(targets=["all", "doxygen"], cmake_opts=[
+    "-DOPENCV_IPP_PATH=3rdparty/ippicv",
+    "-DCMAKE_BUILD_TYPE=RELEASE",
+    "-DENABLE_PRECOMPILED_HEADERS=OFF",
+    "-DWITH_CUDA=OFF",
+    "-DWITH_OPENGL=ON",
+    "-DWITH_TBB=ON",
+    "-DWITH_GDAL=ON",
+    "-DBUILD_EXAMPLES=OFF",
+    "-DOPENCV_EXTRA_MODULES_PATH=opencv_contrib/modules"
+], install_cmd=instcmd)
 
 # Move dirs to the correct packages
 install_move("usr/include", "usr/share/OpenCV", "dev")
