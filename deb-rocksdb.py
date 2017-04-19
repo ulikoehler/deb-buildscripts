@@ -18,11 +18,10 @@ copy_license()
 #Create the changelog (no messages - dummy)
 create_dummy_changelog()
 
-instcmd = "INSTALL_PATH=debian/{}/usr make install".format(get_name())
+instcmd = "INSTALL_PATH=debian/{}/usr make install-shared".format(get_name())
 # Create rules file
 build_config_autotools(targets=["shared_lib"], install_cmd=instcmd)
 install_usr_dir_to_package("usr/include", "dev")
-install_usr_dir_to_package("usr/share", "doc")
 build_config["test"] = []
 build_config["clean"] = []
 build_config["configure"] = []
@@ -40,10 +39,6 @@ control_add_package("dev",
     depends=["{} (= {})".format(get_name(), get_debversion())],
     arch_specific=False,
     description="RocksDB Key-Value database (development files)")
-
-control_add_package("doc",
-    arch_specific=False,
-    description="RocksDB Key-Value database (documentation)")
 
 #Build it
 commandline_interface()
