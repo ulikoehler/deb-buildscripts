@@ -72,16 +72,20 @@ def remove_old_buildtree():
     if os.path.exists(get_name()):
         shutil.rmtree(get_name())
 
-def git_clone(url, depth=None, branch=None):
-    # Clone to _git directory to avoid multiple cloning
-    remove_old_buildtree()
-    if not os.path.exists(get_name() + "_git"):
-        args = ["git", "clone", url, get_name() + "_git"]
+def git_clone_to(url, directory, depth=None, branch=None):
+    if not os.path.exists(directory):
+        args = ["git", "clone", url, directory]
         if depth:
             args += ["--depth", str(depth)]
         if branch:
             args += ["--branch", branch]
         subprocess.run(args)
+
+
+def git_clone(url, depth=None, branch=None):
+    # Clone to _git directory to avoid multiple cloning
+    remove_old_buildtree()
+    git_clone_to(url, get_name() + "_git", depth=depth, branch=branch)
     # Copy _git tree to build dir
     shutil.copytree(get_name() + "_git", get_name())
 
@@ -116,10 +120,16 @@ def wget_download(url):
     # Rename to the directory name the rest of the code expects
     os.rename(prefix, get_name())
 
-def pack_source():
+def remove_metadata_directories(directory):
+    """
+    Remove subdirectories of directory like .git or debian
+    """
     # Remove .git & old build directory
-    shutil.rmtree(os.path.join(get_name(), ".git"), ignore_errors=True)
-    shutil.rmtree(os.path.join(get_name(), "debian"), ignore_errors=True)
+    shutil.rmtree(os.path.join(directory, ".git"), ignore_errors=True)
+    shutil.rmtree(os.path.join(directory, "debian"), ignore_errors=True)
+
+def pack_source():
+    remove_metadata_directories(get_name())
     # Pack source archive
     outfilename = "{}_{}.orig.tar.xz".format(get_name(), get_version())
     # Delete old archive if it exist
@@ -172,7 +182,7 @@ def get_dpkg_architecture():
 def control_filepath():
     return os.path.join(debian_dirpath(), "control")
 
-def control_add_package(suffix=None, depends=[], provides=[], arch_specific=True, description=None, only_current_arch=False):
+def control_add_package(suffix=None, depends=[], provides=[], conflicts=[], arch_specific=True, description=None, only_current_arch=False):
     global homepage
     package_name = get_name()
     if suffix:
@@ -192,6 +202,8 @@ def control_add_package(suffix=None, depends=[], provides=[], arch_specific=True
             print("Depends: " + ", ".join(depends), file=outfile)
         if provides:
             print("Provides: " + ", ".join(provides), file=outfile)
+        if conflicts:
+            print("Conflicts: " + ", ".join(provides), file=outfile)
         if homepage:
             print("Homepage: " + homepage, file=outfile)
         if description:
@@ -280,9 +292,30 @@ def install_usr_dir_to_package(src, suffix):
             get_name(), src, get_name(), suffix)
     )
 
+def install_move(src, dst, suffix):
+    """
+    A more flexible version of install_usr_dir_to_package().
+    Allows arbitrary destination paths
+
+    move_usr_dir_to_package("usr/lib/foobar.d", "usr/lib/foobar", "dev")
+    moves the /usr/lib/foobar.d folder to <name>-dev/usr/lib/foobar/
+
+    Note that you can move files, but you must not specify the filename as dst but the target
+    directory!
+    """
+    # Dont add mkdir twice
+    mkdir = "mkdir -p debian/{}-{}/{}".format(get_name(), suffix, dst)
+    if mkdir not in build_config["install"]:
+        build_config["install"].append(mkdir)
+    # Add move command
+    build_config["install"].append(
+        "mv debian/{}/{} debian/{}-{}/{}".format(
+            get_name(), src, get_name(), suffix, dst)
+    )
+
 def install_file(src, dst, suffix=None):
     """
-    Copy arbitrary files from the project directory
+    Copy arbitrary files from the project directory.
 
     Call after build_config_...()
 
