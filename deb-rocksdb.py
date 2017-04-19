@@ -5,7 +5,7 @@ set_name("librocksdb")
 set_homepage("http://rocksdb.org/")
 #Download it
 pkgversion = "5.2.1"
-set_version(pkgversion + "-deb1")
+set_version(pkgversion + "-deb5")
 git_clone("https://github.com/facebook/rocksdb.git", branch="v" + pkgversion, depth=1)
 set_debversion(1)
 # Remove git

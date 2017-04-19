@@ -315,7 +315,7 @@ def write_rules():
 def perform_debuild(only_source=False):
     # Create misc files
     init_misc_files()
-    cmd("debuild -S -uc" if only_source else "debuild -us -uc")
+    cmd("debuild -S -uc" if only_source else "debuild -us -uc -b")
 
 def commandline_interface():
     """
