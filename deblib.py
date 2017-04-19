@@ -73,13 +73,17 @@ def remove_old_buildtree():
         shutil.rmtree(get_name())
 
 def git_clone(url, depth=None, branch=None):
+    # Clone to _git directory to avoid multiple cloning
     remove_old_buildtree()
-    args = ["git", "clone", url, get_name()]
-    if depth:
-        args += ["--depth", str(depth)]
-    if branch:
-        args += ["--branch", branch]
-    subprocess.run(args)
+    if not os.path.exists(get_name() + "_git"):
+        args = ["git", "clone", url, get_name() + "_git"]
+        if depth:
+            args += ["--depth", str(depth)]
+        if branch:
+            args += ["--branch", branch]
+        subprocess.run(args)
+    # Copy _git tree to build dir
+    shutil.copytree(get_name() + "_git", get_name())
 
 def wget_download(url):
     """
@@ -211,7 +215,7 @@ def parallelism():
     except: # <= python 3.4
         return 2
 
-def build_config_cmake(targets=["all"], cmake_opts=[]):
+def build_config_cmake(targets=["all"], cmake_opts=[], install_cmd="make install"):
     """
     Configure the build for cmake
     """
@@ -225,12 +229,12 @@ def build_config_cmake(targets=["all"], cmake_opts=[]):
             " ".join(targets), parallelism())]
     build_config["install"] = [
         "mkdir -p debian/{}/usr".format(get_name()),
-        "make install"
+        install_cmd
     ]
     build_depends.append("cmake")
 
 
-def build_config_autotools(targets=["all"], cfg_flags=[]):
+def build_config_autotools(targets=["all"], cfg_flags=[], install_cmd="make install"):
     """
     Configure the build for cmake
     """
@@ -246,7 +250,7 @@ def build_config_autotools(targets=["all"], cfg_flags=[]):
         "make {} -j{}".format(
             " ".join(targets), parallelism())]
     build_config["install"] = [
-        "make install"
+        install_cmd
     ]
     build_depends += ["autoconf", "automake"]
 
