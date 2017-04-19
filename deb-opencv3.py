@@ -5,7 +5,7 @@ set_name("libopencv3")
 set_homepage("http://opencv.willowgarage.com/")
 #Download it
 pkgversion = "3.2.0"
-set_version(pkgversion + "-deb1")
+set_version(pkgversion + "-deb3")
 git_clone("https://github.com/Itseez/opencv.git", branch=pkgversion, depth=1)
 # Clone opencv_contrib to main source directory
 contrib_dirname = get_name() + "_git/opencv_contrib"
@@ -20,6 +20,7 @@ icv_url = "https://raw.githubusercontent.com/opencv/opencv_3rdparty/{}/ippicv/{}
 icv_path  = "3rdparty/ippicv/downloads/linux-{}/{}".format(icv_hash, icv_filename)
 if not os.path.isfile(icv_path):
     print("Downloading Intel ICV")
+    os.makedirs(os.path.dirname(icv_path), exist_ok=True)
     subprocess.call(["wget", "-O", icv_path, icv_url])
     print("Downloading Intel ICV finished")
 
