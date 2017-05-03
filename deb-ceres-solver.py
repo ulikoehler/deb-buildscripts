@@ -6,7 +6,7 @@ set_homepage("http://ceres-solver.org/")
 #Download it
 pkgversion = "1.12.0"
 git_clone("https://ceres-solver.googlesource.com/ceres-solver", branch=pkgversion)
-set_version(pkgversion + "-deb1")
+set_version(pkgversion + "-deb3")
 set_debversion(1)
 # Remove git
 pack_source()
@@ -26,7 +26,8 @@ create_dummy_changelog()
 build_config_cmake(cmake_opts=[
     "-DCMAKE_C_FLAGS=-fPIC",
     "-DCMAKE_CXX_FLAGS=-fPIC",
-    "-DBUILD_EXAMPLES=OFF"])
+    "-DBUILD_EXAMPLES=OFF",
+    "-DBUILD_SHARED_LIBS=ON"])
 install_usr_dir_to_package("usr/include", "dev")
 write_rules()
 
@@ -35,6 +36,7 @@ intitialize_control()
 control_add_package(description="Ceres solver")
 control_add_package("dev",
     arch_specific=False,
+    depends=[depends_main_package()],
     description="Ceres solver (development files)")
 
 #Build it
