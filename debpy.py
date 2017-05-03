@@ -18,16 +18,13 @@ def find_latest_pypi_version(pkgname, forced_version=None):
     return pkgversion, url
 
 def build_stdeb(debsuffix, python2=True, python3=True, depends=[], build_depends=[]):
-    args = ["python3",
+    args = ["python3" if python3 else "python",
             "setup.py",
             "--command-packages=stdeb.command",
             "sdist_dsc",
-            "--suite={}".format(distribution_name()),
-            "--with-python3=True"]
-    if python2:
-        args.append("--with-python2=true")
-    if python3:
-        args.append("--with-python3=true")
+            "--suite={}".format(distribution_name())]
+    args.append("--with-python2={}".format("true" if python2 else "false"))
+    args.append("--with-python3={}".format("true" if python3 else "false"))
     # Add dependency arguments
     for dep in depends:
         args += ["--depends", dep]
@@ -35,6 +32,7 @@ def build_stdeb(debsuffix, python2=True, python3=True, depends=[], build_depends
         args += ["--build-depends", dep]
     if debsuffix is not None:
         args.append("--upstream-version-suffix=-deb{}".format(debsuffix))
+    print(args)
     cmd(" ".join(args))
 
 def autobuild_python_package(nameorurl, suffix, version=None, depends=[], build_depends=[], py2=True, py3=True):
@@ -44,12 +42,14 @@ def autobuild_python_package(nameorurl, suffix, version=None, depends=[], build_
     In case of a package name, the package is downloaded from PyPI
     """
 
-    if nameorurl.startswith(("git+https://", "git+http://", "git://")):
+    if nameorurl.startswith(("git+https://", "git+http://", "git://")) or \
+       (nameorurl.startswith(("http://", "https://")) and nameorurl.endswith(".git")):
         # Git package download
         pkgname = nameorurl.rpartition("/")[2].rstrip(".git")
-        print(black("Cloning {} ...".format(pkgname), bold=True))
-        set_name(pkgname)
-        git_clone(nameorurl)
+        print(black("Cloning {} {}...".format(pkgname,
+            "(branch {})".format(version) if version else ""), bold=True))
+        set_name(pkgname.lower())
+        git_clone(nameorurl, branch=version)
 
     else: # Normal package download
         set_name(nameorurl)

@@ -98,10 +98,15 @@ def git_clone(url, depth=None, branch=None):
     # Copy _git tree to build dir
     shutil.copytree(get_name() + "_git", get_name())
 
-def extract_compressed_tar(filename):
+def extract_compressed_archve(filename):
     """
     Run "tar xz?f" on the given filename and return the output
     """
+    if filename.endswith(".zip"):
+        out = subprocess.check_output(["unzip", filename])
+        filtlines = [l.partition(":")[2] for l in out.decode("utf-8").split("\n")]
+        return "\n".join(filtlines).encode("utf-8")
+    # else: assume tar
     if filename.endswith((".tar.gz", ".tgz")):
         arg = "xzvf"
     elif filename.endswith((".tar.bz2", ".tbz")):
@@ -137,7 +142,7 @@ def wget_download(url):
     else:
         print("Skipping download - file {} already exists".format(filename))
     # Find the most common output prefix of the tar output = the directory name
-    prefix = find_most_common_prefix(extract_compressed_tar(filename))
+    prefix = find_most_common_prefix(extract_compressed_archve(filename))
     # Rename to the directory name the rest of the code expects
     os.rename(prefix, get_name())
 
