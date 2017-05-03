@@ -17,6 +17,7 @@ version = None
 debversion = None
 homepage = None
 build_depends = []
+force_parallel = None # int if CLI flag is set
 
 # Key (suffix to override_dh_auto_) ; value: list of make commands
 build_config = defaultdict(list)
@@ -48,7 +49,7 @@ def set_version(arg, gitcount=False):
     version = arg
     if gitcount:
         gitrev = cmd_output("git rev-list --all | wc -l".format(get_name())).decode("utf-8")
-        version += "-{}".format(gitrev.strip())
+        version += "-git{}".format(gitrev.strip())
 
 def set_debversion(arg):
     global debversion
@@ -147,7 +148,7 @@ def create_debian_dir():
 
 def copy_license():
     dst = os.path.join(debian_dirpath(), "copyright")
-    for filename in ["COPYING", "LICENSE"]:
+    for filename in ["COPYING", "LICENSE", "License.txt", "license.txt"]:
         fn = os.path.join(get_name(), filename)
         if os.path.isfile(fn):
             shutil.copy(fn, dst)
@@ -222,6 +223,8 @@ def init_misc_files():
         outf.write("3.0 (quilt)")
 
 def parallelism():
+    if force_parallel is not None:
+        return force_parallel
     try:
         return os.cpu_count()
     except: # <= python 3.4
@@ -282,14 +285,18 @@ def install_usr_dir_to_package(src, suffix):
     move_usr_dir_to_package("usr/include", "dev")
     moves the /usr/include folder to <name>-dev/usr/
     """
+    # avoid dirname only removing trailing slash
+    if src.endswith("/"):
+        src = src[:-1]
     # Dont add mkdir twice
-    mkdir = "mkdir -p debian/{}-{}/usr/".format(get_name(), suffix)
+    mkdir = "mkdir -p debian/{}-{}/{}".format(
+        get_name(), suffix, os.path.dirname(src))
     if mkdir not in build_config["install"]:
         build_config["install"].append(mkdir)
     # Add move command
     build_config["install"].append(
-        "mv debian/{}/{} debian/{}-{}/usr/".format(
-            get_name(), src, get_name(), suffix)
+        "mv debian/{}/{} debian/{}-{}/{}".format(
+            get_name(), src, get_name(), suffix, os.path.dirname(src))
     )
 
 def install_move(src, dst, suffix):
@@ -358,6 +365,11 @@ def commandline_interface():
     parser = argparse.ArgumentParser()
     parser.add_argument("-s", "--only-source", action="store_true",
         help="Dont build packages, only source (for PPA)")
+    parser.add_argument("-j", "--threads", type=int, default=None,
+        help="The number of threads to use")
     args = parser.parse_args()
+
+    if args.threads is not None:
+        force_parallel = args.threads
 
     perform_debuild(only_source=args.only_source)
