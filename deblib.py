@@ -90,7 +90,28 @@ def git_clone(url, depth=None, branch=None):
     # Copy _git tree to build dir
     shutil.copytree(get_name() + "_git", get_name())
 
-def wget_download(url):
+def extract_compressed_tar(filename):
+    """
+    Run "tar xz?f" on the given filename and return the output
+    """
+    if filename.endswith((".tar.gz", ".tgz")):
+        arg = "xzvf"
+    elif filename.endswith((".tar.bz2", ".tbz")):
+        arg = "xjvf"
+    elif filename.endswith(".tar.xz"):
+        arg = "xJvf"
+    else:
+        raise PackagingError("Don't know how to extract archive (unknown extension): " + filename)
+    return  subprocess.check_output(["tar", arg, filename])
+
+def find_most_common_prefix(txt):
+    outlines = [line.strip() for line in txt.decode("utf-8").split("\n")]
+    ctr = Counter()
+    for line in outlines:
+        ctr[line.partition("/")[0]] += 1
+    prefix = ctr.most_common()[0][0]
+
+def wget_download(url, rename=True):
     """
     Download a package from a wget-compatible URL
     """
@@ -103,21 +124,8 @@ def wget_download(url):
         subprocess.run(args)
     else:
         print("Skipping download - file {} already exists".format(filename))
-    # Extract
-    if filename.endswith(".tar.gz"):
-        out = subprocess.check_output(["tar", "xzvf", filename])
-    elif filename.endswith(".tar.bz2"):
-        out = subprocess.check_output(["tar", "xjvf", filename])
-    elif filename.endswith(".tar.xz"):
-        out = subprocess.check_output(["tar", "xJvf", filename])
-    else:
-        raise PackagingError("Cant extract archive: " + filename)
     # Find the most common output prefix of the tar output = the directory name
-    outlines = [line.strip() for line in out.decode("utf-8").split("\n")]
-    ctr = Counter()
-    for line in outlines:
-        ctr[line.partition("/")[0]] += 1
-    prefix = ctr.most_common()[0][0]
+    prefix = find_most_common_prefix(extract_compressed_tar(filename))
     # Rename to the directory name the rest of the code expects
     os.rename(prefix, get_name())
 

@@ -21,7 +21,10 @@ args = ["python3",
         "sdist_dsc",
         "--suite={}".format(distribution_name()),
         "--with-python3=True",
-        "--upstream-version-suffix=-deb{}".form]
+        "--upstream-version-suffix=-deb{}".format(debsuffix)]
+
+pkgversion, url = find_latest_pypi_version(pkgname)
+
 
 # General config
 set_name("python-" - exifread)
