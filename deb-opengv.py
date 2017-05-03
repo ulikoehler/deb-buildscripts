@@ -5,7 +5,7 @@ set_name("libopengv")
 set_homepage("https://github.com/laurentkneip/opengv")
 #Download it
 git_clone("https://github.com/laurentkneip/opengv.git")
-set_version("1.0-deb1", gitcount=True)
+set_version("1.0-deb2", gitcount=True)
 set_debversion(1)
 
 pack_source()
@@ -37,6 +37,7 @@ write_rules()
 intitialize_control()
 control_add_package(description="OpenGV geometry view library")
 control_add_package("dev",
+    depends=[depends_main_package()],
     arch_specific=False,
     description="OpenGV geometry view library (development files)")
 control_add_package("python",

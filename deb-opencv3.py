@@ -84,22 +84,22 @@ control_add_package(
     description="OpenCV")
 
 control_add_package("dev",
-    depends=["{} (= {})".format(get_name(), get_debversion())],
+    depends=[depends_main_package()],
     arch_specific=False,
     description="OpenCV (development files)")
 
 control_add_package("doc",
-    depends=["{} (= {})".format(get_name(), get_debversion())],
+    depends=[depends_main_package()],
     arch_specific=False,
     description="OpenCV (documentation)")
 
 control_add_package("python2",
-    depends=["{} (= {})".format(get_name(), get_debversion())],
+    depends=[depends_main_package()],
     arch_specific=True,
     description="OpenCV (Python2 bindings)")
 
 control_add_package("python3",
-    depends=["{} (= {})".format(get_name(), get_debversion())],
+    depends=[depends_main_package()],
     arch_specific=True,
     description="OpenCV (Python3 bindings)")
 

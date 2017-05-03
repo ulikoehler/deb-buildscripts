@@ -373,3 +373,14 @@ def commandline_interface():
         force_parallel = args.threads
 
     perform_debuild(only_source=args.only_source)
+
+def add_build_dependencies(*args):
+    global build_depends
+    build_depends += args
+
+def depends_main_package():
+    """
+    Returns a depends element for the main package
+    with the given version
+    """
+    return "{} (= {})".format(get_name(), get_debversion())

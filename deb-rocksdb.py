@@ -37,7 +37,7 @@ control_add_package(
     description="RocksDB Key-Value database")
 
 control_add_package("dev",
-    depends=["{} (= {})".format(get_name(), get_debversion())],
+    depends=[depends_main_package()],
     arch_specific=False,
     description="RocksDB Key-Value database (development files)")
 
