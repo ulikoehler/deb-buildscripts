@@ -5,7 +5,8 @@ set_name("bup")
 set_homepage("https://github.com/bup/bup")
 #Download it
 pkgversion = "0.29.1"
-set_version(pkgversion + "-deb3")
+set_version(pkgversion)
+add_version_suffix("-deb3")
 git_clone("https://github.com/bup/bup.git", branch=pkgversion)
 set_debversion(1)
 # Remove git

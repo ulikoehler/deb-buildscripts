@@ -5,7 +5,8 @@ set_name("libopengv")
 set_homepage("https://github.com/laurentkneip/opengv")
 #Download it
 git_clone("https://github.com/laurentkneip/opengv.git")
-set_version("1.0-deb2", gitcount=True)
+set_version("1.0", gitcount=True)
+add_version_suffix("-deb1")
 set_debversion(1)
 
 pack_source()

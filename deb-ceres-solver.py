@@ -6,7 +6,8 @@ set_homepage("http://ceres-solver.org/")
 #Download it
 pkgversion = "1.12.0"
 git_clone("https://ceres-solver.googlesource.com/ceres-solver", branch=pkgversion)
-set_version(pkgversion + "-deb3")
+set_version(pkgversion)
+add_version_suffix("-deb3")
 set_debversion(1)
 # Remove git
 pack_source()

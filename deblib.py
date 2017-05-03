@@ -51,6 +51,14 @@ def set_version(arg, gitcount=False):
         gitrev = cmd_output("git rev-list --all | wc -l".format(get_name())).decode("utf-8")
         version += "-git{}".format(gitrev.strip())
 
+def add_version_suffix(suffix):
+    """
+    Add a suffix to the current version.
+    Modifies the source version. Call before set_debversion()
+    """
+    global version
+    version += suffix
+
 def set_debversion(arg):
     global debversion
     debversion = "{}-{}".format(get_version(), arg)

@@ -5,7 +5,8 @@ set_name("libopencv3")
 set_homepage("http://opencv.willowgarage.com/")
 #Download it
 pkgversion = "3.2.0"
-set_version(pkgversion + "-deb7")
+set_version(pkgversion)
+add_version_suffix("-deb8")
 git_clone("https://github.com/Itseez/opencv.git", branch=pkgversion, depth=1)
 # Clone opencv_contrib to main source directory
 contrib_dirname = get_name() + "_git/opencv_contrib"

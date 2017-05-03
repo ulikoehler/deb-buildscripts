@@ -5,7 +5,8 @@ set_name("libczmq4")
 set_homepage("http://czmq.zeromq.org")
 #Download it
 pkgversion = "4.0.2"
-set_version(pkgversion + "-deb1")
+set_version(pkgversion)
+add_version_suffix("-deb1")
 git_clone("https://github.com/zeromq/czmq.git", branch="v{}".format(pkgversion))
 set_debversion(1)
 # Remove git
