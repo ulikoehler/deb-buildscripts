@@ -105,13 +105,17 @@ def extract_compressed_tar(filename):
     return  subprocess.check_output(["tar", arg, filename])
 
 def find_most_common_prefix(txt):
-    outlines = [line.strip() for line in txt.decode("utf-8").split("\n")]
+    """
+    Find the most common prefix (prefix is partitioned by /)
+    in txt split into lines
+    """
+    outlines = (line.strip() for line in txt.decode("utf-8").split("\n"))
     ctr = Counter()
     for line in outlines:
         ctr[line.partition("/")[0]] += 1
-    prefix = ctr.most_common()[0][0]
+    return ctr.most_common()[0][0]
 
-def wget_download(url, rename=True):
+def wget_download(url):
     """
     Download a package from a wget-compatible URL
     """
