@@ -255,8 +255,10 @@ def build_config_autotools(targets=["all"], cfg_flags=[], install_cmd="make inst
     """
     global build_depends
     # Auto-regenerate ./configure
-    if os.path.isfile(os.path.join(get_name(), "autogen.sh")):
+    if os.path.isfile(os.path.join(get_name(), "autogen.sh")) and not \
+       os.path.isfile(os.path.join(get_name(), "configure.sh")):
         build_config["configure"].append("./autogen.sh")
+        build_depends.append("libtool")
     build_config["configure"] += [
         "mkdir -p debian/{}/usr".format(get_name()),
         "./configure --prefix=`pwd`/debian/{}/usr {}".format(get_name(), "".join(cfg_flags))

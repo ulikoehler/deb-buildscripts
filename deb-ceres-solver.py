@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 from deblib import *
 # General config
-set_name("ceres-solver")
+set_name("libceres1")
 set_homepage("http://ceres-solver.org/")
 #Download it
 pkgversion = "1.12.0"

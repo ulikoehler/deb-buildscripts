@@ -5,7 +5,7 @@ set_name("libzmq5")
 set_homepage("http://zeromq.org")
 #Download it
 pkgversion = "4.2.1"
-set_version(pkgversion + "-deb1")
+set_version(pkgversion + "-deb2")
 wget_download("https://github.com/zeromq/libzmq/releases/download/v{}/zeromq-{}.tar.gz".format(pkgversion, pkgversion))
 set_debversion(1)
 # Remove git
