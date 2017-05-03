@@ -386,3 +386,9 @@ def depends_main_package():
     with the given version
     """
     return "{} (= {})".format(get_name(), get_debversion())
+
+def distribution_name():
+    """
+    Get the LSB release distribution name, e.g. "xenial" on Ubuntu 16.04
+    """
+    return subprocess.check_output("lsb_release -c -s", shell=True).strip().decode("utf-8")
