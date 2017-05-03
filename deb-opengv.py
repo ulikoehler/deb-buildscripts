@@ -11,9 +11,11 @@ set_debversion(1)
 pack_source()
 create_debian_dir()
 
-build_depends.append("libeigen3-dev")
-build_depends.append("libboost-python-dev")
-build_depends.append("python-numpy")
+add_build_dependencies(
+    "libeigen3-dev",
+    "libboost-python-dev",
+    "python-numpy"
+)
 
 #Use the existing COPYING file
 copy_license()
@@ -39,7 +41,7 @@ control_add_package("dev",
     description="OpenGV geometry view library (development files)")
 control_add_package("python",
     arch_specific=True,
-    depends=["python", "python-numpy", "{} (= {})".format(get_name(), get_debversion())],
+    depends=["python", "python-numpy"],
     description="OpenGV geometry view library (python bindings)")
 
 #Build it
