@@ -282,7 +282,8 @@ def build_config_python(python="python3"):
     """
     global build_depends
     build_config["clean"] = []
-    build_config["build"] = [
+    build_config["build"] = []
+    build_config["install"] = [
         "{} setup.py install --prefix=debian/{}/usr".format(
             python, get_name())
     ]
