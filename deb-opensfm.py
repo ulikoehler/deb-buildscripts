@@ -6,7 +6,7 @@ set_homepage("https://github.com/mapillary/OpenSfM")
 #Download it
 git_clone("https://github.com/mapillary/OpenSfM.git")
 set_version("0.1", gitcount=True)
-add_version_suffix("-deb12")
+add_version_suffix("-deb13")
 set_debversion(1)
 # Remove git
 pack_source()
@@ -48,7 +48,6 @@ write_rules()
 intitialize_control()
 control_add_package(
     depends=[
-        "libeigen3",
         "libceres1",
         "libopengv-python",
         "python-exifread",
