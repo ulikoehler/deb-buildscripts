@@ -273,6 +273,17 @@ def build_config_cmake(targets=["all"], cmake_opts=[], install_cmd="make install
     ]
     build_depends.append("cmake")
 
+def build_config_python(python="python3"):
+    """
+    Configure the build for cmake
+    """
+    global build_depends
+    build_config["clean"] = []
+    build_config["build"] = [
+        "{} setup.py install --prefix=debian/{}/usr".format(
+            python, get_name())
+    ]
+
 
 def build_config_autotools(targets=["all"], cfg_flags=[], install_cmd="make install"):
     """
