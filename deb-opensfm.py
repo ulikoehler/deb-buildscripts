@@ -6,7 +6,7 @@ set_homepage("https://github.com/mapillary/OpenSfM")
 #Download it
 git_clone("https://github.com/mapillary/OpenSfM.git")
 set_version("0.1", gitcount=True)
-add_version_suffix("-deb9")
+add_version_suffix("-deb11")
 set_debversion(1)
 # Remove git
 pack_source()
@@ -20,9 +20,10 @@ build_depends += [
     "python-exifread",
     "python-pyproj",
     "python-networkx",
-    "libboost-python",
+    "libboost-python-dev",
     "python-gpxpy",
     "cmake",
+    "pkg-config",
     "libeigen3-dev",
     "libgflags-dev",
     "libopencv-dev",
