@@ -24,6 +24,8 @@ build_depends += [
     "cmake",
     "libeigen3-dev",
     "libgflags-dev",
+    "libgoogle-glog-dev",
+    "libsuitesparse-dev",
     "python-xmltodict",
     "libopengv-dev",
     "libopengv-python",
