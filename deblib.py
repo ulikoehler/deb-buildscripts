@@ -171,7 +171,7 @@ def debian_dirpath():
 def create_debian_dir():
     os.makedirs(debian_dirpath(), exist_ok=True)
 
-def copy_license():
+def copy_license(filename=None):
     dst = os.path.join(debian_dirpath(), "copyright")
     for filename in ["COPYING", "LICENSE", "License.txt", "license.txt"]:
         fn = os.path.join(get_name(), filename)
@@ -255,13 +255,13 @@ def parallelism():
     except: # <= python 3.4
         return 2
 
-def build_config_cmake(targets=["all"], cmake_opts=[], install_cmd="make install"):
+def build_config_cmake(targets=["all"], cmake_opts=[], install_cmd="make install", srcdir="."):
     """
     Configure the build for cmake
     """
     global build_depends
     build_config["configure"] = [
-        "cmake . -DCMAKE_INSTALL_PREFIX=debian/{}/usr {}".format(
+        "cmake {} -DCMAKE_INSTALL_PREFIX=debian/{}/usr {}".format(srcdir,
             get_name(), " ".join(cmake_opts))
     ]
     build_config["build"] = [
