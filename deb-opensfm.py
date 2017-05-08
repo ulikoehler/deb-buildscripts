@@ -6,7 +6,7 @@ set_homepage("https://github.com/mapillary/OpenSfM")
 #Download it
 git_clone("https://github.com/mapillary/OpenSfM.git")
 set_version("0.1", gitcount=True)
-add_version_suffix("-deb4")
+add_version_suffix("-deb9")
 set_debversion(1)
 # Remove git
 pack_source()
@@ -20,10 +20,12 @@ build_depends += [
     "python-exifread",
     "python-pyproj",
     "python-networkx",
+    "libboost-python",
     "python-gpxpy",
     "cmake",
     "libeigen3-dev",
     "libgflags-dev",
+    "libopencv-dev",
     "libgoogle-glog-dev",
     "libsuitesparse-dev",
     "python-xmltodict",
@@ -49,6 +51,7 @@ control_add_package(
         "python-networkx",
         "python-gpxpy",
         "python-pyproj",
+        "python-opencv",
         "python-scipy"
     ],
     description="OpenSfM structure from motion implementation")
