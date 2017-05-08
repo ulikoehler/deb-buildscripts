@@ -35,7 +35,7 @@ def build_stdeb(debsuffix, python2=True, python3=True, depends=[], build_depends
     print(args)
     cmd(" ".join(args))
 
-def autobuild_python_package(nameorurl, suffix, version=None, depends=[], build_depends=[], py2=True, py3=True):
+def autobuild_python_package(nameorurl, suffix, version=None, depends=[], build_depends=[], py2=True, py3=True, remove_pyc=False):
     """
     Automatically build a python package.
     Takes either a git+http(s) or git:// URL or a package name.
@@ -62,6 +62,10 @@ def autobuild_python_package(nameorurl, suffix, version=None, depends=[], build_
             nameorurl, pkgversion), bold=True))
         wget_download(url)
 
+    # Remove pyc (workaround) if enabled
+    if remove_pyc:
+        cmd("find . -name '*.pyc' -print0 | xargs -0 rm")
+
     # Perform build of deb package using stdeb
     print(black("Building deb package", bold=True))
     build_stdeb(suffix, py2, py3, depends=depends, build_depends=build_depends)
@@ -85,12 +89,14 @@ def run_pybuild_cli():
         help="Add specific dependencies. Note that many dependencies are auto-detected")
     parser.add_argument("-b", "--build-depends", nargs="*", default=[],
         help="Add specific dependencies. Note that many dependencies are auto-detected")
+    parser.add_argument("--remove-pyc", action="store_true",
+        help="Remove all pyc files from a package prior to build. Workaround for pypi packaging issues.")
     parser.add_argument("package",
         help="The pypi package to build")
     args = parser.parse_args()
 
     autobuild_python_package(args.package, args.suffix, args.version, args.depends,
-        args.build_depends, args.no_python2, args.no_python3)
+        args.build_depends, args.no_python2, args.no_python3, remove_pyc=args.remove_pyc)
 
 if __name__ == "__main__":
     run_pybuild_cli()
