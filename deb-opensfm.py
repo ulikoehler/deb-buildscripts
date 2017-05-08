@@ -6,7 +6,7 @@ set_homepage("https://github.com/mapillary/OpenSfM")
 #Download it
 git_clone("https://github.com/mapillary/OpenSfM.git")
 set_version("0.1", gitcount=True)
-add_version_suffix("-deb11")
+add_version_suffix("-deb12")
 set_debversion(1)
 # Remove git
 pack_source()
@@ -39,6 +39,9 @@ create_dummy_changelog()
 
 # Create rules file
 build_config_python(python="python2")
+build_config["install"].append(
+    "mv debian/opensfm/usr/lib/python2.7/site-packages debian/opensfm/usr/lib/python2.7/dist-packages"
+)
 write_rules()
 
 #Create control file
