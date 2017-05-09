@@ -175,7 +175,7 @@ def create_debian_dir():
 def copy_license(filename=None):
     dst = os.path.join(debian_dirpath(), "copyright")
     if filename is None:
-        for filename in ["COPYING", "LICENSE", "License.txt", "license.txt"]:
+        for filename in ["COPYING", "LICENSE", "License.txt", "license.txt", "COPYRIGHT"]:
             fn = os.path.join(get_name(), filename)
             if os.path.isfile(fn):
                 shutil.copy(fn, dst)
@@ -290,7 +290,7 @@ def build_config_python(python="python3"):
     ]
 
 
-def build_config_autotools(targets=["all"], cfg_flags=[], install_cmd="make install"):
+def build_config_autotools(targets=["all"], cfg_flags=[], install_cmd="make install", configure=True):
     """
     Configure the build for cmake
     """
@@ -300,10 +300,12 @@ def build_config_autotools(targets=["all"], cfg_flags=[], install_cmd="make inst
        os.path.isfile(os.path.join(get_name(), "configure.sh")):
         build_config["configure"].append("./autogen.sh")
         build_depends.append("libtool")
-    build_config["configure"] += [
-        "mkdir -p debian/{}/usr".format(get_name()),
-        "./configure --prefix=`pwd`/debian/{}/usr {}".format(get_name(), "".join(cfg_flags))
-    ]
+
+    build_config["configure"].append("mkdir -p debian/{}/usr".format(get_name()))
+    if configure:
+        build_config["configure"].append(
+            "./configure --prefix=`pwd`/debian/{}/usr {}".format(get_name(), "".join(cfg_flags))
+        )
     build_config["build"] = [
         "make {} -j{}".format(
             " ".join(targets), parallelism())]
