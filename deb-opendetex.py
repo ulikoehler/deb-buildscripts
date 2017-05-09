@@ -7,11 +7,13 @@ set_homepage("https://github.com/pkubowicz/opendetex")
 pkgversion = "2.8.2"
 git_clone("https://github.com/pkubowicz/opendetex.git", branch="v" + pkgversion)
 set_version(pkgversion)
-add_version_suffix("-deb1")
+add_version_suffix("-deb2")
 set_debversion(1)
 # Remove git
 pack_source()
 create_debian_dir()
+
+build_depends += ["flex"]
 
 #Use the existing COPYING file
 copy_license()
