@@ -6,8 +6,12 @@ set_homepage("https://github.com/laurentkneip/opengv")
 #Download it
 git_clone("https://github.com/laurentkneip/opengv.git")
 set_version("1.0", gitcount=True)
-add_version_suffix("-deb1")
+add_version_suffix("-deb2")
 set_debversion(1)
+
+# Fix march=native producing illegal instructions
+# We assume core2 is a good general purpose basis
+cmd("sed -i -e 's/march=native/march=core2/g' CMakeLists.txt".format(get_name())) 
 
 pack_source()
 create_debian_dir()
