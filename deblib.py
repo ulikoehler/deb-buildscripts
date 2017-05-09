@@ -154,15 +154,16 @@ def remove_metadata_directories(directory):
     shutil.rmtree(os.path.join(directory, ".git"), ignore_errors=True)
     shutil.rmtree(os.path.join(directory, "debian"), ignore_errors=True)
 
-def pack_source():
+def pack_source(ext="xz"):
     remove_metadata_directories(get_name())
     # Pack source archive
-    outfilename = "{}_{}.orig.tar.xz".format(get_name(), get_version())
+    outfilename = "{}_{}.orig.tar.{}".format(get_name(), get_version(), ext)
     # Delete old archive if it exist
     if os.path.isfile(outfilename):
         os.remove(outfilename)
     # Create new archive
-    cmd_output("tar cJvf {} {}".format(
+    opt = {"xz": "cJvf", "gz": "czvf", "bz2": "cjvf"}[ext]
+    cmd_output("tar {} {} {}".format(opt,
         outfilename, get_name()), cwd=False)
 
 def debian_dirpath():
