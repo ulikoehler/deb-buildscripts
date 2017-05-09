@@ -6,7 +6,7 @@ set_homepage("http://opencv.willowgarage.com/")
 #Download it
 pkgversion = "3.2.0"
 set_version(pkgversion)
-add_version_suffix("-deb13")
+add_version_suffix("-deb14")
 git_clone("https://github.com/Itseez/opencv.git", branch=pkgversion, depth=1)
 # Clone opencv_contrib to main source directory
 contrib_dirname = get_name() + "/opencv_contrib"
@@ -28,6 +28,9 @@ subprocess.call("mv ippicv_lnx/* " + icv_dst, shell=True)
 # Remove download tree & local ippicv directory
 shutil.rmtree(icv_dst + "downloads")
 shutil.rmtree("ippicv_lnx")
+
+# Patch:
+cmd("sed -i -e '/downloader.cmake/s/^/#/g' cmake/OpenCVFindIPP.cmake".format())
 
 # Move all the sources to a subdir to simulate an out-of-source build
 os.makedirs("opencv_tmp")
