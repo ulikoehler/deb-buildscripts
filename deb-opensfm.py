@@ -6,7 +6,7 @@ set_homepage("https://github.com/mapillary/OpenSfM")
 #Download it
 git_clone("https://github.com/mapillary/OpenSfM.git")
 set_version("0.1", gitcount=True)
-add_version_suffix("-deb13")
+add_version_suffix("-deb14")
 set_debversion(1)
 # Remove git
 pack_source()
@@ -55,7 +55,8 @@ control_add_package(
         "python-gpxpy",
         "python-pyproj",
         "python-opencv",
-        "python-scipy"
+        "python-scipy",
+	"python-xmltodict"
     ],
     description="OpenSfM structure from motion implementation")
 

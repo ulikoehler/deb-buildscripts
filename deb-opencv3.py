@@ -6,7 +6,7 @@ set_homepage("http://opencv.willowgarage.com/")
 #Download it
 pkgversion = "3.2.0"
 set_version(pkgversion)
-add_version_suffix("-deb14")
+add_version_suffix("-deb15")
 git_clone("https://github.com/Itseez/opencv.git", branch=pkgversion, depth=1)
 # Clone opencv_contrib to main source directory
 contrib_dirname = get_name() + "/opencv_contrib"
@@ -39,7 +39,7 @@ os.rename("opencv_tmp", get_name())
 
 set_debversion(1)
 # Remove git
-pack_source()
+pack_source("gz")
 create_debian_dir()
 
 #Use the existing COPYING file
@@ -75,13 +75,13 @@ install_usr_dir_to_package("usr/include", "doc")
 write_rules()
 
 # This is a larger list of build depends, so its separated into parts
-pkgs_build_tools=["build-essential", "cmake"]
+pkgs_build_tools=["build-essential", "cmake", "libprotobuf-dev"]
 pkgs_viz=["libgtkglext1-dev", "libvtk6-dev", "vtk6"]
 pkgs_img=["zlib1g-dev", "libjpeg-dev", "libwebp-dev", "libpng-dev", "libtiff5-dev", "libjasper-dev", "libopenexr-dev", "libgdal-dev"]
 pkgs_video=["libdc1394-22-dev", "libavcodec-dev", "libavformat-dev", "libswscale-dev", "libtheora-dev", "libvorbis-dev", "libxvidcore-dev", "libx264-dev", "yasm", "libopencore-amrnb-dev", "libopencore-amrwb-dev", "libv4l-dev", "libxine2-dev"]
 pkgs_math=["libtbb-dev", "libeigen3-dev"]
 pkgs_python=["python-dev", "python-tk", "python-numpy", "python3-dev", "python3-tk", "python3-numpy"]
-pkgs_util=["unzip", "wget", "doxygen"]
+pkgs_util=["unzip", "wget", "doxygen", "protobuf-compiler"]
 pkgs_ocr=["libtesseract-dev"]
 pkgs_doc=["texlive-full"]
 build_depends += pkgs_build_tools + pkgs_viz + pkgs_img + pkgs_video + pkgs_math + pkgs_python + pkgs_util + pkgs_ocr + pkgs_doc
