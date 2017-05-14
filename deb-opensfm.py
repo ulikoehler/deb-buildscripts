@@ -4,9 +4,10 @@ from deblib import *
 set_name("opensfm")
 set_homepage("https://github.com/mapillary/OpenSfM")
 #Download it
-git_clone("https://github.com/mapillary/OpenSfM.git")
-set_version("0.1", gitcount=True)
-add_version_suffix("-deb14")
+pkgversion = "0.0.0"
+git_clone("https://github.com/mapillary/OpenSfM.git", branch="v" + pkgversion)
+set_version("0.0.0")
+add_version_suffix("-deb1")
 set_debversion(1)
 # Remove git
 pack_source()
