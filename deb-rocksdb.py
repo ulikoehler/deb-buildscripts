@@ -6,7 +6,7 @@ set_homepage("http://rocksdb.org/")
 #Download it
 pkgversion = "5.4.6"
 set_version(pkgversion)
-add_version_suffix("-deb6")
+add_version_suffix("-deb3")
 git_clone("https://github.com/facebook/rocksdb.git", branch="v" + pkgversion, depth=1)
 set_debversion(1)
 # Remove git
@@ -25,11 +25,11 @@ build_config_autotools(targets=[""], install_cmd=instcmd)
 install_usr_dir_to_package("usr/include", "dev")
 build_config["test"] = []
 build_config["clean"] = []
-build_config["build"] = ["PORTABLE=1 CFLAGS=-march=corei7 make -j4 shared_lib"]
+build_config["build"] = ["PORTABLE=1 CFLAGS=-march=corei7 make -j6 static_lib"]
 build_config["configure"] = []
 write_rules()
 
-build_depends += ["zlib1g-dev", "libbz2-dev", "libsnappy-dev", "libgflags-dev"]
+build_depends += ["zlib1g-dev", "libbz2-dev", "libsnappy-dev", "libgflags-dev", "libzstd-dev"]
 
 #Create control file
 intitialize_control()
