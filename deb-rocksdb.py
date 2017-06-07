@@ -4,7 +4,7 @@ from deblib import *
 set_name("librocksdb")
 set_homepage("http://rocksdb.org/")
 #Download it
-pkgversion = "5.2.1"
+pkgversion = "5.4.6"
 set_version(pkgversion)
 add_version_suffix("-deb6")
 git_clone("https://github.com/facebook/rocksdb.git", branch="v" + pkgversion, depth=1)
