@@ -4,3 +4,4 @@
 *.deb
 *.dsc
 *.build
+__pycache__
