@@ -6,7 +6,7 @@ set_homepage("https://github.com/zsiciarz/aquila")
 #Download it
 git_clone("https://github.com/Tencent/rapidjson.git")
 set_version("1.1.0", gitcount=False)
-add_version_suffix("-deb1")
+add_version_suffix("-deb2")
 set_debversion(1)
 # Remove git
 pack_source()
