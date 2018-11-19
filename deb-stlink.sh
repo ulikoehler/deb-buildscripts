@@ -12,7 +12,7 @@ touch debian/copyright
 #Create the changelog (no messages needed)
 dch --create -v $DEBVERSION --package stlink ""
 #Create copyright file
-cp COPYING debian/copyright
+cp LICENSE debian/copyright
 #Create control file
 echo "Source: stlink" > debian/control
 echo "Maintainer: None <none@example.com>" >> debian/control
@@ -33,14 +33,14 @@ echo '#!/usr/bin/make -f' > debian/rules
 echo '%:' >> debian/rules
 echo -e '\tdh $@' >> debian/rules
 echo 'override_dh_auto_configure:' >> debian/rules
-echo -e "\tcmake -DCMAKE_INSTALL_PREFIX:PATH=`pwd`/debian/$NAME/usr" >> debian/rules
+echo -e "\tcmake -DCMAKE_INSTALL_PREFIX:PATH=`pwd`/debian/$NAME/usr -DSTLINK_MODPROBED_DIR:PATH=`pwd`/debian/$NAME/etc/modprobe.d -DSTLINK_UDEV_RULES_DIR:PATH=`pwd`/debian/$NAME/etc/udev/rules.d" >> debian/rules
 echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
-echo -e "\tmkdir -p debian/stlink/etc/udev/rules.d" >> debian/rules
-echo -e "\tcp /etc/udev/rules.d/49-stlink* debian/$NAME/etc/udev/rules.d/" >> debian/rules
+echo -e "\tmkdir -p debian/stlink/etc/udev/rules.d debian/etc/modprobe.d" >> debian/rules
+echo -e "\tcp etc/udev/rules.d/49-stlink* debian/$NAME/etc/udev/rules.d/" >> debian/rules
 echo -e '\tmake install' >> debian/rules
-echo -e "\tcp /etc/udev/rules.d/49-stlink* debian/$NAME/etc/udev/rules.d/" >> debian/rules
+echo -e "\tcp etc/udev/rules.d/49-stlink* debian/$NAME/etc/udev/rules.d/" >> debian/rules
 echo 'override_dh_auto_test:' >> debian/rules
 echo -e >> debian/rules
 #Create the target dir
