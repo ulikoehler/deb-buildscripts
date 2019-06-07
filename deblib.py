@@ -277,6 +277,22 @@ def build_config_cmake(targets=["all"], cmake_opts=[], install_cmd="make install
     ]
     build_depends.append("cmake")
 
+def build_config_just_make(targets=["all"], cmake_opts=[], install_cmd="make install", srcdir="."):
+    """
+    Configure the build for make without configuration step
+    """
+    global build_depends
+    build_config["configure"] = []
+    build_config["build"] = [
+        "make {} -j{}".format(
+            " ".join(targets), parallelism())]
+    build_config["install"] = [
+        "mkdir -p debian/{}/usr".format(get_name()),
+        install_cmd
+    ]
+    build_depends.append("cmake")
+
+
 def build_config_python(python="python3"):
     """
     Configure the build for cmake
