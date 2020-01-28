@@ -34,7 +34,7 @@ build_depends += ["zlib1g-dev", "libbz2-dev", "libsnappy-dev", "libgflags-dev", 
 #Create control file
 intitialize_control()
 control_add_package(
-    depends=["libbz2-1.0", "libsnappy1v5 (>= 1.0)", "zlib1g", "libgflags2v5"],
+    depends=["libbz2-1.0", "libsnappy1v5 (>= 1.0)", "zlib1g", "libgflags2.2"],
     description="RocksDB Key-Value database")
 
 control_add_package("dev",
