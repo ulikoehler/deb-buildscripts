@@ -15,7 +15,7 @@ The script automatically
 (only partially finished)
 
 ```sh
-sudo apt-get install devscripts debhelper build-essential
+sudo apt-get install devscripts debhelper build-essential fakeroot
 ```
 Depending on the buildscript, you might need to install more packages.
 
