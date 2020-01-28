@@ -25,7 +25,7 @@ build_config_autotools(targets=[""], install_cmd=instcmd)
 install_usr_dir_to_package("usr/include", "dev")
 build_config["test"] = []
 build_config["clean"] = []
-build_config["build"] = ["PORTABLE=1 CFLAGS=-march=corei7 make -j6 static_lib"]
+build_config["build"] = ["PORTABLE=1 CFLAGS=-march=sandybridge make -j6 static_lib"]
 build_config["configure"] = []
 write_rules()
 
