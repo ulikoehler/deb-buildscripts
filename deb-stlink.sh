@@ -1,7 +1,7 @@
 #!/bin/bash
 export NAME=stlink
-git clone git://github.com/texane/stlink.git --depth 1 -b 1.4.0
-export VERSION=1.4.0
+git clone git://github.com/stlink-org/stlink.git --depth 1 -b v1.6.0
+export VERSION=1.6.0
 export DEBVERSION=${VERSION}-1
 cd stlink
 git pull
