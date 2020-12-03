@@ -27,7 +27,7 @@ build_config["install"] = ["make install PREFIX=debian/{}/usr".format(get_name()
 build_config["clean"] = []
 write_rules()
 
-build_depends += ["python3-dev", "git", "libacl1-dev"]
+build_depends += ["python3-dev", "git", "libacl1-dev", "libreadline-dev"]
 
 #Create control file
 intitialize_control()
