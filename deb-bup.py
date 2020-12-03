@@ -25,9 +25,10 @@ build_config_autotools(targets=["all"])
 build_config["configure"] = ["./configure"]
 build_config["install"] = ["make install PREFIX=debian/{}/usr".format(get_name())]
 build_config["clean"] = []
+build_config["test"] = []
 write_rules()
 
-build_depends += ["python3-dev", "git", "libacl1-dev", "libreadline-dev"]
+build_depends += ["python3-dev", "git", "libacl1-dev", "libreadline-dev", "pandoc"]
 
 #Create control file
 intitialize_control()
