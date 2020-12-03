@@ -27,7 +27,7 @@ build_config["install"] = ["make install PREFIX=debian/{}/usr".format(get_name()
 build_config["clean"] = []
 write_rules()
 
-build_depends += ["python2.7", "git"]
+build_depends += ["python3-dev", "git"]
 
 #Create control file
 intitialize_control()
