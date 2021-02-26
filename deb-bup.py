@@ -4,7 +4,7 @@ from deblib import *
 set_name("bup")
 set_homepage("https://github.com/bup/bup")
 #Download it
-pkgversion = "0.31"
+pkgversion = "0.32"
 set_version(pkgversion)
 add_version_suffix("-deb1")
 git_clone("https://github.com/bup/bup.git", branch=pkgversion)
