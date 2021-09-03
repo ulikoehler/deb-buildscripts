@@ -175,7 +175,7 @@ def create_debian_dir():
 def copy_license(filename=None):
     dst = os.path.join(debian_dirpath(), "copyright")
     if filename is None:
-        for filename in ["COPYING", "LICENSE", "License.txt", "license.txt", "COPYRIGHT"]:
+        for filename in ["COPYING", "LICENSE", "License.txt", "license.txt", "LICENSE.txt", "COPYRIGHT"]:
             fn = os.path.join(get_name(), filename)
             if os.path.isfile(fn):
                 shutil.copy(fn, dst)
