@@ -250,7 +250,7 @@ def init_misc_files():
     """
     os.makedirs(os.path.join(debian_dirpath(), "source"))
     with open(os.path.join(debian_dirpath(), "compat"), "w") as outf:
-        outf.write("8")
+        outf.write("10")
     with open(os.path.join(debian_dirpath(), "source", "format"), "w") as outf:
         outf.write("3.0 (quilt)")
 
