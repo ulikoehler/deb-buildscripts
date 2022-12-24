@@ -96,7 +96,7 @@ def git_clone(url, depth=None, branch=None):
     remove_old_buildtree()
     git_clone_to(url, get_name() + "_git", depth=depth, branch=branch)
     # Copy _git tree to build dir
-    shutil.copytree(get_name() + "_git", get_name())
+    shutil.copytree(get_name() + "_git", get_name(), symlinks=True)
 
 def git_update_submodules():
     cmd_output("git submodule update --init --recursive")
