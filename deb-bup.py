@@ -10,7 +10,7 @@ add_version_suffix("-deb1")
 git_clone("https://github.com/bup/bup.git", branch=pkgversion)
 set_debversion(1)
 # Remove git
-pack_source()
+pack_source(keep_git=True) # bup needs git to know its version
 create_debian_dir()
 
 #Use the existing COPYING file
