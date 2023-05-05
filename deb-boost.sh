@@ -5,9 +5,9 @@ export PATCHVERSION=0
 export FULLVERSION=${MAJORVERSION}.${MINORVERSION}.${PATCHVERSION}
 export UNDERSCOREVERSION=${MAJORVERSION}_${MINORVERSION}_${PATCHVERSION}
 export DEBVERSION=${FULLVERSION}-1
-if [ ! -d "boost_1_60_0" ]; then
+if [ ! -d "boost_${UNDERSCOREVERSION}" ]; then
     wget "https://boostorg.jfrog.io/artifactory/main/release/${FULLVERSION}/source/boost_${UNDERSCOREVERSION}.tar.bz2" -O boost-all_${FULLVERSION}.orig.tar.bz2
-    tar xjvf boost-all_$.orig.tar.bz2
+    tar xjvf boost-all_${FULLVERSION}.orig.tar.bz2
 fi
 cd boost_${UNDERSCOREVERSION}
 #Build DEB
