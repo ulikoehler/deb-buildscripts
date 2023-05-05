@@ -1,10 +1,15 @@
 #!/bin/bash
-export DEBVERSION=1.60.0-1
+export MAJORVERSION=1
+export MINORVERSION=60
+export PATCHVERSION=0
+export FULLVERSION=${MAJORVERSION}.${MINORVERSION}.${PATCHVERSION}
+export UNDERSCOREVERSION=${MAJORVERSION}_${MINORVERSION}_${PATCHVERSION}
+export DEBVERSION=${FULLVERSION}-1
 if [ ! -d "boost_1_60_0" ]; then
-    wget "http://downloads.sourceforge.net/project/boost/boost/1.60.0/boost_1_60_0.tar.bz2?r=http%3A%2F%2Fsourceforge.net%2Fprojects%2Fboost%2Ffiles%2Fboost%2F1.60.0%2F&ts=1385240128&use_mirror=switch" -O boost-all_1.60.0.orig.tar.bz2
-    tar xjvf boost-all_1.60.0.orig.tar.bz2
+    wget "https://boostorg.jfrog.io/artifactory/main/release/${FULLVERSION}/source/boost_${UNDERSCOREVERSION}.tar.bz2" -O boost-all_${FULLVERSION}.orig.tar.bz2
+    tar xjvf boost-all_$.orig.tar.bz2
 fi
-cd boost_1_60_0
+cd boost_${UNDERSCOREVERSION}
 #Build DEB
 rm -rf debian
 mkdir -p debian
