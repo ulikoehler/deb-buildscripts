@@ -1,7 +1,7 @@
 #!/bin/bash
 export NAME=stlink
-git clone git://github.com/stlink-org/stlink.git --depth 1 -b v1.6.0
-export VERSION=1.6.0
+git clone git://github.com/stlink-org/stlink.git --depth 1 -b v1.7.0
+export VERSION=1.7.0
 export DEBVERSION=${VERSION}-1
 cd stlink
 git pull
@@ -38,9 +38,9 @@ echo 'override_dh_auto_build:' >> debian/rules
 echo -e '\tmake' >> debian/rules
 echo 'override_dh_auto_install:' >> debian/rules
 echo -e "\tmkdir -p debian/stlink/etc/udev/rules.d debian/etc/modprobe.d" >> debian/rules
-echo -e "\tcp etc/udev/rules.d/49-stlink* debian/$NAME/etc/udev/rules.d/" >> debian/rules
+echo -e "\tcp config/udev/rules.d/49-stlink* debian/$NAME/etc/udev/rules.d/" >> debian/rules
 echo -e '\tmake install' >> debian/rules
-echo -e "\tcp etc/udev/rules.d/49-stlink* debian/$NAME/etc/udev/rules.d/" >> debian/rules
+echo -e "\tcp config/udev/rules.d/49-stlink* debian/$NAME/etc/udev/rules.d/" >> debian/rules
 echo 'override_dh_auto_test:' >> debian/rules
 echo -e >> debian/rules
 #Create the target dir

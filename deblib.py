@@ -96,7 +96,10 @@ def git_clone(url, depth=None, branch=None):
     remove_old_buildtree()
     git_clone_to(url, get_name() + "_git", depth=depth, branch=branch)
     # Copy _git tree to build dir
-    shutil.copytree(get_name() + "_git", get_name())
+    shutil.copytree(get_name() + "_git", get_name(), symlinks=True)
+
+def git_update_submodules():
+    cmd_output("git submodule update --init --recursive")
 
 def extract_compressed_archve(filename):
     """
@@ -146,16 +149,18 @@ def wget_download(url):
     # Rename to the directory name the rest of the code expects
     os.rename(prefix, get_name())
 
-def remove_metadata_directories(directory):
+def remove_metadata_directories(directory, keep_git=False, keep_debian=False):
     """
     Remove subdirectories of directory like .git or debian
     """
     # Remove .git & old build directory
-    shutil.rmtree(os.path.join(directory, ".git"), ignore_errors=True)
-    shutil.rmtree(os.path.join(directory, "debian"), ignore_errors=True)
+    if not keep_git:
+        shutil.rmtree(os.path.join(directory, ".git"), ignore_errors=True)
+    if not keep_debian:
+        shutil.rmtree(os.path.join(directory, "debian"), ignore_errors=True)
 
-def pack_source(ext="xz"):
-    remove_metadata_directories(get_name())
+def pack_source(ext="xz", keep_git=False):
+    remove_metadata_directories(get_name(), keep_git=keep_git)
     # Pack source archive
     outfilename = "{}_{}.orig.tar.{}".format(get_name(), get_version(), ext)
     # Delete old archive if it exist
@@ -175,7 +180,7 @@ def create_debian_dir():
 def copy_license(filename=None):
     dst = os.path.join(debian_dirpath(), "copyright")
     if filename is None:
-        for filename in ["COPYING", "LICENSE", "License.txt", "license.txt", "COPYRIGHT"]:
+        for filename in ["COPYING", "LICENSE", "License.txt", "license.txt", "LICENSE.txt", "COPYRIGHT"]:
             fn = os.path.join(get_name(), filename)
             if os.path.isfile(fn):
                 shutil.copy(fn, dst)
@@ -247,7 +252,7 @@ def init_misc_files():
     """
     os.makedirs(os.path.join(debian_dirpath(), "source"))
     with open(os.path.join(debian_dirpath(), "compat"), "w") as outf:
-        outf.write("8")
+        outf.write("10")
     with open(os.path.join(debian_dirpath(), "source", "format"), "w") as outf:
         outf.write("3.0 (quilt)")
 
