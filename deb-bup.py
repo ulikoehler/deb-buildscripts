@@ -32,7 +32,7 @@ build_depends += ["python3-dev", "git", "libacl1-dev", "libreadline-dev", "pando
 
 #Create control file
 intitialize_control()
-control_add_package(description="bup incremental backup tool")
+control_add_package(description="bup incremental backup tool", depends=["python-is-python2 | python-is-python3"])
 
 #Build it
 commandline_interface()
