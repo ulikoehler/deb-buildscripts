@@ -37,6 +37,7 @@ Package: boost-all-dev
 Architecture: any
 Depends: boost-all (= $DEBVERSION)
 Description: Boost library, version $DEBVERSION (development files)
+Provides: libboost1.74-dev
 
 Package: boost-build
 Architecture: any
@@ -49,16 +50,16 @@ cat > debian/rules <<EOF
 %:
 	dh \$@
 override_dh_auto_configure:
-        ./bootstrap.sh
+	./bootstrap.sh
 override_dh_auto_build:
-        ./b2 link=static,shared cxxflags="-DBOOST_STACKTRACE_LIBCXX_RUNTIME_MAY_CAUSE_MEMORY_LEAK=1" -j 32 --prefix=`pwd`/debian/boost-all/usr/
+	./b2 link=static,shared cxxflags="-DBOOST_STACKTRACE_LIBCXX_RUNTIME_MAY_CAUSE_MEMORY_LEAK=1" -j 32 --prefix=`pwd`/debian/boost-all/usr/
 override_dh_auto_test:
 override_dh_auto_install:
-        mkdir -p debian/boost-all/usr debian/boost-all-dev/usr debian/boost-build/usr/bin
-        ./b2 link=static,shared cxxflags="-DBOOST_STACKTRACE_LIBCXX_RUNTIME_MAY_CAUSE_MEMORY_LEAK=1" --prefix=`pwd`/debian/boost-all/usr/ install
-        mv debian/boost-all/usr/include debian/boost-all-dev/usr
-        cp b2 debian/boost-build/usr/bin
-        ./b2 cxxflags="-DBOOST_STACKTRACE_LIBCXX_RUNTIME_MAY_CAUSE_MEMORY_LEAK=1" install --prefix=`pwd`/debian/boost-build/usr/
+	mkdir -p debian/boost-all/usr debian/boost-all-dev/usr debian/boost-build/usr/bin
+	./b2 link=static,shared cxxflags="-DBOOST_STACKTRACE_LIBCXX_RUNTIME_MAY_CAUSE_MEMORY_LEAK=1" --prefix=`pwd`/debian/boost-all/usr/ install
+	mv debian/boost-all/usr/include debian/boost-all-dev/usr
+	cp b2 debian/boost-build/usr/bin
+	./b2 cxxflags="-DBOOST_STACKTRACE_LIBCXX_RUNTIME_MAY_CAUSE_MEMORY_LEAK=1" install --prefix=`pwd`/debian/boost-build/usr/
 EOF
 #Create some misc files
 echo "10" > debian/compat
