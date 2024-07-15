@@ -1,6 +1,6 @@
 #!/bin/bash
 export MAJORVERSION=1
-export MINORVERSION=83
+export MINORVERSION=85
 export PATCHVERSION=0
 export FULLVERSION=${MAJORVERSION}.${MINORVERSION}.${PATCHVERSION}
 export UNDERSCOREVERSION=${MAJORVERSION}_${MINORVERSION}_${PATCHVERSION}
@@ -49,19 +49,19 @@ cat > debian/rules <<EOF
 %:
 	dh \$@
 override_dh_auto_configure:
-	./bootstrap.sh
+        ./bootstrap.sh
 override_dh_auto_build:
-	./b2 link=static,shared -j 1 --prefix=`pwd`/debian/boost-all/usr/
+        ./b2 link=static,shared cxxflags="-DBOOST_STACKTRACE_LIBCXX_RUNTIME_MAY_CAUSE_MEMORY_LEAK=1" -j 32 --prefix=`pwd`/debian/boost-all/usr/
 override_dh_auto_test:
 override_dh_auto_install:
-	mkdir -p debian/boost-all/usr debian/boost-all-dev/usr debian/boost-build/usr/bin
-	./b2 link=static,shared --prefix=`pwd`/debian/boost-all/usr/ install
-	mv debian/boost-all/usr/include debian/boost-all-dev/usr
-	cp b2 debian/boost-build/usr/bin
-	./b2 install --prefix=`pwd`/debian/boost-build/usr/ install
+        mkdir -p debian/boost-all/usr debian/boost-all-dev/usr debian/boost-build/usr/bin
+        ./b2 link=static,shared cxxflags="-DBOOST_STACKTRACE_LIBCXX_RUNTIME_MAY_CAUSE_MEMORY_LEAK=1" --prefix=`pwd`/debian/boost-all/usr/ install
+        mv debian/boost-all/usr/include debian/boost-all-dev/usr
+        cp b2 debian/boost-build/usr/bin
+        ./b2 cxxflags="-DBOOST_STACKTRACE_LIBCXX_RUNTIME_MAY_CAUSE_MEMORY_LEAK=1" install --prefix=`pwd`/debian/boost-build/usr/
 EOF
 #Create some misc files
-echo "8" > debian/compat
+echo "10" > debian/compat
 mkdir -p debian/source
 echo "3.0 (quilt)" > debian/source/format
 #Build the package
