@@ -20,7 +20,10 @@ copy_license()
 create_dummy_changelog()
 
 # Create rules file
-build_config_cmake(cmake_opts=[])
+build_config_cmake(cmake_opts=[
+    "-DCMAKE_BUILD_TYPE=Release",  
+    "-DBUILD_SHARED_LIBS=ON",  
+])
 install_usr_dir_to_package("usr/include", "dev")
 write_rules()
 
