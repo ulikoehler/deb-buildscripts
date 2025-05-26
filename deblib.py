@@ -180,14 +180,14 @@ def create_debian_dir():
 def copy_license(filename=None):
     dst = os.path.join(debian_dirpath(), "copyright")
     if filename is None:
-        for filename in ["COPYING", "LICENSE", "License.txt", "license.txt", "LICENSE.txt", "COPYRIGHT"]:
+        for filename in ["COPYING", "LICENSE", "License.txt", "license.txt", "LICENSE.txt", "COPYRIGHT", "LICENSE.md"]:
             fn = os.path.join(get_name(), filename)
             if os.path.isfile(fn):
                 shutil.copy(fn, dst)
                 return
         raise PackagingError("Can't find license file!")
     else: # Known filename
-        shutil.copy(filename, dst)
+        shutil.copy(os.path.join(get_name(), filename), dst)
 
 def create_debian():
     "Create the debian directory. Call this AFTER setting all config options"
