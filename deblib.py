@@ -48,8 +48,8 @@ def set_version(arg, gitcount=False):
     global version
     version = arg
     if gitcount:
-        gitrev = cmd_output("git rev-list --all | wc -l".format(get_name())).decode("utf-8")
-        version += "-git{}".format(gitrev.strip())
+        gitrev = cmd_output(f"git rev-list --all | wc -l").decode("utf-8")
+        version += f"-git{gitrev.strip()}"
 
 def add_version_suffix(suffix):
     """
@@ -61,7 +61,7 @@ def add_version_suffix(suffix):
 
 def set_debversion(arg):
     global debversion
-    debversion = "{}-{}".format(get_version(), arg)
+    debversion = f"{get_version()}-{arg}"
 
 def set_homepage(arg):
     global homepage
@@ -69,12 +69,12 @@ def set_homepage(arg):
 
 def cmd(arg, cwd=True):
     if cwd:
-        arg = "cd {} && {}".format(get_name(), arg)
+        arg = f"cd {get_name()} && {arg}"
     subprocess.run(arg, shell=True)
 
 def cmd_output(arg, cwd=True):
     if cwd:
-        arg = "cd {} && {}".format(get_name(), arg)
+        arg = f"cd {get_name()} && {arg}"
     return subprocess.check_output(arg, shell=True)
 
 def remove_old_buildtree():
@@ -143,7 +143,7 @@ def wget_download(url):
         args = ["wget", url]
         subprocess.run(args)
     else:
-        print("Skipping download - file {} already exists".format(filename))
+        print(f"Skipping download - file {filename} already exists")
     # Find the most common output prefix of the tar output = the directory name
     prefix = find_most_common_prefix(extract_compressed_archve(filename))
     # Rename to the directory name the rest of the code expects
@@ -162,14 +162,13 @@ def remove_metadata_directories(directory, keep_git=False, keep_debian=False):
 def pack_source(ext="xz", keep_git=False):
     remove_metadata_directories(get_name(), keep_git=keep_git)
     # Pack source archive
-    outfilename = "{}_{}.orig.tar.{}".format(get_name(), get_version(), ext)
+    outfilename = f"{get_name()}_{get_version()}.orig.tar.{ext}"
     # Delete old archive if it exist
     if os.path.isfile(outfilename):
         os.remove(outfilename)
     # Create new archive
     opt = {"xz": "cJvf", "gz": "czvf", "bz2": "cjvf"}[ext]
-    cmd_output("tar {} {} {}".format(opt,
-        outfilename, get_name()), cwd=False)
+    cmd_output(f"tar {opt} {outfilename} {get_name()}", cwd=False)
 
 def debian_dirpath():
     return os.path.join(get_name(), "debian")
@@ -198,13 +197,12 @@ def create_dummy_changelog():
 
 def intitialize_control():
     with open(control_filepath(), "w") as outfile:
-        print("Source: {}".format(get_name()), file=outfile)
+        print(f"Source: {get_name()}", file=outfile)
         print("Maintainer: None <none@example.com>", file=outfile)
         print("Section: misc", file=outfile)
         print("Priority: optional", file=outfile)
         print("Standards-Version: 3.9.2", file=outfile)
-        print("Build-Depends: {}".format(", ".join(
-            ["debhelper (>= 8)"] + build_depends)), file=outfile)
+        print(f"Build-Depends: {', '.join(['debhelper (>= 8)'] + build_depends)}", file=outfile)
 
 def get_dpkg_architecture():
     """
@@ -221,7 +219,7 @@ def control_add_package(suffix=None, depends=[], provides=[], conflicts=[], arch
     global homepage
     package_name = get_name()
     if suffix:
-        package_name += "-" + suffix
+        package_name += f"-{suffix}"
     arch = "any" if arch_specific else "all"
     if only_current_arch: # Force e.g. amd64 for prebuilt stufff
         arch = get_dpkg_architecture()
@@ -231,18 +229,18 @@ def control_add_package(suffix=None, depends=[], provides=[], conflicts=[], arch
     # Append to control file
     with open(control_filepath(), "a") as outfile:
         print("", file=outfile)
-        print("Package: " + package_name, file=outfile)
-        print("Architecture: " + arch, file=outfile)
+        print(f"Package: {package_name}", file=outfile)
+        print(f"Architecture: {arch}", file=outfile)
         if depends:
-            print("Depends: " + ", ".join(depends), file=outfile)
+            print(f"Depends: {', '.join(depends)}", file=outfile)
         if provides:
-            print("Provides: " + ", ".join(provides), file=outfile)
+            print(f"Provides: {', '.join(provides)}", file=outfile)
         if conflicts:
-            print("Conflicts: " + ", ".join(provides), file=outfile)
+            print(f"Conflicts: {', '.join(provides)}", file=outfile)
         if homepage:
-            print("Homepage: " + homepage, file=outfile)
+            print(f"Homepage: {homepage}", file=outfile)
         if description:
-            print("Description: " + description, file=outfile)
+            print(f"Description: {description}", file=outfile)
 
 def init_misc_files():
     """
@@ -270,14 +268,13 @@ def build_config_cmake(targets=["all"], cmake_opts=[], install_cmd="make install
     """
     global build_depends
     build_config["configure"] = [
-        "cmake {} -DCMAKE_INSTALL_PREFIX=debian/{}/usr {}".format(srcdir,
-            get_name(), " ".join(cmake_opts))
+        f"cmake {srcdir} -DCMAKE_INSTALL_PREFIX=debian/{get_name()}/usr {' '.join(cmake_opts)}"
     ]
     build_config["build"] = [
-        "make {} -j{}".format(
-            " ".join(targets), parallelism())]
+        f"make {' '.join(targets)} -j{parallelism()}"
+    ]
     build_config["install"] = [
-        "mkdir -p debian/{}/usr".format(get_name()),
+        f"mkdir -p debian/{get_name()}/usr",
         install_cmd
     ]
     build_depends.append("cmake")
@@ -307,10 +304,10 @@ def build_config_just_make(targets=["all"], cmake_opts=[], install_cmd="make ins
     global build_depends
     build_config["configure"] = []
     build_config["build"] = [
-        "make {} -j{}".format(
-            " ".join(targets), parallelism())]
+        f"make {' '.join(targets)} -j{parallelism()}"
+    ]
     build_config["install"] = [
-        "mkdir -p debian/{}/usr".format(get_name()),
+        f"mkdir -p debian/{get_name()}/usr",
         install_cmd
     ]
     build_depends.append("cmake")
@@ -324,8 +321,7 @@ def build_config_python(python="python3"):
     build_config["clean"] = []
     build_config["build"] = ["python setup.py build"]
     build_config["install"] = [
-        "{} setup.py install --prefix=debian/{}/usr".format(
-            python, get_name())
+        f"{python} setup.py install --prefix=debian/{get_name()}/usr"
     ]
 
 
@@ -340,14 +336,14 @@ def build_config_autotools(targets=["all"], cfg_flags=[], install_cmd="make inst
         build_config["configure"].append("./autogen.sh")
         build_depends.append("libtool")
 
-    build_config["configure"].append("mkdir -p debian/{}/usr".format(get_name()))
+    build_config["configure"].append(f"mkdir -p debian/{get_name()}/usr")
     if configure:
         build_config["configure"].append(
-            "./configure --prefix=`pwd`/debian/{}/usr {}".format(get_name(), "".join(cfg_flags))
+            f"./configure --prefix=`pwd`/debian/{get_name()}/usr {''.join(cfg_flags)}"
         )
     build_config["build"] = [
-        "make {} -j{}".format(
-            " ".join(targets), parallelism())]
+        f"make {' '.join(targets)} -j{parallelism()}"
+    ]
     build_config["install"] = [
         install_cmd
     ]
@@ -373,14 +369,12 @@ def install_usr_dir_to_package(src, suffix):
     if src.endswith("/"):
         src = src[:-1]
     # Dont add mkdir twice
-    mkdir = "mkdir -p debian/{}-{}/{}".format(
-        get_name(), suffix, os.path.dirname(src))
+    mkdir = f"mkdir -p debian/{get_name()}-{suffix}/{os.path.dirname(src)}"
     if mkdir not in build_config["install"]:
         build_config["install"].append(mkdir)
     # Add move command
     build_config["install"].append(
-        "mv debian/{}/{} debian/{}-{}/{}".format(
-            get_name(), src, get_name(), suffix, os.path.dirname(src))
+        f"mv debian/{get_name()}/{src} debian/{get_name()}-{suffix}/{os.path.dirname(src)}"
     )
 
 def install_move(src, dst, suffix):
@@ -395,13 +389,12 @@ def install_move(src, dst, suffix):
     directory!
     """
     # Dont add mkdir twice
-    mkdir = "mkdir -p debian/{}-{}/{}".format(get_name(), suffix, dst)
+    mkdir = f"mkdir -p debian/{get_name()}-{suffix}/{dst}"
     if mkdir not in build_config["install"]:
         build_config["install"].append(mkdir)
     # Add move command
     build_config["install"].append(
-        "mv debian/{}/{} debian/{}-{}/{}".format(
-            get_name(), src, get_name(), suffix, dst)
+        f"mv debian/{get_name()}/{src} debian/{get_name()}-{suffix}/{dst}"
     )
 
 def install_file(src, dst, suffix=None):
@@ -415,12 +408,12 @@ def install_file(src, dst, suffix=None):
     """
     dstproj = get_name() if suffix is None else get_name() + "-" + suffix
     # Dont add mkdir twice
-    mkdir = "mkdir -p debian/{}/{}".format(dstproj, dst)
+    mkdir = f"mkdir -p debian/{dstproj}/{dst}"
     if mkdir not in build_config["install"]:
         build_config["install"].append(mkdir)
     # Add move command
     build_config["install"].append(
-        "cp -rv {} debian/{}/{}".format(src, dstproj, dst)
+        f"cp -rv {src} debian/{dstproj}/{dst}"
     )
 
 def write_rules():
@@ -432,9 +425,9 @@ def write_rules():
         print('%:', file=outf)
         print('\tdh $@', file=outf)
         for key, cmds in build_config.items():
-            print('override_dh_auto_{}:'.format(key), file=outf)
+            print(f'override_dh_auto_{key}:', file=outf)
             for cmd in cmds:
-                print('\t{}'.format(cmd), file=outf)
+                print(f'\t{cmd}', file=outf)
 
 def perform_debuild(only_source=False):
     # Create misc files
@@ -467,7 +460,7 @@ def depends_main_package():
     Returns a depends element for the main package
     with the given version
     """
-    return "{} (= {})".format(get_name(), get_debversion())
+    return f"{get_name()} (= {get_debversion()})"
 
 def distribution_name():
     """
