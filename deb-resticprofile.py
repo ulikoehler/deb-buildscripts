@@ -21,6 +21,7 @@ create_dummy_changelog()
 
 # Create rules file
 build_config_go()
+build_config["test"] = [] # Testing fails with 0.31.0 due to IO priority stuff
 write_rules()
 
 #Create control file

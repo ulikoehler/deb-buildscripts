@@ -65,7 +65,7 @@ def set_debversion(arg):
 
 def set_homepage(arg):
     global homepage
-    homepage = homepage
+    homepage = arg
 
 def cmd(arg, cwd=True):
     if cwd:
@@ -292,8 +292,8 @@ def build_config_go():
         f"go build -o {get_name()}"
     ]
     build_config["install"] = [
-        f"mkdir -p debian/{get_name()}/usr",
-        f"mv {get_name()} debian/{get_name()}/usr/bin",
+        f"mkdir -p debian/{get_name()}/usr/bin",
+        f"mv {get_name()} debian/{get_name()}/usr/bin/",
     ]
     build_depends.append("cmake")
 
