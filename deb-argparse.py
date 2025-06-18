@@ -21,8 +21,7 @@ create_dummy_changelog()
 
 # Create rules file
 build_config_cmake()
-install_usr_dir_to_package("usr/include", "dev")
-
+install_file("include/argparse", "usr/include")
 install_usr_dir_to_package("usr/include", "dev")
 write_rules()
 
