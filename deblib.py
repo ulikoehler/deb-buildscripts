@@ -318,7 +318,7 @@ def build_config_autotools(targets=["all"], cfg_flags=[], install_cmd="make inst
     global build_depends
     # Auto-regenerate ./configure
     if os.path.isfile(os.path.join(get_name(), "autogen.sh")) and not \
-       os.path.isfile(os.path.join(get_name(), "configure.sh")):
+       os.path.isfile(os.path.join(get_name(), "configure")):
         build_config["configure"].append("./autogen.sh")
         build_depends.append("libtool")
 
