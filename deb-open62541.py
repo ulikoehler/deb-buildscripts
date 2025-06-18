@@ -7,8 +7,8 @@ set_homepage("https://open62541.org/")
 pkgversion = "v1.4.12"
 git_clone("https://github.com/open62541/open62541.git", branch=pkgversion)
 set_version(pkgversion[1:])
-add_version_suffix("-deb1")
-set_debversion(1)
+add_version_suffix("-deb2")
+set_debversion(2)
 # Remove git
 pack_source()
 create_debian_dir()
@@ -21,11 +21,13 @@ create_dummy_changelog()
 
 # Create rules file
 build_config_cmake(cmake_opts=[
-    "-DCMAKE_BUILD_TYPE=Release",  
-    "-DBUILD_SHARED_LIBS=ON",  
+    "-DCMAKE_BUILD_TYPE=Release",
+    "-DBUILD_SHARED_LIBS=ON",
 ])
 install_usr_dir_to_package("usr/include", "dev")
 write_rules()
+
+build_depends += ["python3-dev"]
 
 #Create control file
 intitialize_control()
