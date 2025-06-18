@@ -402,7 +402,7 @@ def install_file(src, dst, suffix=None):
         build_config["install"].append(mkdir)
     # Add move command
     build_config["install"].append(
-        "cp {} debian/{}/{}".format(src, dstproj, dst)
+        "cp -rv {} debian/{}/{}".format(src, dstproj, dst)
     )
 
 def write_rules():
