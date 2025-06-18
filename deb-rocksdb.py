@@ -19,14 +19,14 @@ copy_license()
 #Create the changelog (no messages - dummy)
 create_dummy_changelog()
 
-instcmd = "INSTALL_PATH=debian/{}/usr make install-shared".format(get_name())
+instcmd = f"DESTDIR=debian/{get_name()}/usr make install-headers install-shared"
 # Create rules file
 build_config_autotools(targets=[""], install_cmd=instcmd)
 install_usr_dir_to_package("usr/include", "dev")
 build_config["test"] = []
 build_config["clean"] = []
-build_config["build"] = ["make -j6 shared_lib"]
-build_config["configure"] = []
+build_config["build"] = ["make -j12 shared_lib"]
+build_config["configure"] = [f"mkdir -p debian/{get_name()}/usr/include",]
 write_rules()
 
 build_depends += ["zlib1g-dev", "libbz2-dev", "libsnappy-dev", "libgflags-dev", "libzstd-dev"]
