@@ -23,6 +23,7 @@ create_dummy_changelog()
 build_config_cmake()
 install_file("include/argparse", "usr/include")
 install_usr_dir_to_package("usr/include", "dev")
+build_config["test"] = ["./test/tests"]
 write_rules()
 
 build_depends += ["python3-dev"]
