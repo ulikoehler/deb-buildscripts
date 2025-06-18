@@ -281,6 +281,24 @@ def build_config_cmake(targets=["all"], cmake_opts=[], install_cmd="make install
         install_cmd
     ]
     build_depends.append("cmake")
+    
+def build_config_go():
+    """
+    Configure the build for cmake
+    """
+    global build_depends
+    build_depends.append("golang-go")
+    build_config["configure"] = [
+        "go mod download",
+    ]
+    build_config["build"] = [
+        f"go build -o {get_name()}"
+    ]
+    build_config["install"] = [
+        f"mkdir -p debian/{get_name()}/usr",
+        f"mv {get_name()} debian/{get_name()}/usr/bin",
+    ]
+    build_depends.append("cmake")
 
 def build_config_just_make(targets=["all"], cmake_opts=[], install_cmd="make install", srcdir="."):
     """
