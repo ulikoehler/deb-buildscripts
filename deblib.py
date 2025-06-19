@@ -17,6 +17,7 @@ version = None
 debversion = None
 homepage = None
 build_depends = []
+build_env = {}
 force_parallel = None # int if CLI flag is set
 
 # Key (suffix to override_dh_auto_) ; value: list of make commands
@@ -284,6 +285,9 @@ def build_config_go():
     Configure the build for cmake
     """
     global build_depends
+    global build_env
+    build_env["GOCACHE"] = "/tmp/go-cache"
+    build_env["GOMODCACHE"] = "/tmp/gomod-cache"
     build_depends.append("golang-go")
     build_config["configure"] = [
         "go mod download",
@@ -418,12 +422,15 @@ def install_file(src, dst, suffix=None):
 
 def write_rules():
     """
-    Call after al
+    Call after all rule configurations
     """
-    with open(os.path.join(debian_dirpath(), "rules"), "w") as outf:
+    with open(os.path.join(debian_dirpath(), "rules"), "w", encoding="utf-8") as outf:
         print('#!/usr/bin/make -f', file=outf)
-        print('%:', file=outf)
-        print('\tdh $@', file=outf)
+        for key, value in build_env.items():
+            print(f'export {key}={value}', file=outf)
+        if build_env:
+            print("", file=outf)
+        print('%:\n\tdh $@', file=outf)
         for key, cmds in build_config.items():
             print(f'override_dh_auto_{key}:', file=outf)
             for cmd in cmds:
