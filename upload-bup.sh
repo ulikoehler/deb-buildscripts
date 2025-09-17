@@ -1,4 +1,4 @@
 #!/bin/sh
 # Usage: upload.sh <.changes file>
-debsign -k FFF34765E885AB1E159B479EA4E92F1D298D6AE3 bup_*source.changes
+debsign -k 1B69364900A773C4319949E805A0300DAE58DEBD bup_*source.changes
 dput ppa:ulikoehler/bup bup_*source.changes

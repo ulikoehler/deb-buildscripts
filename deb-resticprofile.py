@@ -7,8 +7,8 @@ set_homepage("https://github.com/creativeprojects/resticprofile.git")
 pkgversion = "v0.31.0"
 git_clone("https://github.com/creativeprojects/resticprofile.git", branch=pkgversion)
 set_version(pkgversion[1:])
-add_version_suffix("-deb1")
-set_debversion(1)
+add_version_suffix("-deb5")
+set_debversion(5)
 # Remove git
 pack_source()
 create_debian_dir()
