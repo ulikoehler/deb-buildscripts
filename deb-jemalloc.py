@@ -3,12 +3,12 @@ from deblib import *
 # General config
 set_name("libjemalloc")
 remove_old_buildtree()
-set_homepage("https://github.com/jemalloc/jemalloc")
+set_homepage("https://github.com/facebook/jemalloc")
 #Download it
-pkgversion = "4.5.0"
+pkgversion = "5.3.0"
 set_version(pkgversion)
-add_version_suffix("-deb2")
-git_clone("https://github.com/jemalloc/jemalloc.git", branch=pkgversion)
+add_version_suffix("-deb1")
+git_clone("https://github.com/facebook/jemalloc.git", branch=pkgversion)
 set_debversion(2)
 # Remove git
 pack_source()
