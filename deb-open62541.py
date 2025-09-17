@@ -4,7 +4,7 @@ from deblib import *
 set_name("libopen62541")
 set_homepage("https://open62541.org/")
 #Download it
-pkgversion = "v1.4.12"
+pkgversion = "v1.4.13"
 git_clone("https://github.com/open62541/open62541.git", branch=pkgversion)
 set_version(pkgversion[1:])
 add_version_suffix("-deb2")
