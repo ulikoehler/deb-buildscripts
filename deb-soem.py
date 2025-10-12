@@ -7,7 +7,7 @@ set_homepage("https://github.com/OpenEtherCATsociety/SOEM.git")
 pkgversion = "v2.0.0"
 git_clone("https://github.com/OpenEtherCATsociety/SOEM.git", branch=pkgversion)
 set_version(pkgversion[1:])
-add_version_suffix("-deb2")
+add_version_suffix("-deb3")
 set_debversion(1)
 # Remove git
 pack_source()
