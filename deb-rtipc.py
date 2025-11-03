@@ -7,8 +7,8 @@ set_homepage("https://gitlab.com/etherlab.org/rtipc")
 pkgversion = "1.0.3"
 git_clone("https://gitlab.com/etherlab.org/rtipc.git", branch=pkgversion)
 set_version(pkgversion)
-add_version_suffix("-deb2")
-set_debversion(2)
+add_version_suffix("-deb3")
+set_debversion(1)
 # Remove git
 pack_source()
 create_debian_dir()
@@ -18,6 +18,13 @@ copy_license()
 
 #Create the changelog (no messages - dummy)
 create_dummy_changelog()
+
+# Build dependencies
+build_depends += [
+    "cmake",
+    "libyaml-dev",
+    "libmhash-dev"
+]
 
 # Create rules file
 build_config_cmake(cmake_opts=[
