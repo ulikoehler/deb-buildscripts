@@ -7,8 +7,8 @@ set_homepage("https://gitlab.com/etherlab.org/rtipc")
 pkgversion = "1.0.3"
 git_clone("https://gitlab.com/etherlab.org/rtipc.git", branch=pkgversion)
 set_version(pkgversion)
-add_version_suffix("-deb1")
-set_debversion(1)
+add_version_suffix("-deb2")
+set_debversion(2)
 # Remove git
 pack_source()
 create_debian_dir()
